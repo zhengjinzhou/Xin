@@ -7,17 +7,25 @@ import android.os.Bundle;
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.umeng.analytics.MobclickAgent;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by zhou on 2017/12/19.
  */
 
 @SuppressLint("Registered")
-public class BaseActivity extends EaseBaseActivity {
+public abstract class BaseActivity extends EaseBaseActivity {
+
+    public abstract int getLayout();
+    public abstract void initV();
+
 
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-
+        setContentView(getLayout());
+        ButterKnife.bind(this);
+        initV();
     }
 
     @Override

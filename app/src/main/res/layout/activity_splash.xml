@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/em_splash"
-    tools:context="com.zhou.xin.ui.SplashActivity">
+    tools:context="com.zhou.xin.ui.LoginActivity">
 
     <EditText
         android:layout_marginTop="180dp"
