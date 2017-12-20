@@ -643,6 +643,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 selectPicFromLocal();
                 break;
             case ITEM_LOCATION:
+                //使用百度地图？
                 startActivityForResult(new Intent(getActivity(), EaseBaiduMapActivity.class), REQUEST_CODE_MAP);
                 break;
 
