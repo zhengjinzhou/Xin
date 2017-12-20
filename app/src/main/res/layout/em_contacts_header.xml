@@ -19,7 +19,7 @@
         app:contactItemImage="@drawable/em_groups_icon"
         app:contactItemName="@string/group_chat" />
 
-    <com.zhou.xin.widget.ContactItemView
+    <!--<com.zhou.xin.widget.ContactItemView
         android:id="@+id/chat_room_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,6 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:contactItemImage="@drawable/em_chat_video_call_normal"
-        app:contactItemName="@string/voice_and_video_conference" />
+        app:contactItemName="@string/voice_and_video_conference" />-->
 
 </LinearLayout>

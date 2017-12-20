@@ -213,7 +213,9 @@
             android:value="6b54bd4edc63eba3ef59d69f8e0a5070bea384e2" />
         <!-- fabric end -->
 
+
         <!-- 环信的相关不需要改的，直接套进来的 完 -->
+
 
         <!-- 开机自启动服务 -->
         <receiver android:name=".receiver.StartServiceReceiver">
@@ -225,13 +227,11 @@
             </intent-filter>
         </receiver>
 
-        <!-- 之前百度地图不能使用是因为没有加载改activity到配置文件中-->
-        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"/>
-        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"/>
-        <activity android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"/>
-        <activity android:name="com.hyphenate.easeui.ui.EaseShowNormalFileActivity"/>
-
-
+        <!-- 之前百度地图不能使用是因为没有加载改activity到配置文件中 -->
+        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity" />
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity" />
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity" />
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowNormalFileActivity" />
         <activity android:name=".ui.activity.VideoCallActivity" />
         <activity android:name=".ui.activity.VoiceCallActivity" />
         <activity android:name=".ui.activity.ChatActivity" />
@@ -249,7 +249,9 @@
         <activity android:name=".ui.activity.UserProfileActivity" />
         <activity android:name=".ui.activity.ImageGridActivity" />
         <activity android:name=".ui.activity.RecorderVideoActivity" />
-        <activity android:name=".ui.activity.CallActivity"/>
+        <activity android:name=".ui.activity.CallActivity" />
+        <activity android:name=".ui.activity.NewGroupActivity" />
+        <activity android:name=".ui.activity.PublicGroupsActivity"></activity>
     </application>
 
 </manifest>

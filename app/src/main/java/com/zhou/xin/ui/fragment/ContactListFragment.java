@@ -55,9 +55,6 @@ public class ContactListFragment extends EaseContactListFragment {
         applicationItem = (ContactItemView) headerView.findViewById(R.id.application_item);
         applicationItem.setOnClickListener(clickListener);
         headerView.findViewById(R.id.group_item).setOnClickListener(clickListener);
-        headerView.findViewById(R.id.chat_room_item).setOnClickListener(clickListener);
-        headerView.findViewById(R.id.robot_item).setOnClickListener(clickListener);
-        headerView.findViewById(R.id.conference_item).setOnClickListener(clickListener);
         listView.addHeaderView(headerView);
         //add loading view
         loadingView = LayoutInflater.from(getActivity()).inflate(R.layout.em_layout_loading_data, null);
@@ -89,7 +86,6 @@ public class ContactListFragment extends EaseContactListFragment {
     @SuppressWarnings("unchecked")
     @Override
     protected void setUpView() {
-        titleBar.setRightImageResource(R.drawable.em_add);
         titleBar.setRightLayoutClickListener(new View.OnClickListener() {
 
             @Override
@@ -175,18 +171,6 @@ public class ContactListFragment extends EaseContactListFragment {
                 case R.id.group_item:
                     // 进入群聊列表页面
                     startActivity(new Intent(getActivity(), GroupsActivity.class));
-                    break;
-                case R.id.chat_room_item:
-                    //进入聊天室列表页面
-                    startActivity(new Intent(getActivity(), PublicChatRoomsActivity.class));
-                    break;
-                case R.id.robot_item:
-                    //进入Robot列表页面
-                    startActivity(new Intent(getActivity(), RobotsActivity.class));
-                    break;
-                case R.id.conference_item:
-                    //音视频会议？
-                    startActivity(new Intent(getActivity(), ConferenceActivity.class).putExtra(Constant.EXTRA_CONFERENCE_IS_CREATOR, true));
                     break;
                 default:
                     break;
