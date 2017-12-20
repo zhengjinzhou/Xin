@@ -227,6 +227,9 @@
 
         <!-- 之前百度地图不能使用是因为没有加载改activity到配置文件中-->
         <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"/>
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"/>
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"/>
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowNormalFileActivity"/>
 
 
         <activity android:name=".ui.activity.VideoCallActivity" />
