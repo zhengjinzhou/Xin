@@ -223,7 +223,14 @@
         <activity android:name=".ui.activity.AddContactActivity" />
         <activity android:name=".ui.activity.NewFriendsMsgActivity" />
         <activity android:name=".ui.activity.PublicChatRoomsActivity" />
-        <activity android:name=".ui.activity.RobotsActivity"></activity>
+        <activity android:name=".ui.activity.RobotsActivity" />
+        <activity android:name=".ui.activity.PickAtUserActivity" />
+        <activity android:name=".ui.activity.ContextMenuActivity" />
+        <activity android:name=".ui.activity.ForwardMessageActivity" />
+        <activity android:name=".ui.activity.GroupDetailsActivity" />
+        <activity android:name=".ui.activity.ChatRoomDetailsActivity" />
+        <activity android:name=".ui.activity.UserProfileActivity" />
+        <activity android:name=".ui.activity.ImageGridActivity"></activity>
     </application>
 
 </manifest>
