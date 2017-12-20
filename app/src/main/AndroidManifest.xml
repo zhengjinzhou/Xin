@@ -214,7 +214,7 @@
         <!-- fabric end -->
 
 
-        <!-- 环信的相关不需要改的，直接套进来的 -->
+        <!-- 环信的相关不需要改的，直接套进来的 完 -->
         <activity android:name=".ui.activity.VideoCallActivity" />
         <activity android:name=".ui.activity.VoiceCallActivity" />
         <activity android:name=".ui.activity.ChatActivity" />
@@ -230,7 +230,8 @@
         <activity android:name=".ui.activity.GroupDetailsActivity" />
         <activity android:name=".ui.activity.ChatRoomDetailsActivity" />
         <activity android:name=".ui.activity.UserProfileActivity" />
-        <activity android:name=".ui.activity.ImageGridActivity"></activity>
+        <activity android:name=".ui.activity.ImageGridActivity" />
+        <activity android:name=".ui.activity.RecorderVideoActivity"></activity>
     </application>
 
 </manifest>
