@@ -20,13 +20,13 @@ import com.zhou.xin.R;
 import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.db.InviteMessgeDao;
 import com.zhou.xin.db.UserDao;
-import com.zhou.xin.ui.AddContactActivity;
-import com.zhou.xin.ui.ChatActivity;
-import com.zhou.xin.ui.ConferenceActivity;
-import com.zhou.xin.ui.GroupsActivity;
-import com.zhou.xin.ui.NewFriendsMsgActivity;
-import com.zhou.xin.ui.PublicChatRoomsActivity;
-import com.zhou.xin.ui.RobotsActivity;
+import com.zhou.xin.ui.activity.AddContactActivity;
+import com.zhou.xin.ui.activity.ChatActivity;
+import com.zhou.xin.ui.activity.ConferenceActivity;
+import com.zhou.xin.ui.activity.GroupsActivity;
+import com.zhou.xin.ui.activity.NewFriendsMsgActivity;
+import com.zhou.xin.ui.activity.PublicChatRoomsActivity;
+import com.zhou.xin.ui.activity.RobotsActivity;
 import com.zhou.xin.widget.ContactItemView;
 
 import java.util.Hashtable;
@@ -119,7 +119,7 @@ public class ContactListFragment extends EaseContactListFragment {
         });
 
 
-        // 进入添加好友页
+        // 进入添加好友页  ，这里是不需要的，到时候删除掉
         titleBar.getRightLayout().setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -185,6 +185,7 @@ public class ContactListFragment extends EaseContactListFragment {
                     startActivity(new Intent(getActivity(), RobotsActivity.class));
                     break;
                 case R.id.conference_item:
+                    //音视频会议？
                     startActivity(new Intent(getActivity(), ConferenceActivity.class).putExtra(Constant.EXTRA_CONFERENCE_IS_CREATOR, true));
                     break;
                 default:

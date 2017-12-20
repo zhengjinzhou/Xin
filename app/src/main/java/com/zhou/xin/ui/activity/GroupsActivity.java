@@ -1,8 +1,6 @@
-package com.zhou.xin.ui;
+package com.zhou.xin.ui.activity;
 
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;

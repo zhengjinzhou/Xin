@@ -1,15 +1,15 @@
-package com.zhou.xin.ui;
+package com.zhou.xin.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.zhou.xin.R;
 
-public class NewFriendsMsgActivity extends AppCompatActivity {
+public class RobotsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_friends_msg);
+        setContentView(R.layout.activity_robots);
     }
 }

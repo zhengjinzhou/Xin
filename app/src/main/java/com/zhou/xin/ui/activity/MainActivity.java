@@ -1,4 +1,4 @@
-package com.zhou.xin.ui;
+package com.zhou.xin.ui.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -42,7 +42,6 @@ import com.zhou.xin.runtimepermissions.PermissionsManager;
 import com.zhou.xin.runtimepermissions.PermissionsResultAction;
 import com.zhou.xin.ui.fragment.ContactListFragment;
 import com.zhou.xin.ui.fragment.ConversationListFragment;
-import com.zhou.xin.ui.fragment.SettingsFragment;
 
 import java.util.List;
 

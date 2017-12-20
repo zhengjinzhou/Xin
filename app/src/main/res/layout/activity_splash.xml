@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/em_splash"
     android:orientation="vertical"
-    tools:context="com.zhou.xin.ui.LoginActivity">
+    tools:context="com.zhou.xin.ui.activity.LoginActivity">
 
     <EditText
         android:id="@+id/et_user"

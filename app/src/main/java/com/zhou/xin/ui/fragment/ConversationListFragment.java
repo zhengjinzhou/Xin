@@ -14,18 +14,19 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
-import com.hyphenate.easeui.ui.EaseContactListFragment;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.easeui.widget.EaseConversationList;
 import com.hyphenate.util.NetUtils;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.db.InviteMessgeDao;
-import com.zhou.xin.ui.ChatActivity;
-import com.zhou.xin.ui.MainActivity;
+import com.zhou.xin.ui.activity.ChatActivity;
+import com.zhou.xin.ui.activity.MainActivity;
 
 /**
  * Created by zhou on 2017/12/19.
+ *
+ * 会话界面
  */
 
 public class ConversationListFragment extends EaseConversationListFragment {
