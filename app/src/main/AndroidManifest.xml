@@ -54,7 +54,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <!-- 环信的相关不需要改的，直接套进来的 -->
         <!-- 红包相关Activity start -->
@@ -214,7 +218,12 @@
         <activity android:name=".ui.VideoCallActivity" />
         <activity android:name=".ui.VoiceCallActivity" />
         <activity android:name=".ui.ChatActivity" />
-        <activity android:name=".ui.ConferenceActivity"></activity>
+        <activity android:name=".ui.ConferenceActivity" />
+        <activity android:name=".ui.GroupsActivity" />
+        <activity android:name=".ui.AddContactActivity" />
+        <activity android:name=".ui.NewFriendsMsgActivity" />
+        <activity android:name=".ui.PublicChatRoomsActivity" />
+        <activity android:name=".ui.RobotsActivity"></activity>
     </application>
 
 </manifest>
