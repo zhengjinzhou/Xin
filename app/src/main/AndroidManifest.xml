@@ -231,7 +231,8 @@
         <activity android:name=".ui.activity.ChatRoomDetailsActivity" />
         <activity android:name=".ui.activity.UserProfileActivity" />
         <activity android:name=".ui.activity.ImageGridActivity" />
-        <activity android:name=".ui.activity.RecorderVideoActivity"></activity>
+        <activity android:name=".ui.activity.RecorderVideoActivity" />
+        <activity android:name=".ui.activity.CallActivity"></activity>
     </application>
 
 </manifest>

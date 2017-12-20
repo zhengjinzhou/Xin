@@ -10,6 +10,9 @@
     <string name="user_forbidden">用户被服务器限制连接</string>
     <string name="msg_recall_by_self">您撤回了一条消息</string>
     <string name="recall">撤回</string>
-
+    <string name="call_version_inconsistent">通话协议版本不一致</string>
+    <string name="have_connected_with">已经和对方建立连接</string>
+    <string name="network_unstable">网络不稳定</string>
+    <string name="no_call_data">没有通话数据</string>
 
 </resources>

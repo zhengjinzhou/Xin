@@ -343,9 +343,11 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                 selectFileFromLocal();
                 break;
             case ITEM_VOICE_CALL:
+                //开始语音
                 startVoiceCall();
                 break;
             case ITEM_VIDEO_CALL:
+                //开始视频
                 startVideoCall();
                 break;
             //red packet code : 进入发红包页面
