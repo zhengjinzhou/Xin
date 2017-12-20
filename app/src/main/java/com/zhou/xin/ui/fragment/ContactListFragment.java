@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.easemob.redpacketui.utils.RPRedPacketUtil;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
@@ -21,6 +22,7 @@ import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.db.InviteMessgeDao;
 import com.zhou.xin.db.UserDao;
 import com.zhou.xin.ui.activity.AddContactActivity;
+import com.zhou.xin.ui.activity.BlacklistActivity;
 import com.zhou.xin.ui.activity.ChatActivity;
 import com.zhou.xin.ui.activity.ConferenceActivity;
 import com.zhou.xin.ui.activity.GroupsActivity;
@@ -171,6 +173,16 @@ public class ContactListFragment extends EaseContactListFragment {
                 case R.id.group_item:
                     // 进入群聊列表页面
                     startActivity(new Intent(getActivity(), GroupsActivity.class));
+                    break;
+                case R.id.hong_bao:
+                    //red packet code : 进入零钱或红包记录页面
+                    //支付宝版红包SDK调用如下方法进入红包记录页面
+                    RPRedPacketUtil.getInstance().startRecordActivity(getActivity());
+                    //钱包版红包SDK调用如下方法进入零钱页面
+//				RPRedPacketUtil.getInstance().startChangeActivity(getActivity());
+                    break;
+                case R.id.black_list:
+                    startActivity(new Intent(getActivity(), BlacklistActivity.class));
                     break;
                 default:
                     break;

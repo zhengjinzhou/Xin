@@ -251,7 +251,8 @@
         <activity android:name=".ui.activity.RecorderVideoActivity" />
         <activity android:name=".ui.activity.CallActivity" />
         <activity android:name=".ui.activity.NewGroupActivity" />
-        <activity android:name=".ui.activity.PublicGroupsActivity"></activity>
+        <activity android:name=".ui.activity.PublicGroupsActivity" />
+        <activity android:name=".ui.activity.BlacklistActivity"></activity>
     </application>
 
 </manifest>

@@ -19,25 +19,25 @@
         app:contactItemImage="@drawable/em_groups_icon"
         app:contactItemName="@string/group_chat" />
 
+    <com.zhou.xin.widget.ContactItemView
+        android:id="@+id/hong_bao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contactItemImage="@drawable/em_groups_icon"
+        app:contactItemName="红包记录" />
+
+    <com.zhou.xin.widget.ContactItemView
+        android:id="@+id/black_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contactItemImage="@drawable/em_groups_icon"
+        app:contactItemName="黑名单" />
+
     <!--<com.zhou.xin.widget.ContactItemView
-        android:id="@+id/chat_room_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_groups_icon"
-        app:contactItemName="@string/chat_room" />
-
-    <com.zhou.xin.widget.ContactItemView
-        android:id="@+id/robot_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_groups_icon"
-        app:contactItemName="@string/robot_chat" />
-
-    <com.zhou.xin.widget.ContactItemView
         android:id="@+id/conference_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:contactItemImage="@drawable/em_chat_video_call_normal"
-        app:contactItemName="@string/voice_and_video_conference" />-->
+        app:contactItemName="个人资料" />-->
 
 </LinearLayout>
