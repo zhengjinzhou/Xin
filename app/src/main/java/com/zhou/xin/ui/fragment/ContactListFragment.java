@@ -57,6 +57,8 @@ public class ContactListFragment extends EaseContactListFragment {
         applicationItem = (ContactItemView) headerView.findViewById(R.id.application_item);
         applicationItem.setOnClickListener(clickListener);
         headerView.findViewById(R.id.group_item).setOnClickListener(clickListener);
+        headerView.findViewById(R.id.hong_bao).setOnClickListener(clickListener);
+        headerView.findViewById(R.id.black_list).setOnClickListener(clickListener);
         listView.addHeaderView(headerView);
         //add loading view
         loadingView = LayoutInflater.from(getActivity()).inflate(R.layout.em_layout_loading_data, null);
@@ -182,6 +184,7 @@ public class ContactListFragment extends EaseContactListFragment {
 //				RPRedPacketUtil.getInstance().startChangeActivity(getActivity());
                     break;
                 case R.id.black_list:
+                    //进入黑名单界面
                     startActivity(new Intent(getActivity(), BlacklistActivity.class));
                     break;
                 default:
