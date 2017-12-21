@@ -257,7 +257,9 @@
         <activity android:name=".ui.activity.EditActivity" />
         <activity android:name=".ui.activity.GroupSearchMessageActivity" />
         <activity android:name=".ui.activity.SharedFilesActivity" />
-        <activity android:name=".ui.activity.ExitGroupDialog"></activity>
+        <activity android:name=".ui.activity.ExitGroupDialog" />
+        <activity android:name=".ui.activity.GroupSimpleDetailActivity" />
+        <activity android:name=".ui.activity.PublicGroupsSeachActivity"></activity>
     </application>
 
 </manifest>
