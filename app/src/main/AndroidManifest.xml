@@ -252,7 +252,12 @@
         <activity android:name=".ui.activity.CallActivity" />
         <activity android:name=".ui.activity.NewGroupActivity" />
         <activity android:name=".ui.activity.PublicGroupsActivity" />
-        <activity android:name=".ui.activity.BlacklistActivity"></activity>
+        <activity android:name=".ui.activity.BlacklistActivity" />
+        <activity android:name=".ui.activity.GroupPickContactsActivity" />
+        <activity android:name=".ui.activity.EditActivity" />
+        <activity android:name=".ui.activity.GroupSearchMessageActivity" />
+        <activity android:name=".ui.activity.SharedFilesActivity" />
+        <activity android:name=".ui.activity.ExitGroupDialog"></activity>
     </application>
 
 </manifest>
