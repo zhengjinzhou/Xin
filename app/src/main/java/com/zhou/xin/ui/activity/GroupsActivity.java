@@ -103,6 +103,7 @@ public class GroupsActivity extends BaseActivity {
                 } else if (position == 2) {
                     // join a public group
                     startActivityForResult(new Intent(GroupsActivity.this, PublicGroupsActivity.class), 0);
+
                 } else {
                     // enter group chat
                     Intent intent = new Intent(GroupsActivity.this, ChatActivity.class);

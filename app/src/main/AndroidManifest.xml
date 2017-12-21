@@ -227,39 +227,153 @@
             </intent-filter>
         </receiver>
 
+        <!-- FCM required start -->
+        <service android:name=".fcm.EMFCMMSGService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".fcm.EMFCMTokenRefreshService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- FCM required end -->
+
         <!-- 之前百度地图不能使用是因为没有加载改activity到配置文件中 -->
-        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity" />
-        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity" />
-        <activity android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity" />
-        <activity android:name="com.hyphenate.easeui.ui.EaseShowNormalFileActivity" />
-        <activity android:name=".ui.activity.VideoCallActivity" />
-        <activity android:name=".ui.activity.VoiceCallActivity" />
-        <activity android:name=".ui.activity.ChatActivity" />
-        <activity android:name=".ui.activity.ConferenceActivity" />
-        <activity android:name=".ui.activity.GroupsActivity" />
-        <activity android:name=".ui.activity.AddContactActivity" />
-        <activity android:name=".ui.activity.NewFriendsMsgActivity" />
-        <activity android:name=".ui.activity.PublicChatRoomsActivity" />
-        <activity android:name=".ui.activity.RobotsActivity" />
-        <activity android:name=".ui.activity.PickAtUserActivity" />
-        <activity android:name=".ui.activity.ContextMenuActivity" />
-        <activity android:name=".ui.activity.ForwardMessageActivity" />
-        <activity android:name=".ui.activity.GroupDetailsActivity" />
-        <activity android:name=".ui.activity.ChatRoomDetailsActivity" />
-        <activity android:name=".ui.activity.UserProfileActivity" />
-        <activity android:name=".ui.activity.ImageGridActivity" />
-        <activity android:name=".ui.activity.RecorderVideoActivity" />
-        <activity android:name=".ui.activity.CallActivity" />
-        <activity android:name=".ui.activity.NewGroupActivity" />
-        <activity android:name=".ui.activity.PublicGroupsActivity" />
-        <activity android:name=".ui.activity.BlacklistActivity" />
-        <activity android:name=".ui.activity.GroupPickContactsActivity" />
-        <activity android:name=".ui.activity.EditActivity" />
-        <activity android:name=".ui.activity.GroupSearchMessageActivity" />
-        <activity android:name=".ui.activity.SharedFilesActivity" />
-        <activity android:name=".ui.activity.ExitGroupDialog" />
-        <activity android:name=".ui.activity.GroupSimpleDetailActivity" />
-        <activity android:name=".ui.activity.PublicGroupsSeachActivity"></activity>
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowNormalFileActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.VideoCallActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.VoiceCallActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ChatActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ConferenceActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.GroupsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AddContactActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.NewFriendsMsgActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PublicChatRoomsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.RobotsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PickAtUserActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ContextMenuActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ForwardMessageActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.GroupDetailsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ChatRoomDetailsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.UserProfileActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ImageGridActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.RecorderVideoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CallActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.NewGroupActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PublicGroupsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.BlacklistActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.GroupPickContactsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.EditActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.GroupSearchMessageActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SharedFilesActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ExitGroupDialog"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.GroupSimpleDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PublicGroupsSeachActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PickContactNoCheckboxActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
