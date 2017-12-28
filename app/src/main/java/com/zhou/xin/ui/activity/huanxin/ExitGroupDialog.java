@@ -23,7 +23,7 @@ public class ExitGroupDialog extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
         text.setText(R.string.exit_group_hint);
         String toast = getIntent().getStringExtra("deleteToast");
         if(toast != null)

@@ -51,7 +51,7 @@ public class PublicGroupsActivity extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
         groupsList = new ArrayList<EMGroupInfo>();
         View footView = getLayoutInflater().inflate(R.layout.em_listview_footer_view, listView, false);
         footLoadingLayout = (LinearLayout) footView.findViewById(R.id.loading_layout);

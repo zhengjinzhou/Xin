@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             String packageName = getPackageName();
             PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);

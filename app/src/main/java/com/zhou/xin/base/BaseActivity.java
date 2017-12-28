@@ -2,6 +2,7 @@ package com.zhou.xin.base;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.hyphenate.easeui.ui.EaseBaseActivity;
@@ -16,7 +17,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends EaseBaseActivity {
 
     public abstract int getLayout();
-    public abstract void initV();
+    public abstract void init();
 
 
     @Override
@@ -24,7 +25,12 @@ public abstract class BaseActivity extends EaseBaseActivity {
         super.onCreate(arg0);
         setContentView(getLayout());
         ButterKnife.bind(this);
-        initV();
+        init();
+    }
+
+    protected void startToActivity(Class<?> lazz){
+        Intent intent = new Intent(this,lazz);
+        startActivity(intent);
     }
 
     @Override

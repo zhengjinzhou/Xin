@@ -22,7 +22,7 @@ public class ChatActivity extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
         activityInstance = this;
         //get user id or group id
         toChatUsername = getIntent().getExtras().getString("userId");

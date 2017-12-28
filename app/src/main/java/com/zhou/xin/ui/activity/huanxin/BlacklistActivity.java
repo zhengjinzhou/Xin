@@ -38,7 +38,7 @@ public class BlacklistActivity extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
 // get blacklist from local databases
         List<String> blacklist = EMClient.getInstance().contactManager().getBlackListUsernames();
 

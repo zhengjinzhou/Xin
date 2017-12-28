@@ -60,7 +60,7 @@ public class GroupsActivity extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
 
         instance = this;
         inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

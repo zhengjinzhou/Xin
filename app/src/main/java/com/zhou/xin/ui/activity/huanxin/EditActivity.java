@@ -25,7 +25,7 @@ public class EditActivity extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
         String title = getIntent().getStringExtra("title");
         String data = getIntent().getStringExtra("data");
         Boolean editable = getIntent().getBooleanExtra("editable", false);

@@ -35,7 +35,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
 
     }
 

@@ -26,7 +26,7 @@ public class NewFriendsMsgActivity extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
         InviteMessgeDao dao = new InviteMessgeDao(this);
         List<InviteMessage> msgs = dao.getMessagesList();
         Collections.reverse(msgs);

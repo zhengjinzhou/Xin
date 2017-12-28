@@ -40,7 +40,7 @@ public class PickAtUserActivity extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
         groupId = getIntent().getStringExtra("groupId");
         group = EMClient.getInstance().groupManager().getGroup(groupId);
         EaseSidebar sidebar = (EaseSidebar) findViewById(com.hyphenate.easeui.R.id.sidebar);

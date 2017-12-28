@@ -39,7 +39,7 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
         sidebar.setListView(listView);
         contactList = new ArrayList<EaseUser>();
         // get contactlist

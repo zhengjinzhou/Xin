@@ -233,13 +233,13 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".fcm.EMFCMTokenRefreshService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <!-- FCM required end -->
+
 
         <!-- 之前百度地图不能使用是因为没有加载改activity到配置文件中 -->
         <activity

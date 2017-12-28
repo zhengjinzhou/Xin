@@ -35,7 +35,7 @@ public class NewGroupActivity extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
         publibCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override

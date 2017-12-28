@@ -41,7 +41,7 @@ public class GroupPickContactsActivity extends BaseActivity {
     }
 
     @Override
-    public void initV() {
+    public void init() {
         String groupId = getIntent().getStringExtra("groupId");
         if (groupId == null) {// create new group
             isCreatingNewGroup = true;
