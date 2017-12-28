@@ -46,7 +46,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.huanxin.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,7 +55,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.activity.huanxin.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
@@ -259,119 +259,119 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.VideoCallActivity"
+            android:name=".ui.activity.huanxin.VideoCallActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.VoiceCallActivity"
+            android:name=".ui.activity.huanxin.VoiceCallActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ChatActivity"
+            android:name=".ui.activity.huanxin.ChatActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ConferenceActivity"
+            android:name=".ui.activity.huanxin.ConferenceActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.GroupsActivity"
+            android:name=".ui.activity.huanxin.GroupsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.AddContactActivity"
+            android:name=".ui.activity.huanxin.AddContactActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.NewFriendsMsgActivity"
+            android:name=".ui.activity.huanxin.NewFriendsMsgActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.PublicChatRoomsActivity"
+            android:name=".ui.activity.huanxin.PublicChatRoomsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.RobotsActivity"
+            android:name=".ui.activity.huanxin.RobotsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.PickAtUserActivity"
+            android:name=".ui.activity.huanxin.PickAtUserActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ContextMenuActivity"
+            android:name=".ui.activity.huanxin.ContextMenuActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ForwardMessageActivity"
+            android:name=".ui.activity.huanxin.ForwardMessageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.GroupDetailsActivity"
+            android:name=".ui.activity.huanxin.GroupDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ChatRoomDetailsActivity"
+            android:name=".ui.activity.huanxin.ChatRoomDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.UserProfileActivity"
+            android:name=".ui.activity.huanxin.UserProfileActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ImageGridActivity"
+            android:name=".ui.activity.huanxin.ImageGridActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.RecorderVideoActivity"
+            android:name=".ui.activity.huanxin.RecorderVideoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.CallActivity"
+            android:name=".ui.activity.huanxin.CallActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.NewGroupActivity"
+            android:name=".ui.activity.huanxin.NewGroupActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.PublicGroupsActivity"
+            android:name=".ui.activity.huanxin.PublicGroupsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.BlacklistActivity"
+            android:name=".ui.activity.huanxin.BlacklistActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.GroupPickContactsActivity"
+            android:name=".ui.activity.huanxin.GroupPickContactsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.EditActivity"
+            android:name=".ui.activity.huanxin.EditActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.GroupSearchMessageActivity"
+            android:name=".ui.activity.huanxin.GroupSearchMessageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.SharedFilesActivity"
+            android:name=".ui.activity.huanxin.SharedFilesActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ExitGroupDialog"
+            android:name=".ui.activity.huanxin.ExitGroupDialog"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.GroupSimpleDetailActivity"
+            android:name=".ui.activity.huanxin.GroupSimpleDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.PublicGroupsSeachActivity"
+            android:name=".ui.activity.huanxin.PublicGroupsSeachActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.PickContactNoCheckboxActivity"
+            android:name=".ui.activity.huanxin.PickContactNoCheckboxActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
     </application>

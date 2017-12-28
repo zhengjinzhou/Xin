@@ -6,8 +6,8 @@ import android.content.Intent;
 
 import com.hyphenate.util.EMLog;
 import com.zhou.xin.base.DemoHelper;
-import com.zhou.xin.ui.activity.VideoCallActivity;
-import com.zhou.xin.ui.activity.VoiceCallActivity;
+import com.zhou.xin.ui.activity.huanxin.VideoCallActivity;
+import com.zhou.xin.ui.activity.huanxin.VoiceCallActivity;
 
 /**
  * Created by zhou on 2017/12/19.

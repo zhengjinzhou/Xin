@@ -30,7 +30,7 @@ import com.hyphenate.util.TextFormater;
 import com.zhou.xin.BuildConfig;
 import com.zhou.xin.R;
 import com.zhou.xin.domain.VideoEntity;
-import com.zhou.xin.ui.activity.RecorderVideoActivity;
+import com.zhou.xin.ui.activity.huanxin.RecorderVideoActivity;
 import com.zhou.xin.video.util.ImageCache;
 import com.zhou.xin.video.util.ImageResizer;
 import com.zhou.xin.video.util.Utils;

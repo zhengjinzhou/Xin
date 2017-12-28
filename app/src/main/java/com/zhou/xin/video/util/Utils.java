@@ -5,7 +5,7 @@ import android.hardware.Camera;
 import android.os.Build;
 import android.os.StrictMode;
 
-import com.zhou.xin.ui.activity.ImageGridActivity;
+import com.zhou.xin.ui.activity.huanxin.ImageGridActivity;
 
 import java.util.Comparator;
 import java.util.List;

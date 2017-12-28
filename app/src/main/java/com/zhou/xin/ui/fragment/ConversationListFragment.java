@@ -20,8 +20,8 @@ import com.hyphenate.util.NetUtils;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.db.InviteMessgeDao;
-import com.zhou.xin.ui.activity.ChatActivity;
-import com.zhou.xin.ui.activity.MainActivity;
+import com.zhou.xin.ui.activity.huanxin.ChatActivity;
+import com.zhou.xin.ui.activity.huanxin.MainActivity;
 
 /**
  * Created by zhou on 2017/12/19.

@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.hyphenate.easeui.ui.EaseBaseActivity;
-import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 
@@ -32,13 +31,13 @@ public abstract class BaseActivity extends EaseBaseActivity {
     protected void onResume() {
         super.onResume();
         // umeng
-        MobclickAgent.onResume(this);
+        //MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         // umeng
-        MobclickAgent.onPause(this);
+        //MobclickAgent.onPause(this);
     }
 }

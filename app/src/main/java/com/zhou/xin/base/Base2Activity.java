@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.hyphenate.easeui.ui.EaseBaseActivity;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by zhou on 2017/12/20.
@@ -22,14 +21,14 @@ public class Base2Activity extends EaseBaseActivity {
     protected void onResume() {
         super.onResume();
         // umeng
-        MobclickAgent.onResume(this);
+        //MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         // umeng
-        MobclickAgent.onPause(this);
+        //MobclickAgent.onPause(this);
     }
 
 }

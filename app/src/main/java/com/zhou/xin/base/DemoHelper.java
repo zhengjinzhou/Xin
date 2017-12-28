@@ -51,11 +51,11 @@ import com.zhou.xin.domain.InviteMessage;
 import com.zhou.xin.domain.RobotUser;
 import com.zhou.xin.parse.UserProfileManager;
 import com.zhou.xin.receiver.CallReceiver;
-import com.zhou.xin.ui.activity.ChatActivity;
-import com.zhou.xin.ui.activity.ConferenceActivity;
-import com.zhou.xin.ui.activity.MainActivity;
-import com.zhou.xin.ui.activity.VideoCallActivity;
-import com.zhou.xin.ui.activity.VoiceCallActivity;
+import com.zhou.xin.ui.activity.huanxin.ChatActivity;
+import com.zhou.xin.ui.activity.huanxin.ConferenceActivity;
+import com.zhou.xin.ui.activity.huanxin.MainActivity;
+import com.zhou.xin.ui.activity.huanxin.VideoCallActivity;
+import com.zhou.xin.ui.activity.huanxin.VoiceCallActivity;
 import com.zhou.xin.utils.PreferenceManager;
 
 import java.util.ArrayList;
