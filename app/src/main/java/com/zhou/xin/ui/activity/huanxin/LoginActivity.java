@@ -31,7 +31,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public int getLayout() {
-        return R.layout.activity_splash;
+        return R.layout.activity_login;
     }
 
     @Override

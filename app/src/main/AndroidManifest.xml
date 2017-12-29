@@ -46,7 +46,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.huanxin.LoginActivity"
+            android:name=".ui.activity.love.StartActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,6 +54,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activity.huanxin.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.activity.huanxin.MainActivity"
             android:launchMode="singleTask"
@@ -374,6 +379,10 @@
             android:name=".ui.activity.huanxin.PickContactNoCheckboxActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.love.SplashActivity" />
+        <activity android:name=".ui.activity.love.AppActivity" />
+        <activity android:name=".ui.activity.love.RegisterActivity" />
+        <activity android:name=".ui.activity.love.Register2Activity"></activity>
     </application>
 
 </manifest>
