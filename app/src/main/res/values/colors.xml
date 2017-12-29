@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#40c9ff</color>
 
+
+	
+	<color name="white">#ffffff</color>
+    <color name="app_select">#f7f7f7</color>
+    <color name="item_label">#eae3e3</color>
+
+    <color name="app_bg_color">#e6e6e6</color>
+
+    <color name="black">#333333</color>
+    <color name="app_bg">#f0eff5</color>
+
+    <color name="bt_login">#44B1F6</color>
+    <color name="bt_register">#202D2A</color>
+
+    <color name="bottom_bg">#f5f9f8</color>
+
+	
+	
     <color name="common_top_bar_blue">#4ebcd3</color>
     <color name="btn_login_normal">#00acff</color>
     <color name="btn_login_pressed">#46678d</color>

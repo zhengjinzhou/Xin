@@ -40,6 +40,7 @@ import com.zhou.xin.runtimepermissions.PermissionsManager;
 import com.zhou.xin.runtimepermissions.PermissionsResultAction;
 import com.zhou.xin.ui.fragment.ContactListFragment;
 import com.zhou.xin.ui.fragment.ConversationListFragment;
+import com.zhou.xin.ui.fragment.HomeFragment;
 
 import java.util.List;
 
@@ -70,6 +71,8 @@ public class MainActivity extends BaseActivity {
     private ConversationListFragment conversationListFragment;
     private BroadcastReceiver broadcastReceiver;
     private LocalBroadcastManager broadcastManager;
+
+    private HomeFragment homeFragment;
     /**
      * check if current user account was remove
      */
@@ -116,10 +119,18 @@ public class MainActivity extends BaseActivity {
         UserDao userDao = new UserDao(this);
         conversationListFragment = new ConversationListFragment();
         contactListFragment = new ContactListFragment();
-        fragments = new Fragment[] { conversationListFragment, contactListFragment};
+        homeFragment = new HomeFragment();
+        fragments = new Fragment[] {homeFragment, conversationListFragment, contactListFragment};
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, conversationListFragment)
-                .add(R.id.fragment_container, contactListFragment).hide(contactListFragment).show(conversationListFragment)
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_container, homeFragment)
+                .hide(homeFragment)
+                .add(R.id.fragment_container, conversationListFragment)
+                .hide(conversationListFragment)
+                .add(R.id.fragment_container, contactListFragment)
+                .hide(contactListFragment)
+                .show(homeFragment)
                 .commit();
 
         //register broadcast receiver to receive the change of group from DemoHelper
@@ -170,7 +181,7 @@ public class MainActivity extends BaseActivity {
             public void run() {
                 // refresh unread count
                 updateUnreadLabel();
-                if (currentTabIndex == 0) {
+                if (currentTabIndex == 1) {
                     // refresh conversation list
                     if (conversationListFragment != null) {
                         conversationListFragment.refresh();
@@ -295,12 +306,12 @@ public class MainActivity extends BaseActivity {
             public void onReceive(Context context, Intent intent) {
                 updateUnreadLabel();
                 updateUnreadAddressLable();
-                if (currentTabIndex == 0) {
+                if (currentTabIndex == 1) {
                     // refresh conversation list
                     if (conversationListFragment != null) {
                         conversationListFragment.refresh();
                     }
-                } else if (currentTabIndex == 1) {
+                } else if (currentTabIndex == 2) {
                     if(contactListFragment != null) {
                         contactListFragment.refresh();
                     }
@@ -388,21 +399,25 @@ public class MainActivity extends BaseActivity {
     private void initView() {
         unreadLabel = (TextView) findViewById(R.id.unread_msg_number);
         unreadAddressLable = (TextView) findViewById(R.id.unread_address_number);
-        mTabs = new Button[2];
-        mTabs[0] = (Button) findViewById(R.id.btn_conversation);
-        mTabs[1] = (Button) findViewById(R.id.btn_address_list);
+        mTabs = new Button[3];
+        mTabs[0] = (Button) findViewById(R.id.btn_index);
+        mTabs[1] = (Button) findViewById(R.id.btn_conversation);
+        mTabs[2] = (Button) findViewById(R.id.btn_address_list);
         // select first tab
         mTabs[0].setSelected(true);
     }
 
-    @OnClick({R.id.btn_conversation, R.id.btn_address_list})
+    @OnClick({R.id.btn_index,R.id.btn_conversation, R.id.btn_address_list})
     void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_conversation:
+            case R.id.btn_index:
                 index = 0;
                 break;
-            case R.id.btn_address_list:
+            case R.id.btn_conversation:
                 index = 1;
+                break;
+            case R.id.btn_address_list:
+                index = 2;
                 break;
         }
         if (currentTabIndex != index) {

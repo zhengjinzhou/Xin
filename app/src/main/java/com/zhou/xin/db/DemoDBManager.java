@@ -9,7 +9,7 @@ import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.HanziToPinyin;
 import com.zhou.xin.Constant;
-import com.zhou.xin.base.DemoApplication;
+import com.zhou.xin.base.App;
 import com.zhou.xin.domain.InviteMessage;
 import com.zhou.xin.domain.RobotUser;
 
@@ -28,7 +28,7 @@ public class DemoDBManager {
     private DbOpenHelper dbHelper;
 
     private DemoDBManager(){
-        dbHelper = DbOpenHelper.getInstance(DemoApplication.getInstance().getApplicationContext());
+        dbHelper = DbOpenHelper.getInstance(App.getInstance().getApplicationContext());
     }
 
     public static synchronized DemoDBManager getInstance(){

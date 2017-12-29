@@ -13,7 +13,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
-import com.zhou.xin.base.DemoApplication;
+import com.zhou.xin.base.App;
 import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.db.DemoDBManager;
 
@@ -127,7 +127,7 @@ public class LoginActivity extends BaseActivity {
 
                 // update current user's display name for APNs
                 boolean updatenick = EMClient.getInstance().pushManager().updatePushNickname(
-                        DemoApplication.currentUserNick.trim());
+                        App.currentUserNick.trim());
                 if (!updatenick) {
                     Log.e("LoginActivity", "update current user nick fail");
                 }
