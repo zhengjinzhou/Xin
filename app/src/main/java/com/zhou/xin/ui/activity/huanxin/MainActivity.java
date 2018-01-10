@@ -41,6 +41,7 @@ import com.zhou.xin.runtimepermissions.PermissionsResultAction;
 import com.zhou.xin.ui.fragment.ContactListFragment;
 import com.zhou.xin.ui.fragment.ConversationListFragment;
 import com.zhou.xin.ui.fragment.HomeFragment;
+import com.zhou.xin.ui.fragment.MeFragment;
 
 import java.util.List;
 
@@ -71,8 +72,9 @@ public class MainActivity extends BaseActivity {
     private ConversationListFragment conversationListFragment;
     private BroadcastReceiver broadcastReceiver;
     private LocalBroadcastManager broadcastManager;
-
     private HomeFragment homeFragment;
+    private MeFragment meFragment;
+
     /**
      * check if current user account was remove
      */
@@ -117,10 +119,12 @@ public class MainActivity extends BaseActivity {
 
         inviteMessgeDao = new InviteMessgeDao(this);
         UserDao userDao = new UserDao(this);
+
         conversationListFragment = new ConversationListFragment();
         contactListFragment = new ContactListFragment();
         homeFragment = new HomeFragment();
-        fragments = new Fragment[] {homeFragment, conversationListFragment, contactListFragment};
+        meFragment = new MeFragment();
+        fragments = new Fragment[] {homeFragment, conversationListFragment, contactListFragment,meFragment};
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -130,12 +134,13 @@ public class MainActivity extends BaseActivity {
                 .hide(conversationListFragment)
                 .add(R.id.fragment_container, contactListFragment)
                 .hide(contactListFragment)
+                .add(R.id.fragment_container, meFragment)
+                .hide(meFragment)
                 .show(homeFragment)
                 .commit();
 
         //register broadcast receiver to receive the change of group from DemoHelper
         registerBroadcastReceiver();
-
 
         EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
         EMClient.getInstance().addClientListener(clientListener);
@@ -399,15 +404,16 @@ public class MainActivity extends BaseActivity {
     private void initView() {
         unreadLabel = (TextView) findViewById(R.id.unread_msg_number);
         unreadAddressLable = (TextView) findViewById(R.id.unread_address_number);
-        mTabs = new Button[3];
+        mTabs = new Button[4];
         mTabs[0] = (Button) findViewById(R.id.btn_index);
         mTabs[1] = (Button) findViewById(R.id.btn_conversation);
         mTabs[2] = (Button) findViewById(R.id.btn_address_list);
+        mTabs[3] = (Button) findViewById(R.id.btn_me_list);
         // select first tab
         mTabs[0].setSelected(true);
     }
 
-    @OnClick({R.id.btn_index,R.id.btn_conversation, R.id.btn_address_list})
+    @OnClick({R.id.btn_index,R.id.btn_conversation, R.id.btn_address_list,R.id.btn_me_list})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_index:
@@ -418,6 +424,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_address_list:
                 index = 2;
+                break;
+            case R.id.btn_me_list:
+                index = 3;
                 break;
         }
         if (currentTabIndex != index) {

@@ -382,7 +382,16 @@
         <activity android:name=".ui.activity.love.SplashActivity" />
         <activity android:name=".ui.activity.love.AppActivity" />
         <activity android:name=".ui.activity.love.RegisterActivity" />
-        <activity android:name=".ui.activity.love.Register2Activity"></activity>
+        <activity android:name=".ui.activity.love.Register2Activity" />
+        <activity android:name=".ui.activity.love.DetailActivity" />
+        <activity android:name=".ui.activity.love.GuildActivity" />
+        <activity android:name=".ui.activity.love.InviteActivity" />
+        <activity android:name=".ui.activity.love.HerActivity" />
+        <activity android:name=".ui.activity.love.SafeActivity" />
+        <activity android:name=".ui.activity.love.PrivacyActivity" />
+        <activity android:name=".ui.activity.love.FriendActivity" />
+        <activity android:name=".ui.activity.love.AboutActivity" />
+        <activity android:name=".ui.activity.love.LotteryActivity"></activity>
     </application>
 
 </manifest>
