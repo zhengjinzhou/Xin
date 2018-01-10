@@ -34,6 +34,7 @@ import com.zhou.xin.ui.activity.love.InviteActivity;
 import com.zhou.xin.ui.activity.love.LotteryActivity;
 import com.zhou.xin.ui.activity.love.PrivacyActivity;
 import com.zhou.xin.ui.activity.love.SafeActivity;
+import com.zhou.xin.ui.activity.love.TaskActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.ToastUtil;
@@ -88,7 +89,7 @@ public class MeFragment extends BaseFragment {
         data.add(new BaseBean(FriendActivity.class,"好友管理",R.drawable.home01_icon_edu));
         data.add(new BaseBean(AboutActivity.class,"关于",R.drawable.home01_icon_edu));
         data.add(new BaseBean(LotteryActivity.class,"抽奖活动",R.drawable.home01_icon_edu));
-        data.add(new BaseBean(LotteryActivity.class,"任务系统",R.drawable.home01_icon_edu));
+        data.add(new BaseBean(TaskActivity.class,"任务系统",R.drawable.home01_icon_edu));
 
         BaseCommonAdapter adapter = new BaseCommonAdapter<BaseBean>(getContext(), R.layout.recycle_me, data) {
             @Override

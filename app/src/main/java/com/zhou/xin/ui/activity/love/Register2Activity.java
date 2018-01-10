@@ -9,10 +9,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hyphenate.EMError;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.base.DemoHelper;
+import com.zhou.xin.ui.activity.huanxin.LoginActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.ToastUtil;
@@ -82,8 +88,8 @@ public class Register2Activity extends BaseActivity {
      * 注册
      */
     private void toRegister() {
-        String username = et_username.getText().toString().trim();
-        String password = et_password.getText().toString().trim();
+        final String username = et_username.getText().toString().trim();
+        final String password = et_password.getText().toString().trim();
         String confirm = et_confirm.getText().toString().trim();
         String inviteCode = et_inviteCode.getText().toString().trim();
         if (TextUtils.isEmpty(username)) {
@@ -134,14 +140,53 @@ public class Register2Activity extends BaseActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: "+e.getMessage());
+                Log.d(TAG, "onFailure: " + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d(TAG, "注册onResponse: "+response.body().string());
-                //转到登录界面
+                Log.d(TAG, "注册onResponse: " + response.body().string());
+                //环信注册
+                xinRegister(username, password);
             }
         });
+    }
+
+    //注册
+    private void xinRegister(final String username, final String pwd) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // call method in SDK
+                try {
+                    EMClient.getInstance().createAccount(username, pwd);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            DemoHelper.getInstance().setCurrentUserName(username);
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_SHORT).show();
+                            startToActivity(LoginActivity.class);//本应用于环信都注册成功之后跳转到登录界面
+                        }
+                    });
+                } catch (final HyphenateException e) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            int errorCode = e.getErrorCode();
+                            if (errorCode == EMError.NETWORK_ERROR) {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
+                            } else if (errorCode == EMError.USER_ALREADY_EXIST) {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
+                            } else if (errorCode == EMError.USER_AUTHENTICATION_FAILED) {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.registration_failed_without_permission), Toast.LENGTH_SHORT).show();
+                            } else if (errorCode == EMError.USER_ILLEGAL_ARGUMENT) {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 }

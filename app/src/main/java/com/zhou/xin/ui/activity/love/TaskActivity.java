@@ -11,19 +11,18 @@ import com.zhou.xin.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SafeActivity extends BaseActivity {
+public class TaskActivity extends BaseActivity {
 
-    @BindView(R.id.tv_head)
-    TextView tv_head;
+    @BindView(R.id.tv_head) TextView tv_head;
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_safe;
+        return R.layout.activity_task;
     }
 
     @Override
     protected void init() {
-        tv_head.setText("安全管理");
+        tv_head.setText("任务系统");
     }
 
     @OnClick({R.id.back}) void click(View view){

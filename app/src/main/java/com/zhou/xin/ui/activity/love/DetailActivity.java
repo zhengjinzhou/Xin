@@ -152,7 +152,7 @@ public class DetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_edit:
-                startToActivity(EditActivity.class);
+                startToActivity(EditLoveActivity.class);
                 break;
         }
     }

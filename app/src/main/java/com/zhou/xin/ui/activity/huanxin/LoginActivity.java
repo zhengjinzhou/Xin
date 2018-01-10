@@ -1,116 +1,199 @@
 package com.zhou.xin.ui.activity.huanxin;
 
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.gson.Gson;
 import com.hyphenate.EMCallBack;
-import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
+import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.DemoHelper;
+import com.zhou.xin.bean.PersonalBean;
+import com.zhou.xin.bean.UserInfo;
 import com.zhou.xin.db.DemoDBManager;
+import com.zhou.xin.ui.activity.love.ForgetActivity;
+import com.zhou.xin.ui.activity.love.RegisterActivity;
+import com.zhou.xin.utils.CurrentTimeUtil;
+import com.zhou.xin.utils.DES3Util;
+import com.zhou.xin.utils.Md5Util;
+import com.zhou.xin.utils.ToastUtil;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class LoginActivity extends BaseActivity {
 
-    private static final String TAG = "LoginActivity";
-
-    @BindView(R.id.et_user) EditText et_user;
-    @BindView(R.id.et_password) EditText et_password;
-    private String user;
+    @BindView(R.id.circle) CircleImageView circle;
+    @BindView(R.id.et_username) EditText etUsername;
+    @BindView(R.id.et_password) EditText etPassword;
+    @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.tv_forget) TextView tv_forget;
+    private String TAG = "LoginActivity";
+    private String username;
     private String password;
 
     @Override
-    public int getLayout() {
+    protected int getLayout() {
         return R.layout.activity_login;
     }
 
     @Override
-    public void init() {
-
+    protected void init() {
+        tv_head.setText("登陆");
+        etUsername.setText("2014414");
+        etPassword.setText("123");
     }
 
-    @OnClick({R.id.bt_register,R.id.bt_login}) void onClick(View view){
-        switch (view.getId()){
-            case R.id.bt_register:
-                user = et_user.getText().toString().trim();
-                password = et_password.getText().toString().trim();
-                if (TextUtils.isEmpty(user)){
-                    Toast.makeText(getApplicationContext(),"用户名不能为空",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(password)){
-                    Toast.makeText(getApplicationContext(),"用户名不能为空",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                register(user,password);
-                break;
+    @OnClick({R.id.bt_login, R.id.back, R.id.tv_forget}) void onClick(View view) {
+        switch (view.getId()) {
             case R.id.bt_login:
-                user = et_user.getText().toString().trim();
-                password = et_password.getText().toString().trim();
-                if (TextUtils.isEmpty(user)){
-                    Toast.makeText(getApplicationContext(),"用户名不能为空",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(password)){
-                    Toast.makeText(getApplicationContext(),"用户名不能为空",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                login(user,password);
+                login();
                 break;
-
+            case R.id.back:
+                finish();
+                break;
+            case R.id.tv_forget:
+                startToActivity(ForgetActivity.class);//忘记密码
+                break;
         }
     }
 
+    private void login() {
+        username = etUsername.getText().toString().trim();
+        password = etPassword.getText().toString().trim();
+        if (TextUtils.isEmpty(username)) {
+            ToastUtil.show(getApplicationContext(), "账号不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            ToastUtil.show(getApplicationContext(), "密码不能为空");
+            return;
+        }
 
-    //注册
-    private void register(final String username, final String pwd) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-        // call method in SDK
-                try {
-                    EMClient.getInstance().createAccount(username, pwd);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            DemoHelper.getInstance().setCurrentUserName(username);
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } catch (final HyphenateException e) {
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            int errorCode=e.getErrorCode();
-                            if(errorCode== EMError.NETWORK_ERROR){
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
-                            }else if(errorCode == EMError.USER_ALREADY_EXIST){
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
-                            }else if(errorCode == EMError.USER_AUTHENTICATION_FAILED){
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.registration_failed_without_permission), Toast.LENGTH_SHORT).show();
-                            }else if(errorCode == EMError.USER_ILLEGAL_ARGUMENT){
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name),Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
-            }
-        }).start();
+        dialog.show();
+
+        String pwd = DES3Util.encrypt3DES(password, Constant.ENCRYPTION_KEY, Charset.forName("UTF-8"));
+        String opt = "2";
+        String _t = CurrentTimeUtil.nowTime();
+        String joint = "_t=" + _t + "&actNumber=" + username + "&opt=" + opt + "&pwd=" + pwd + Constant.APP_ENCRYPTION_KEY;
+        String _s = Md5Util.encoder(joint);
+
+        System.out.println("拼接后_t的数据--------" + joint);
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        FormBody body = new FormBody.Builder()
+                .add("actNumber", username)
+                .add("pwd", pwd)
+                .add("opt", opt)
+                .add("_t", _t)
+                .add("_s", _s)
+                .build();
+        Request request = new Request.Builder()
+                .url(Constant.LOGIN_URL)
+                .post(body)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(callback);
     }
 
-    //登录
-    private void login(final String username, final String pwd) {
+    Callback callback = new Callback() {
+        @Override
+        public void onFailure(Call call, final IOException e) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ToastUtil.show(getApplicationContext(), e.getMessage());
+                }
+            });
+            Log.d(TAG, "onFailure: " + e.getMessage());
+        }
+
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+            String string = response.body().string();
+            Log.d(TAG, "onResponse: " + string);
+            getResult(string);
+        }
+    };
+
+    private void getResult(String data) {
+        Gson gson = new Gson();
+        UserInfo userInfo = gson.fromJson(data, UserInfo.class);
+        String token = userInfo.getToken();
+        String uid = userInfo.getUid();
+
+        if (!userInfo.getError().equals("-1")) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ToastUtil.show(getApplicationContext(), "访问超时，请检查您的系统时间是否正确");
+                }
+            });
+            return;
+        }
+        Log.d(TAG, "getResult: " + token);
+        Log.d(TAG, "getResult: " + uid);
+
+        String opt = "5";
+        String _t = CurrentTimeUtil.nowTime();
+        String joint = "_t=" + _t + "&opt=" + opt + "&token=" + token + "&uid=" + uid + Constant.APP_ENCRYPTION_KEY;
+        String _s = Md5Util.encoder(joint);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody build = new FormBody.Builder()
+                .add("uid", uid)
+                .add("token", token)
+                .add("opt", opt)
+                .add("_t", _t)
+                .add("_s", _s)
+                .build();
+        Request request = new Request.Builder().url(Constant.LOGIN_URL).post(build).build();
+        Call call2 = okHttpClient.newCall(request);
+        call2.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, final IOException e) {
+                Log.d(TAG, "---------onFailure: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response res) throws IOException {
+                Gson gson1 = new Gson();
+                PersonalBean personalBean = gson1.fromJson(res.body().string(), PersonalBean.class);
+                App.getInstence().setPersonalBean(personalBean);
+            }
+        });
+
+        App.getInstence().setUserInfo(userInfo);
+        if (userInfo.getError().equals("-1")) {
+            //进行环信登录
+            XinLogin(username,password);
+            //startToActivity(MainActivity.class);
+        } else if (userInfo.getError().equals("-2")) {
+            startToActivity(RegisterActivity.class);
+        }
+    }
+    /**
+     * 进行环信登录
+     * @param username
+     * @param pwd
+     */
+    private void XinLogin(final String username, final String pwd) {
         // After logout，the DemoDB may still be accessed due to async callback, so the DemoDB will be re-opened again.
         // close it before login to make sure DemoDB not overlap
         DemoDBManager.getInstance().closeDB();
@@ -133,10 +216,7 @@ public class LoginActivity extends BaseActivity {
                 }
                 // get user's info (this should be get from App's server or 3rd party service)
                 DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
-                Intent intent = new Intent(LoginActivity.this,
-                        MainActivity.class);
-                startActivity(intent);
-
+                startToActivity(MainActivity.class);
                 finish();
             }
 

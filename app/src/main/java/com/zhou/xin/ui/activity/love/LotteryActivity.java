@@ -19,7 +19,6 @@ public class LotteryActivity extends BaseActivity {
     @Override
     protected void init() {
         tv_head.setText("抽奖活动");
-
     }
 
     @OnClick({R.id.back}) void onClick(View view){

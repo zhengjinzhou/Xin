@@ -1,38 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/em_splash"
-    android:orientation="vertical"
-    tools:context="com.zhou.xin.ui.activity.huanxin.LoginActivity">
+    tools:context="zhou.com.snail.ui.activity.LoginActivity">
 
-    <EditText
-        android:id="@+id/et_user"
+    <include layout="@layout/headerbar" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circle"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="68dp"
+        android:src="@drawable/fall_in_love"
+        app:civ_border_color="#f3b8b8"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:id="@+id/tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
-        android:singleLine="true"
-        android:text="zhou" />
+        android:layout_below="@+id/circle"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:text="寻找真爱,就在这里"
+        android:textColor="#fff"
+        android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/et_password"
+    <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:singleLine="true"
-        android:text="123" />
+        android:layout_below="@+id/tv"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_login"
+        android:padding="13dp">
 
-    <Button
-        android:id="@+id/bt_register"
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/login_user" />
+
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/iv"
+            android:background="@null"
+            android:hint="请输入您的手机号码"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="注册" />
+        android:layout_below="@+id/rl"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_login"
+        android:padding="13dp">
+
+        <ImageView
+            android:id="@+id/iv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/login_pwd" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/iv2"
+            android:background="@null"
+            android:hint="请输入您的密码"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_forget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/rl2"
+        android:layout_marginRight="@dimen/space_16"
+        android:text="忘记密码" />
+
 
     <Button
         android:id="@+id/bt_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="登录" />
-</LinearLayout>
+        android:layout_below="@+id/rl2"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_drawable_login"
+        android:text="登 录"
+        android:textColor="#fff"
+        android:textSize="14sp" />
+
+</RelativeLayout>
