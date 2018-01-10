@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zhou.xin.ui.activity.love.OpinionActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/headerbar" />
+
+        <EditText
+            android:id="@+id/et_opinion"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@null"
+            android:gravity="start"
+            android:hint="@string/opinion"
+            android:maxLength="300"
+            android:padding="@dimen/space_8" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_8"
+            android:background="#f2eded" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/jvbao_icon_photo"
+            android:drawablePadding="@dimen/space_2"
+            android:gravity="center_vertical"
+            android:padding="@dimen/space_8"
+            android:text="添加图片建议" />
+
+        <RelativeLayout
+            android:id="@+id/rl_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginTop="@dimen/space_16">
+
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/opinion_add" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/bt_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bg_drawable_login"
+            android:text="提交"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

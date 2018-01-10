@@ -89,6 +89,7 @@
     <string name="change_the_group_description">改变群描述</string>
     <string name="change_the_group_extension">改变群扩展</string>
     <string name="me">我</string>
+    <string name="opinion">请把您所遇到的问题或者好的建议告诉我们，以便我们能够对您提供更优质的体验(限300字以内)</string>
 
 
     <string-array name="icons">

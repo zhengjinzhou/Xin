@@ -394,7 +394,8 @@
         <activity android:name=".ui.activity.love.LotteryActivity" />
         <activity android:name=".ui.activity.love.ForgetActivity" />
         <activity android:name=".ui.activity.love.EditLoveActivity" />
-        <activity android:name=".ui.activity.love.TaskActivity"></activity>
+        <activity android:name=".ui.activity.love.TaskActivity" />
+        <activity android:name=".ui.activity.love.OpinionActivity"></activity>
     </application>
 
 </manifest>
