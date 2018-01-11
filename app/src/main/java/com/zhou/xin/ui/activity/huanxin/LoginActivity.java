@@ -22,6 +22,7 @@ import com.zhou.xin.ui.activity.love.RegisterActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.DES3Util;
 import com.zhou.xin.utils.Md5Util;
+import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.utils.ToastUtil;
 
 import java.io.IOException;
@@ -183,7 +184,7 @@ public class LoginActivity extends BaseActivity {
         if (userInfo.getError().equals("-1")) {
             //进行环信登录
             XinLogin(username,password);
-            //startToActivity(MainActivity.class);
+            SpUtil.putString(getApplicationContext(), Constant.PASSWORD,password);
         } else if (userInfo.getError().equals("-2")) {
             startToActivity(RegisterActivity.class);
         }

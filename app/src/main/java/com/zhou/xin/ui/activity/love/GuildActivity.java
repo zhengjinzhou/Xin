@@ -43,17 +43,25 @@ public class GuildActivity extends BaseActivity {
      */
     private void initRecycle() {
         final List<String> data = new ArrayList<>();
-        for (int i=0;i<24;i++){
-            data.add(i+"");
-        }
-        CommonAdapter adapter = new CommonAdapter(this, R.layout.recycle_guild, data) {
+        data.add("本应用是真实真人真事吗？");
+        data.add("如何找回密码?");
+        data.add("如何修改密码？");
+        data.add("如何了解本应用的任务？");
+        data.add("如何邀请好友加油本应用？");
+        data.add("如何在应用中举报和反馈？");
+        data.add("如何进行线下活动？");
+        data.add("本应用只能和一人聊天么");
+        data.add("本应用中的红包是怎么回事？");
+        data.add("如何联系我们？");
+
+        CommonAdapter adapter = new CommonAdapter<String>(this, R.layout.recycle_guild, data) {
             @Override
-            public void convert(ViewHolder holder, Object o, final int position) {
-                holder.setText(R.id.tv_des,data.get(position));
+            public void convert(ViewHolder holder, final String s, final int position) {
+                holder.setText(R.id.tv_des,s);
                 holder.setOnClickListener(R.id.rl_guild, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(GuildInfoActivity.newIntent(getApplicationContext(),data.get(position)));
+                        startActivity(GuildInfoActivity.newIntent(getApplicationContext(),s));
                     }
                 });
             }

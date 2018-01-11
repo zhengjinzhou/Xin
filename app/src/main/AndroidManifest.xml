@@ -398,7 +398,9 @@
         <activity android:name=".ui.activity.love.OpinionActivity" />
         <activity android:name=".ui.activity.love.GuildInfoActivity" />
         <activity android:name=".ui.activity.love.AboutInfoActivity" />
-        <activity android:name=".ui.activity.love.ChangeActivity"></activity>
+        <activity android:name=".ui.activity.love.ChangeActivity" />
+        <activity android:name=".ui.activity.love.ActivityActivity" />
+        <activity android:name=".ui.activity.love.SuccessActivity"></activity>
     </application>
 
 </manifest>

@@ -14,6 +14,7 @@
         android:src="@drawable/upload_del" />
 
     <TextView
+        android:layout_marginLeft="@dimen/space_8"
         android:layout_gravity="center"
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"

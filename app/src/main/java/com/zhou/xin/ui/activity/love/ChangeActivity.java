@@ -3,6 +3,7 @@ package com.zhou.xin.ui.activity.love;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -72,15 +73,17 @@ public class ChangeActivity extends BaseActivity {
             return;
         }
 
-        if (SpUtil.getString(getApplicationContext(), Constant.PASSWORD,"") != null){
-            if (!SpUtil.getString(getApplicationContext(), Constant.PASSWORD,"").equals(etOld)){
-                ToastUtil.show(getApplicationContext(),"原密码不正确");
-                return;
-            }
-        }else {
-            ToastUtil.show(getApplicationContext(),"原密码没有？");
+        String psd = SpUtil.getString(getApplicationContext(), Constant.PASSWORD, "");
+        if (psd == null){
+            ToastUtil.show(getApplicationContext(),"原密码不存在");
             return;
         }
+
+        if (!etOld.equals(psd)){
+            ToastUtil.show(getApplicationContext(),"原密码不正确");
+            return;
+        }
+
         //余下修改成功之后记得再次保存一次原密码  SpUtil.putString(getApplicationContext(), Constant.PASSWORD,password);
     }
 }

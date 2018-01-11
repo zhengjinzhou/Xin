@@ -1,48 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:background="@color/white"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context="com.zhou.xin.ui.activity.love.ChangeActivity">
 
-    <include layout="@layout/headerbar"/>
+    <include layout="@layout/headerbar" />
 
     <EditText
-        android:layout_marginTop="@dimen/space_8"
         android:id="@+id/et_old"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout"
+        android:layout_marginTop="@dimen/space_8"
         android:background="@drawable/bg_login"
         android:hint="请输入原密码"
+        android:inputType="textPassword"
         android:maxLines="1"
         android:padding="@dimen/space_12"
         android:singleLine="true" />
 
     <EditText
-        android:layout_marginTop="@dimen/space_1"
         android:id="@+id/et_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout"
+        android:layout_marginTop="@dimen/space_1"
         android:background="@drawable/bg_login"
         android:hint="请输入原密码"
+        android:inputType="textPassword"
         android:maxLines="1"
         android:padding="@dimen/space_12"
         android:singleLine="true" />
 
     <EditText
-        android:layout_marginTop="@dimen/space_1"
         android:id="@+id/et_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout"
+        android:layout_marginTop="@dimen/space_1"
         android:background="@drawable/bg_login"
         android:hint="请再次输入原密码"
+        android:inputType="textPassword"
         android:maxLines="1"
         android:padding="@dimen/space_12"
         android:singleLine="true" />

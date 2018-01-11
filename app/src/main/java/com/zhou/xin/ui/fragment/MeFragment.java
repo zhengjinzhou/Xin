@@ -27,6 +27,7 @@ import com.zhou.xin.base.BaseFragment;
 import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.bean.SelectBean;
 import com.zhou.xin.ui.activity.love.AboutActivity;
+import com.zhou.xin.ui.activity.love.ActivityActivity;
 import com.zhou.xin.ui.activity.love.DetailActivity;
 import com.zhou.xin.ui.activity.love.FriendActivity;
 import com.zhou.xin.ui.activity.love.GuildActivity;
@@ -36,6 +37,7 @@ import com.zhou.xin.ui.activity.love.LotteryActivity;
 import com.zhou.xin.ui.activity.love.OpinionActivity;
 import com.zhou.xin.ui.activity.love.PrivacyActivity;
 import com.zhou.xin.ui.activity.love.SafeActivity;
+import com.zhou.xin.ui.activity.love.SuccessActivity;
 import com.zhou.xin.ui.activity.love.TaskActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
@@ -85,14 +87,16 @@ public class MeFragment extends BaseFragment {
      */
     private void initRecycle() {
         ArrayList<BaseBean> data = new ArrayList<>();
-        data.add(new BaseBean(HerActivity.class,"对象",R.drawable.home01_icon_edu));
-        data.add(new BaseBean(SafeActivity.class,"安全管理",R.drawable.home01_icon_edu));
-        data.add(new BaseBean(PrivacyActivity.class,"隐私管理",R.drawable.home01_icon_edu));
-        data.add(new BaseBean(FriendActivity.class,"好友管理",R.drawable.home01_icon_edu));
-        data.add(new BaseBean(AboutActivity.class,"关于",R.drawable.home01_icon_edu));
-        data.add(new BaseBean(LotteryActivity.class,"抽奖活动",R.drawable.home01_icon_edu));
-        data.add(new BaseBean(TaskActivity.class,"任务系统",R.drawable.home01_icon_edu));
-        data.add(new BaseBean(OpinionActivity.class,"意见反馈",R.drawable.home01_icon_edu));
+        data.add(new BaseBean(HerActivity.class,"对象",R.drawable.guanzhu));
+        data.add(new BaseBean(SafeActivity.class,"安全管理",R.drawable.saft));
+        data.add(new BaseBean(PrivacyActivity.class,"隐私管理",R.drawable.privately));
+        data.add(new BaseBean(FriendActivity.class,"好友管理",R.drawable.fensi));
+        data.add(new BaseBean(AboutActivity.class,"关于",R.drawable.about));
+        data.add(new BaseBean(LotteryActivity.class,"抽奖活动",R.drawable.lottery));
+        data.add(new BaseBean(TaskActivity.class,"任务系统",R.drawable.task));
+        data.add(new BaseBean(OpinionActivity.class,"意见反馈",R.drawable.opinion));
+        data.add(new BaseBean(ActivityActivity.class,"线下活动",R.drawable.activity));
+        data.add(new BaseBean(SuccessActivity.class,"成功案例",R.drawable.success));
 
         BaseCommonAdapter adapter = new BaseCommonAdapter<BaseBean>(getContext(), R.layout.recycle_me, data) {
             @Override
