@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * Created by zhou on 2018/1/11.
  *
  * 获取缓存大小和清除缓存
- * 
+ *
  */
 
 public class DataCleanManager {
