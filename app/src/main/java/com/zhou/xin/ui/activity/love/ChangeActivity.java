@@ -81,6 +81,6 @@ public class ChangeActivity extends BaseActivity {
             ToastUtil.show(getApplicationContext(),"原密码没有？");
             return;
         }
-        //余下修改成功之后记得再次保存一次原密码  SpUtil.putString(getApplicationContext(), Constant.PASSWORD,password); 
+        //余下修改成功之后记得再次保存一次原密码  SpUtil.putString(getApplicationContext(), Constant.PASSWORD,password);
     }
 }
