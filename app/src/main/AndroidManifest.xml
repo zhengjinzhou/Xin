@@ -395,7 +395,10 @@
         <activity android:name=".ui.activity.love.ForgetActivity" />
         <activity android:name=".ui.activity.love.EditLoveActivity" />
         <activity android:name=".ui.activity.love.TaskActivity" />
-        <activity android:name=".ui.activity.love.OpinionActivity"></activity>
+        <activity android:name=".ui.activity.love.OpinionActivity" />
+        <activity android:name=".ui.activity.love.GuildInfoActivity" />
+        <activity android:name=".ui.activity.love.AboutInfoActivity" />
+        <activity android:name=".ui.activity.love.ChangeActivity"></activity>
     </application>
 
 </manifest>

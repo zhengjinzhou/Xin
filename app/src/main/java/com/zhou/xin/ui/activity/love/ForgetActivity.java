@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.utils.CountDownTimerUtils;
 import com.zhou.xin.utils.PhoneUtil;
+import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.utils.ToastUtil;
 
 import butterknife.BindView;
@@ -103,6 +105,7 @@ public class ForgetActivity extends BaseActivity {
             return;
         }
 
-        //余下待续
+        //余下待续  成功之后 SpUtil.putString(getApplicationContext(), Constant.PASSWORD,password); 修改本机处密码
+
     }
 }

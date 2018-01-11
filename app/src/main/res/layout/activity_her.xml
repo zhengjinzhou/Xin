@@ -8,26 +8,7 @@
     android:orientation="vertical"
     >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorAccent">
-
-
-        <ImageView
-            android:id="@+id/iv_all_back"
-            android:layout_width="28dp"
-            android:layout_height="23dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/bar_back_white"/>
-
-        <TextView
-            style="@style/StyleHead"
-            android:layout_centerInParent="true"
-            android:text="她的信息"
-            />
-    </RelativeLayout>
+    <include layout="@layout/headerbar"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

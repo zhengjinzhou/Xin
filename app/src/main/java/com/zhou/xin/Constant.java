@@ -35,6 +35,9 @@ public class Constant extends EaseConstant {
 
     public static final String MOBILE = "mobile";
 
+    //记住密码
+    public static final String PASSWORD = "password";
+
     //注册 发送验证码  //注册 提交用户名，密码，手机号码，邀请码
     public static final String URL_REGISTER = URL + "/app/index.do";
 

@@ -21,6 +21,7 @@ import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.ui.activity.huanxin.LoginActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
+import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.utils.ToastUtil;
 
 import java.io.IOException;
@@ -148,6 +149,9 @@ public class Register2Activity extends BaseActivity {
                 Log.d(TAG, "注册onResponse: " + response.body().string());
                 //环信注册
                 xinRegister(username, password);
+
+                //保存密码，用在修改密码处于原密码进行对比
+                SpUtil.putString(getApplicationContext(),Constant.PASSWORD,password);
             }
         });
     }
