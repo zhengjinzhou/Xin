@@ -1,5 +1,6 @@
 package com.zhou.xin.ui.activity.love;
 
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -65,6 +66,11 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refresh.setRefreshing(false);
+            }
+        },2000);
     }
 }
