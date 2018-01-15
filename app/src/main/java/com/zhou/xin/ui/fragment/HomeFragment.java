@@ -13,13 +13,17 @@ import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseFragment;
+import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.bean.GenderBean;
 import com.zhou.xin.swipe.SwipeFlingAdapterView;
 
@@ -189,6 +193,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
     @Override
     public void onItemClicked(MotionEvent event, View v, Object dataObject) {
+        Log.d(TAG, "onItemClicked: "+dataObject.toString());
 
     }
 
@@ -199,11 +204,16 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
     @Override
     public void onLeftCardExit(Object dataObject) {
+        //左画以及点击dislike  不做处理
+        Log.d(TAG, "onLeftCardExit: "+dataObject.toString());
 
     }
 
     @Override
     public void onRightCardExit(Object dataObject) {
+        //右划以及点击Like  添加好友
+        //先获取当前用户名
+        Talent talent = (Talent) dataObject;
 
     }
 
@@ -359,6 +369,45 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
         TextView workView;
         CheckedTextView collectView;
         LinearLayout layout;
+    }
+
+
+    public void addContact(final String username){
+        if(EMClient.getInstance().getCurrentUser().equals(username)){
+            new EaseAlertDialog(getContext(), R.string.not_add_myself).show();
+            return;
+        }
+
+        if(DemoHelper.getInstance().getContactList().containsKey(username)){
+            //let the user know the contact already in your contact list
+            if(EMClient.getInstance().contactManager().getBlackListUsernames().contains(username)){
+                new EaseAlertDialog(getContext(), R.string.user_already_in_contactlist).show();
+                return;
+            }
+            new EaseAlertDialog(getContext(), R.string.This_user_is_already_your_friend).show();
+            return;
+        }
+
+        String stri = getResources().getString(R.string.Is_sending_a_request);
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    //demo use a hardcode reason here, you need let user to input if you like
+                    String s = getResources().getString(R.string.Add_a_friend);
+                    EMClient.getInstance().contactManager().addContact(username, s);
+
+                    String s1 = getResources().getString(R.string.send_successful);
+                    Toast.makeText(getContext(), s1, Toast.LENGTH_LONG).show();
+
+                } catch (final Exception e) {
+
+                    String s2 = getResources().getString(R.string.Request_add_buddy_failure);
+                    Toast.makeText(getContext(), s2 + e.getMessage(), Toast.LENGTH_LONG).show();
+
+                }
+            }
+        }).start();
     }
 
 }

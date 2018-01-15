@@ -1,8 +1,5 @@
 package com.zhou.xin.ui.activity.huanxin;
 
-import android.app.ProgressDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
