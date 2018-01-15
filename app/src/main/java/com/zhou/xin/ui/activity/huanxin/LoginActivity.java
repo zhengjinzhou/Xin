@@ -204,6 +204,7 @@ public class LoginActivity extends BaseActivity {
         EMClient.getInstance().login(username, pwd, new EMCallBack() {
             @Override
             public void onSuccess() {
+                dialog.dismiss();
                 Log.d(TAG, "login: onSuccess");
                 // ** manually load all local groups and conversation
                 EMClient.getInstance().groupManager().loadAllGroups();
@@ -223,6 +224,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onError(int i, String s) {
+                dialog.dismiss();
                 Log.d(TAG, "login: onProgress");
             }
 
@@ -231,6 +233,7 @@ public class LoginActivity extends BaseActivity {
                 Log.d(TAG, "login: onError: " + code);
                 runOnUiThread(new Runnable() {
                     public void run() {
+                        dialog.dismiss();
                         Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
                                 Toast.LENGTH_SHORT).show();
                     }

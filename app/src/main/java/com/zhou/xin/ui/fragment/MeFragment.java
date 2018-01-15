@@ -69,6 +69,8 @@ public class MeFragment extends BaseFragment {
     @BindView(R.id.iv_gender) ImageView iv_gender;
     @BindView(R.id.tv_exit) TextView tv_exit;
     @BindView(R.id.recycleView) RecyclerView recycleView;
+    @BindView(R.id.back) ImageView back;
+    @BindView(R.id.tv_head) TextView tv_head;
 
     @Override
     protected int getLayout() {
@@ -77,6 +79,9 @@ public class MeFragment extends BaseFragment {
 
     @Override
     protected void init(View v) {
+        back.setVisibility(View.GONE);
+        tv_head.setText("我");
+
         initRecycle();
         getInfo();
         setInfo();

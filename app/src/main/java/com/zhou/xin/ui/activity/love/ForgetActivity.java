@@ -105,7 +105,7 @@ public class ForgetActivity extends BaseActivity {
             return;
         }
 
-        //余下待续  成功之后 SpUtil.putString(getApplicationContext(), Constant.PASSWORD,password); 修改本机处密码
+        //余下待续  成功之后 SpUtil.putString(getApplicationContext(), Constant.PASSWORD,password); 修改本机处密码 还要修改环信账号的密码
 
     }
 }

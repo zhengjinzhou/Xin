@@ -14,10 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseFragment;
+import com.zhou.xin.bean.GenderBean;
 import com.zhou.xin.swipe.SwipeFlingAdapterView;
 
 import java.io.IOException;
@@ -45,6 +48,9 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
     @BindView(R.id.swipe_view) SwipeFlingAdapterView swipeView;
     @BindView(R.id.swipeLeft) View vLeft;
     @BindView(R.id.swipeRight) View vRight;
+    @BindView(R.id.back) ImageView back;
+    @BindView(R.id.tv_head) TextView tv_head;
+
 
     private static final String TAG = "HomeFragment";
     int [] headerIcons = {
@@ -65,6 +71,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
     private List<String> cityList;
     private List<String> edusList;
     private List<String> yearsList;
+    private List<String> photoList;
 
 
     @Override
@@ -75,19 +82,21 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
     @Override
     protected void init(View v) {
 
+        back.setVisibility(View.GONE);
+        tv_head.setText("主页");
         getInfo();
 
         nameList = new ArrayList<>();
         cityList = new ArrayList<>();
         edusList = new ArrayList<>();
         yearsList = new ArrayList<>();
-        nameList.add("张三");nameList.add("李四");nameList.add("王小二"); nameList.add("王五");nameList.add("汇一城");nameList.add("他");
+        photoList = new ArrayList<>();
+        /*nameList.add("张三");nameList.add("李四");nameList.add("王小二"); nameList.add("王五");nameList.add("汇一城");nameList.add("他");
         cityList.add("背景");cityList.add("背景");cityList.add("背r景");cityList.add("背e景");cityList.add("背d景");cityList.add("背景");
         edusList.add("奔溃");edusList.add("奔溃");edusList.add("奔溃");edusList.add("奔g溃");edusList.add("奔4溃");edusList.add("奔2溃");
-        yearsList.add("1年");yearsList.add("2年");yearsList.add("3年");yearsList.add("14年");yearsList.add("1年");yearsList.add("1年");
-
+        yearsList.add("1年");yearsList.add("2年");yearsList.add("3年");yearsList.add("14年");yearsList.add("1年");yearsList.add("1年");*/
         initView();
-        loadData();
+
     }
 
     /**
@@ -111,9 +120,34 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d(TAG, "获取异性信息 onResponse: "+response.body().string());
+                   // Log.d(TAG, "获取异性信息 onResponse: "+response.body().string());
+                    String string = response.body().string();
+                    setResult(string);
                 }
             });
+        }
+    }
+
+    //回调
+    private void setResult(String data) {
+        Gson gson = new Gson();
+        GenderBean genderBean = gson.fromJson(data, GenderBean.class);
+        List<GenderBean.MemberListBean> memberList = genderBean.getMemberList();
+        Log.d(TAG, "setResult:222222222222 "+memberList.size());
+        for (int i = 0; i< memberList.size();i++){
+            GenderBean.MemberListBean memberListBean = memberList.get(i);
+           /* memberListBean.getAge();
+            memberListBean.getCity().getName();
+            memberListBean.getNickname();
+            memberListBean.getMajor().getMajorName();*/
+            photoList.add(memberListBean.getPhotoPath());
+            nameList.add(memberListBean.getRealname());
+            cityList.add(memberListBean.getCity().getName());
+            yearsList.add(memberListBean.getAge()+"岁");
+            edusList.add(memberListBean.getMajor().getMajorName());
+
+            Log.d(TAG, "setResult: "+memberListBean.getRealname());
+            loadData();
         }
     }
 
@@ -190,15 +224,16 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
         new AsyncTask<Void, Void, List<Talent>>() {
             @Override
             protected List<Talent> doInBackground(Void... params) {
-                ArrayList<Talent> list = new ArrayList<>(10);
+                ArrayList<Talent> list = new ArrayList<>(nameList.size());
                 Talent talent;
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < nameList.size(); i++) {
                     talent = new Talent();
-                    talent.headerIcon = headerIcons[i % headerIcons.length];
-                    talent.nickname = nameList.get(ran.nextInt(nameList.size()-1));
-                    talent.cityName = cityList.get(ran.nextInt(cityList.size()-1));
-                    talent.educationName = edusList.get(ran.nextInt(edusList.size()-1));
-                    talent.workYearName = yearsList.get(ran.nextInt(yearsList.size()-1));
+                    //talent.headerIcon = headerIcons[i % headerIcons.length];
+                    talent.headerIcon = Constant.URL + photoList.get(i % photoList.size());
+                    talent.nickname = nameList.get(i);
+                    talent.cityName = cityList.get(i);
+                    talent.educationName = edusList.get(i);
+                    talent.workYearName = yearsList.get(i);
 
                     list.add(talent);
                 }
@@ -211,6 +246,14 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
                 adapter.addAll(list);
             }
         }.execute();
+    }
+
+    public static class Talent {
+        public String headerIcon;
+        public String nickname;
+        public String cityName;
+        public String educationName;
+        public String workYearName;
     }
 
     private class InnerAdapter extends BaseAdapter {
@@ -279,12 +322,12 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
                 holder.cityView = (TextView) convertView.findViewById(R.id.city);
                 holder.eduView = (TextView) convertView.findViewById(R.id.education);
                 holder.workView = (TextView) convertView.findViewById(R.id.work_year);
-
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.portraitView.setImageResource(talent.headerIcon);
+           // holder.portraitView.setImageResource(talent.headerIcon);
+            Glide.with(getContext()).load(talent.headerIcon).into(holder.portraitView);
 
             holder.nameView.setText(String.format("%s", talent.nickname));
             //holder.jobView.setText(talent.jobName);
@@ -318,11 +361,4 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
         LinearLayout layout;
     }
 
-    public static class Talent {
-        public int headerIcon;
-        public String nickname;
-        public String cityName;
-        public String educationName;
-        public String workYearName;
-    }
 }
