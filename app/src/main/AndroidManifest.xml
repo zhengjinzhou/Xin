@@ -400,7 +400,8 @@
         <activity android:name=".ui.activity.love.AboutInfoActivity" />
         <activity android:name=".ui.activity.love.ChangeActivity" />
         <activity android:name=".ui.activity.love.ActivityActivity" />
-        <activity android:name=".ui.activity.love.SuccessActivity"></activity>
+        <activity android:name=".ui.activity.love.SuccessActivity" />
+        <activity android:name=".ui.activity.love.ActivityInfoActivity"></activity>
     </application>
 
 </manifest>

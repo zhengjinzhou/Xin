@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/ll_activity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -31,6 +33,7 @@
             android:layout_below="@+id/tv_name"
             android:layout_toRightOf="@+id/iv_man"
             android:text="岁数" />
+
     </RelativeLayout>
 
     <TextView

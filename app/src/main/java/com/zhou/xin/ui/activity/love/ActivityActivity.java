@@ -74,7 +74,12 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
         CommonAdapter adapter = new CommonAdapter<String>(this, R.layout.recycle_activity, data) {
             @Override
             public void convert(ViewHolder holder, String s, int position) {
-
+                holder.setOnClickListener(R.id.ll_activity, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startToActivity(ActivityInfoActivity.class);//要传参
+                    }
+                });
             }
         };
         recycleView.setLayoutManager(new LinearLayoutManager(this));
@@ -134,7 +139,6 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
                     ToastUtil.show(getApplicationContext(),"照片不能为空");
                     return;
                 }
-                
             }
         });
     }
