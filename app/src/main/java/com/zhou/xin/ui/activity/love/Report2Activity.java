@@ -46,6 +46,7 @@ public class Report2Activity extends BaseActivity {
         if (acTypes != null){
             Gson gson = new Gson();
             Log.d(TAG, "init: "+acTypes);
+
         }
     }
 
