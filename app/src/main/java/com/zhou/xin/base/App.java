@@ -15,6 +15,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.zhou.xin.bean.PersonalBean;
+import com.zhou.xin.bean.ReportBean;
 import com.zhou.xin.bean.SelectBean;
 import com.zhou.xin.bean.UserInfo;
 

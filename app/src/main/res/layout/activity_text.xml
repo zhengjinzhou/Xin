@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zhou.xin.ui.activity.love.TextActivity">
+
+    <include layout="@layout/headerbar"/>
+
+    <TextView
+        android:gravity="center"
+        android:padding="@dimen/space_10"
+        android:text="举报须知"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:lineSpacingMultiplier="1.5"
+        android:padding="@dimen/space_8"
+        android:text="您应该保证您的举报行为基于善意，并代表您本人真实意思。本应用收到您的举报之后，会尽快按照相关规则独立判断并进行处理。本应用会采用合理的措施保护您的个人信息。"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

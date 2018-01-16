@@ -36,6 +36,7 @@ import com.zhou.xin.ui.activity.love.InviteActivity;
 import com.zhou.xin.ui.activity.love.LotteryActivity;
 import com.zhou.xin.ui.activity.love.OpinionActivity;
 import com.zhou.xin.ui.activity.love.PrivacyActivity;
+import com.zhou.xin.ui.activity.love.ReportActivity;
 import com.zhou.xin.ui.activity.love.SafeActivity;
 import com.zhou.xin.ui.activity.love.SuccessActivity;
 import com.zhou.xin.ui.activity.love.TaskActivity;
@@ -102,6 +103,7 @@ public class MeFragment extends BaseFragment {
         data.add(new BaseBean(OpinionActivity.class,"意见反馈",R.drawable.opinion));
         data.add(new BaseBean(ActivityActivity.class,"线下活动",R.drawable.activity));
         data.add(new BaseBean(SuccessActivity.class,"成功案例",R.drawable.success));
+        data.add(new BaseBean(ReportActivity.class,"举报用户",R.drawable.jubao));
 
         BaseCommonAdapter adapter = new BaseCommonAdapter<BaseBean>(getContext(), R.layout.recycle_me, data) {
             @Override

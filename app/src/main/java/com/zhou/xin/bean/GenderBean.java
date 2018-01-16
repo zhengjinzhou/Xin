@@ -11,7 +11,7 @@ public class GenderBean {
 
     /**
      * error : -1
-     * memberList : [{"age":23,"autograph":"","birthday":"1995-06-12","book_others":"","books":"古龙","city":{"id":22,"name":"福州市","priority":0,"province":{"id":2,"name":"福建省","priority":2}},"constellation":"金牛座","film_others":"","films":"喜剧,惊悚","food_others":"","foods":"卤肉饭,生煎包","gender":0,"hashCode":-2147483648,"id":3,"label_others":"","labels":"健谈,局气,热血,叛逆,安静","major":{"hashCode":-2147483648,"id":3,"majorName":"化学与环境工程学院","priority":0},"miniPhotoPath":"/upload/file/mini/201712/28162354m993.jpg","music":"R&B,金属,嘻哈","music_others":"","nickname":"飞翔","pair_id":0,"photoPath":"/upload/file/201712/28162354l3nf.jpg","pictures":[{"miniUrl":"/upload/file/mini/201712/28162354m993.jpg","photoUrl":"/upload/file/201712/28162354l3nf.jpg","pictureId":34},{"miniUrl":"/upload/file/mini/201712/281623557f5w.jpg","photoUrl":"/upload/file/201712/28162355rmc1.jpg","pictureId":35}],"realname":"成龙","sport_others":"","sports":"健身房,拳击,跆拳道,足球","thumbs_up":0,"travel_others":"","travels":"","wechat":""},{"age":25,"autograph":"哈哈哈","birthday":"1995-06-12","book_others":"","books":"古龙","city":{"id":23,"name":"厦门市","priority":0,"province":{"id":2,"name":"福建省","priority":2}},"constellation":"狮子座","film_others":"","films":"喜剧,惊悚","food_others":"","foods":"卤肉饭,生煎包,北京烤鸭","gender":0,"hashCode":-2147483648,"id":4,"label_others":"","labels":"健谈,局气,热血,叛逆,安静","major":{"hashCode":-2147483648,"id":4,"majorName":"机械工程学院","priority":0},"miniPhotoPath":"/upload/file/mini/201712/28162438vs29.jpg","music":"R&B,金属,嘻哈","music_others":"","nickname":"敖强","pair_id":0,"photoPath":"/upload/file/201712/28162437z7ls.jpg","pictures":[{"miniUrl":"/upload/file/mini/201712/28162438vs29.jpg","photoUrl":"/upload/file/201712/28162437z7ls.jpg","pictureId":36},{"miniUrl":"/upload/file/mini/201712/28162438rdfa.jpg","photoUrl":"/upload/file/201712/2816243845zd.jpg","pictureId":37},{"miniUrl":"/upload/file/mini/201712/28162438pqfl.jpg","photoUrl":"/upload/file/201712/28162438psm7.jpg","pictureId":38}],"realname":"吴亦凡","sport_others":"","sports":"健身房,拳击,跆拳道,足球","thumbs_up":0,"travel_others":"","travels":"桂林,成都","wechat":"12563644"}]
+     * memberList : [{"age":23,"autograph":"","birthday":"1995-06-12","book_others":"","books":"古龙","city":{"id":22,"name":"福州市","priority":0,"province":{"id":2,"name":"福建省","priority":2}},"constellation":"金牛座","film_others":"","films":"喜剧,惊悚","food_others":"","foods":"卤肉饭,生煎包","gender":0,"hashCode":-2147483648,"id":3,"label_others":"","labels":"健谈,局气,热血,叛逆,安静","major":{"hashCode":-2147483648,"id":3,"majorName":"高中","priority":0},"miniPhotoPath":"/upload/file/mini/201712/28162354m993.jpg","music":"R&B,金属,嘻哈","music_others":"","nickname":"飞翔","pair_id":0,"phone":"13631789659","photoPath":"/upload/file/201712/28162354l3nf.jpg","pictures":[{"miniUrl":"/upload/file/mini/201712/28162354m993.jpg","photoUrl":"/upload/file/201712/28162354l3nf.jpg","pictureId":34},{"miniUrl":"/upload/file/mini/201712/281623557f5w.jpg","photoUrl":"/upload/file/201712/28162355rmc1.jpg","pictureId":35}],"realname":"成龙","sport_others":"","sports":"健身房,拳击,跆拳道,足球","thumbs_up":0,"travel_others":"","travels":"","wechat":""},{"age":25,"autograph":"哈哈哈","birthday":"1995-06-12","book_others":"","books":"古龙","city":{"id":23,"name":"厦门市","priority":0,"province":{"id":2,"name":"福建省","priority":2}},"constellation":"狮子座","film_others":"","films":"喜剧,惊悚","food_others":"","foods":"卤肉饭,生煎包,北京烤鸭","gender":0,"hashCode":-2147483648,"id":4,"label_others":"","labels":"健谈,局气,热血,叛逆,安静","major":{"hashCode":-2147483648,"id":4,"majorName":"大专","priority":0},"miniPhotoPath":"/upload/file/mini/201712/28162438vs29.jpg","music":"R&B,金属,嘻哈","music_others":"","nickname":"敖强","pair_id":0,"phone":"13631789659","photoPath":"/upload/file/201712/28162437z7ls.jpg","pictures":[{"miniUrl":"/upload/file/mini/201712/28162438vs29.jpg","photoUrl":"/upload/file/201712/28162437z7ls.jpg","pictureId":36},{"miniUrl":"/upload/file/mini/201712/28162438rdfa.jpg","photoUrl":"/upload/file/201712/2816243845zd.jpg","pictureId":37},{"miniUrl":"/upload/file/mini/201712/28162438pqfl.jpg","photoUrl":"/upload/file/201712/28162438psm7.jpg","pictureId":38}],"realname":"吴亦凡","sport_others":"","sports":"健身房,拳击,跆拳道,足球","thumbs_up":0,"travel_others":"","travels":"桂林,成都","wechat":"12563644"}]
      * msg : 获取成功
      */
 
@@ -61,12 +61,13 @@ public class GenderBean {
          * id : 3
          * label_others :
          * labels : 健谈,局气,热血,叛逆,安静
-         * major : {"hashCode":-2147483648,"id":3,"majorName":"化学与环境工程学院","priority":0}
+         * major : {"hashCode":-2147483648,"id":3,"majorName":"高中","priority":0}
          * miniPhotoPath : /upload/file/mini/201712/28162354m993.jpg
          * music : R&B,金属,嘻哈
          * music_others :
          * nickname : 飞翔
          * pair_id : 0
+         * phone : 13631789659
          * photoPath : /upload/file/201712/28162354l3nf.jpg
          * pictures : [{"miniUrl":"/upload/file/mini/201712/28162354m993.jpg","photoUrl":"/upload/file/201712/28162354l3nf.jpg","pictureId":34},{"miniUrl":"/upload/file/mini/201712/281623557f5w.jpg","photoUrl":"/upload/file/201712/28162355rmc1.jpg","pictureId":35}]
          * realname : 成龙
@@ -100,6 +101,7 @@ public class GenderBean {
         private String music_others;
         private String nickname;
         private int pair_id;
+        private String phone;
         private String photoPath;
         private String realname;
         private String sport_others;
@@ -286,6 +288,14 @@ public class GenderBean {
             this.pair_id = pair_id;
         }
 
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+
         public String getPhotoPath() {
             return photoPath;
         }
@@ -444,7 +454,7 @@ public class GenderBean {
             /**
              * hashCode : -2147483648
              * id : 3
-             * majorName : 化学与环境工程学院
+             * majorName : 高中
              * priority : 0
              */
 
@@ -520,6 +530,62 @@ public class GenderBean {
             public void setPictureId(int pictureId) {
                 this.pictureId = pictureId;
             }
+
+            @Override
+            public String toString() {
+                return "PicturesBean{" +
+                        "miniUrl='" + miniUrl + '\'' +
+                        ", photoUrl='" + photoUrl + '\'' +
+                        ", pictureId=" + pictureId +
+                        '}';
+            }
         }
+
+        @Override
+        public String toString() {
+            return "MemberListBean{" +
+                    "age=" + age +
+                    ", autograph='" + autograph + '\'' +
+                    ", birthday='" + birthday + '\'' +
+                    ", book_others='" + book_others + '\'' +
+                    ", books='" + books + '\'' +
+                    ", city=" + city +
+                    ", constellation='" + constellation + '\'' +
+                    ", film_others='" + film_others + '\'' +
+                    ", films='" + films + '\'' +
+                    ", food_others='" + food_others + '\'' +
+                    ", foods='" + foods + '\'' +
+                    ", gender=" + gender +
+                    ", hashCode=" + hashCode +
+                    ", id=" + id +
+                    ", label_others='" + label_others + '\'' +
+                    ", labels='" + labels + '\'' +
+                    ", major=" + major +
+                    ", miniPhotoPath='" + miniPhotoPath + '\'' +
+                    ", music='" + music + '\'' +
+                    ", music_others='" + music_others + '\'' +
+                    ", nickname='" + nickname + '\'' +
+                    ", pair_id=" + pair_id +
+                    ", phone='" + phone + '\'' +
+                    ", photoPath='" + photoPath + '\'' +
+                    ", realname='" + realname + '\'' +
+                    ", sport_others='" + sport_others + '\'' +
+                    ", sports='" + sports + '\'' +
+                    ", thumbs_up=" + thumbs_up +
+                    ", travel_others='" + travel_others + '\'' +
+                    ", travels='" + travels + '\'' +
+                    ", wechat='" + wechat + '\'' +
+                    ", pictures=" + pictures +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "GenderBean{" +
+                "error='" + error + '\'' +
+                ", msg='" + msg + '\'' +
+                ", memberList=" + memberList +
+                '}';
     }
 }

@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,14 +15,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hyphenate.chat.EMClient;
+import com.zhou.xin.Constant;
 import com.zhou.xin.R;
+import com.zhou.xin.base.App;
+import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.db.InviteMessgeDao;
 import com.zhou.xin.domain.InviteMessage;
+import com.zhou.xin.utils.CurrentTimeUtil;
+import com.zhou.xin.utils.DES3Util;
+import com.zhou.xin.utils.Md5Util;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by zhou on 2017/12/20.
+ *
+ * 申请与通知的adapter
  */
 
 public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
@@ -89,8 +107,10 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                 holder.agreeBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // accept invitation
+                        // accept invitation  同意添加好友
                         acceptInvitation(holder.agreeBtn, holder.refuseBtn, msg);
+                        //给后台发送同意添加好友
+                        sendAgree(1);
                     }
                 });
                 holder.refuseBtn.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +118,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                     public void onClick(View v) {
                         // decline invitation
                         refuseInvitation(holder.agreeBtn, holder.refuseBtn, msg);
+                        sendAgree(2);
                     }
                 });
             } else {
@@ -219,6 +240,43 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
         }
 
         return convertView;
+    }
+
+    /**
+     * 给后台发送好友申请成功
+     */
+    private void sendAgree(int flag) {
+        String token = App.getInstence().getUserInfo().getToken();//获取token值
+        PersonalBean.MemInfoBean memInfo = App.getInstance().getPersonalBean().getMemInfo();
+        String id = memInfo.getId()+"";//获取id
+        String pid = DES3Util.encrypt3DES(id, Constant.ENCRYPTION_KEY, Charset.forName("UTF-8"));
+        String opt = "11";
+        String _t = CurrentTimeUtil.nowTime();
+        String handle_flag = flag +"";
+        String joint = "_t=" + _t + "&handle_flag=" + handle_flag + "&opt=" + opt + "&pid=" + pid + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
+        String _s = Md5Util.encoder(joint);
+        System.out.println("拼接后_t的数据--------" + joint);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody body = new FormBody.Builder()
+                .add("handle_flag",handle_flag)
+                .add("token",token)
+                .add("pid",pid)
+                .add("opt", opt)
+                .add("_t", _t)
+                .add("_s", _s)
+                .build();
+        Request request = new Request.Builder().url(Constant.LOGIN_URL).post(body).build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("发送给后台", "onFailure: "+e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d("发送给后台", "onResponse: "+response.body().string());
+            }
+        });
     }
 
     /**

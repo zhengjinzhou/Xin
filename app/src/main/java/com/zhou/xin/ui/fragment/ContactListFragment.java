@@ -3,6 +3,7 @@ package com.zhou.xin.ui.fragment;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -212,8 +213,11 @@ public class ContactListFragment extends EaseContactListFragment {
                 e.printStackTrace();
             }
             return true;
-        }else if(item.getItemId() == R.id.add_to_blacklist){
+        }else if(item.getItemId() == R.id.add_to_blacklist){//移到黑名单
             moveToBlacklist(toBeProcessUsername);
+            //发送到后台  拉黑好友
+            Log.d(TAG, "onContextItemSelected: "+toBeProcessUsername);
+
             return true;
         }
         return super.onContextItemSelected(item);

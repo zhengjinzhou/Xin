@@ -1,5 +1,7 @@
 package com.zhou.xin.ui.activity.love;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -13,6 +15,7 @@ public class ActivityInfoActivity extends BaseActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsing_toolbar;
+
 
     @Override
     protected int getLayout() {

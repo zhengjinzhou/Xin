@@ -2,6 +2,8 @@ package com.zhou.xin.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,8 +28,12 @@ import com.zhou.xin.base.BaseFragment;
 import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.bean.GenderBean;
 import com.zhou.xin.swipe.SwipeFlingAdapterView;
+import com.zhou.xin.utils.CurrentTimeUtil;
+import com.zhou.xin.utils.DES3Util;
+import com.zhou.xin.utils.Md5Util;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,15 +55,20 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
         SwipeFlingAdapterView.OnItemClickListener, View.OnClickListener {
 
 
-    @BindView(R.id.swipe_view) SwipeFlingAdapterView swipeView;
-    @BindView(R.id.swipeLeft) View vLeft;
-    @BindView(R.id.swipeRight) View vRight;
-    @BindView(R.id.back) ImageView back;
-    @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.swipe_view)
+    SwipeFlingAdapterView swipeView;
+    @BindView(R.id.swipeLeft)
+    View vLeft;
+    @BindView(R.id.swipeRight)
+    View vRight;
+    @BindView(R.id.back)
+    ImageView back;
+    @BindView(R.id.tv_head)
+    TextView tv_head;
 
 
     private static final String TAG = "HomeFragment";
-    int [] headerIcons = {
+    int[] headerIcons = {
             R.drawable.i1,
             R.drawable.i2,
             R.drawable.i3,
@@ -76,6 +87,8 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
     private List<String> edusList;
     private List<String> yearsList;
     private List<String> photoList;
+    private List<String> phoneList;
+    private List<String> cidList;
 
 
     @Override
@@ -95,10 +108,9 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
         edusList = new ArrayList<>();
         yearsList = new ArrayList<>();
         photoList = new ArrayList<>();
-        /*nameList.add("张三");nameList.add("李四");nameList.add("王小二"); nameList.add("王五");nameList.add("汇一城");nameList.add("他");
-        cityList.add("背景");cityList.add("背景");cityList.add("背r景");cityList.add("背e景");cityList.add("背d景");cityList.add("背景");
-        edusList.add("奔溃");edusList.add("奔溃");edusList.add("奔溃");edusList.add("奔g溃");edusList.add("奔4溃");edusList.add("奔2溃");
-        yearsList.add("1年");yearsList.add("2年");yearsList.add("3年");yearsList.add("14年");yearsList.add("1年");yearsList.add("1年");*/
+        phoneList = new ArrayList<>();
+        cidList = new ArrayList<>();
+
         initView();
 
     }
@@ -107,25 +119,26 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
      * 获取异性信息
      */
     private void getInfo() {
-        if (App.getInstence().getUserInfo() != null){
+        if (App.getInstence().getUserInfo() != null) {
             String token = App.getInstence().getUserInfo().getToken();
-            Log.d(TAG, "getInfo: "+token);
+            Log.d(TAG, "getInfo: " + token);
             OkHttpClient okHttpClient = new OkHttpClient();
             FormBody body = new FormBody.Builder()
-                    .add("token",token)
+                    .add("token", token)
                     .build();
             Request request = new Request.Builder().url(Constant.ISOMERISM_URL).post(body).build();
             Call call = okHttpClient.newCall(request);
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "获取异性信息 onFailure: "+e.getMessage());
+                    Log.d(TAG, "获取异性信息 onFailure: " + e.getMessage());
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                   // Log.d(TAG, "获取异性信息 onResponse: "+response.body().string());
+                    // Log.d(TAG, "获取异性信息 onResponse: "+response.body().string());
                     String string = response.body().string();
+                    Log.d(TAG, "onResponse: " + string);
                     setResult(string);
                 }
             });
@@ -137,20 +150,17 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
         Gson gson = new Gson();
         GenderBean genderBean = gson.fromJson(data, GenderBean.class);
         List<GenderBean.MemberListBean> memberList = genderBean.getMemberList();
-        Log.d(TAG, "setResult:222222222222 "+memberList.size());
-        for (int i = 0; i< memberList.size();i++){
+        for (int i = 0; i < memberList.size(); i++) {
             GenderBean.MemberListBean memberListBean = memberList.get(i);
-           /* memberListBean.getAge();
-            memberListBean.getCity().getName();
-            memberListBean.getNickname();
-            memberListBean.getMajor().getMajorName();*/
             photoList.add(memberListBean.getPhotoPath());
             nameList.add(memberListBean.getRealname());
             cityList.add(memberListBean.getCity().getName());
-            yearsList.add(memberListBean.getAge()+"岁");
+            yearsList.add(memberListBean.getAge() + "岁");
             edusList.add(memberListBean.getMajor().getMajorName());
+            phoneList.add(memberListBean.getPhone());//新增一个phone
+            cidList.add(memberListBean.getId()+"");//新增一个id
 
-            Log.d(TAG, "setResult: "+memberListBean.getRealname());
+            //Log.d(TAG, "setResult: "+memberListBean.getRealname());
             loadData();
         }
     }
@@ -193,7 +203,6 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
     @Override
     public void onItemClicked(MotionEvent event, View v, Object dataObject) {
-        Log.d(TAG, "onItemClicked: "+dataObject.toString());
 
     }
 
@@ -205,16 +214,66 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
     @Override
     public void onLeftCardExit(Object dataObject) {
         //左画以及点击dislike  不做处理
-        Log.d(TAG, "onLeftCardExit: "+dataObject.toString());
+        Log.d(TAG, "onLeftCardExit: " + dataObject.toString());
 
     }
 
     @Override
     public void onRightCardExit(Object dataObject) {
-        //右划以及点击Like  添加好友
-        //先获取当前用户名
-        Talent talent = (Talent) dataObject;
 
+        //先获取当前用户名
+        final Talent talent = (Talent) dataObject;
+        /*Log.d(TAG, "onRightCardExit: "+talent.phone);
+        Log.d(TAG, "onRightCardExit: "+talent.nickname);*/
+        new Handler(getContext().getMainLooper()){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                addContact(talent.phone);//右划以及点击Like  添加好友
+            }
+        };
+        sendBackground(talent.id);//向后台发送请求添加好友请求
+    }
+
+    /**
+     * 向后台发送请求添加好友请求
+     * @param id
+     */
+    private void sendBackground(String id) {
+        Log.d(TAG, "sendBackground: "+id);
+        String token = App.getInstence().getUserInfo().getToken();
+        String opt = "6";
+        String cid = DES3Util.encrypt3DES(id, Constant.ENCRYPTION_KEY, Charset.forName("UTF-8"));
+        String _t = CurrentTimeUtil.nowTime();
+        String apply_reason = "like";
+        String joint = "_t=" + _t + "&apply_reason=" + apply_reason  +"&cid=" + cid + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
+        String _s = Md5Util.encoder(joint);
+        System.out.println("拼接后_t的数据--------" + joint);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody body = new FormBody.Builder()
+                .add("token", token)
+                .add("opt", opt)
+                .add("cid", cid)
+                .add("apply_reason", apply_reason)
+                .add("_t", _t)
+                .add("_s", _s)
+                .build();
+        Request request = new Request.Builder()
+                .url(Constant.LOGIN_URL)
+                .post(body)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "发起添加好友请求失败: "+e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d(TAG, "发起添加好友请求成功: "+response.body().string());
+            }
+        });
     }
 
     @Override
@@ -244,6 +303,8 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
                     talent.cityName = cityList.get(i);
                     talent.educationName = edusList.get(i);
                     talent.workYearName = yearsList.get(i);
+                    talent.phone = phoneList.get(i);//新增一个phone
+                    talent.id = cidList.get(i);
 
                     list.add(talent);
                 }
@@ -259,6 +320,10 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
     }
 
     public static class Talent {
+
+        public String phone;//新增一个phone
+        public String id;//新增一个cid，用于发起添加好友请求
+
         public String headerIcon;
         public String nickname;
         public String cityName;
@@ -307,7 +372,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
         @Override
         public Talent getItem(int position) {
-            if(objs==null ||objs.size()==0) return null;
+            if (objs == null || objs.size() == 0) return null;
             return objs.get(position);
         }
 
@@ -323,7 +388,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
             Talent talent = getItem(position);
             if (convertView == null) {
                 convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_new_item, parent, false);
-                holder  = new ViewHolder();
+                holder = new ViewHolder();
                 convertView.setTag(holder);
                 convertView.getLayoutParams().width = cardWidth;
                 holder.portraitView = (ImageView) convertView.findViewById(R.id.portrait);
@@ -336,7 +401,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
                 holder = (ViewHolder) convertView.getTag();
             }
 
-           // holder.portraitView.setImageResource(talent.headerIcon);
+            // holder.portraitView.setImageResource(talent.headerIcon);
             Glide.with(getContext()).load(talent.headerIcon).into(holder.portraitView);
 
             holder.nameView.setText(String.format("%s", talent.nickname));
@@ -346,15 +411,15 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
             holder.cityView.setHint(no);
             holder.cityView.setText(talent.cityName);
-            holder.cityView.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.home01_icon_location,0,0);
+            holder.cityView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home01_icon_location, 0, 0);
 
             holder.eduView.setHint(no);
             holder.eduView.setText(talent.educationName);
-            holder.eduView.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.home01_icon_edu,0,0);
+            holder.eduView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home01_icon_edu, 0, 0);
 
             holder.workView.setHint(no);
             holder.workView.setText(talent.workYearName);
-            holder.workView.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.home01_icon_work_year,0,0);
+            holder.workView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home01_icon_work_year, 0, 0);
 
             return convertView;
         }
@@ -371,16 +436,20 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
         LinearLayout layout;
     }
 
-
-    public void addContact(final String username){
-        if(EMClient.getInstance().getCurrentUser().equals(username)){
+    /**
+     * 添加好友请求
+     * @param username
+     */
+    public void addContact(final String username) {
+        Log.d(TAG, "addContact: 添加好友请求");
+        if (EMClient.getInstance().getCurrentUser().equals(username)) {
             new EaseAlertDialog(getContext(), R.string.not_add_myself).show();
             return;
         }
 
-        if(DemoHelper.getInstance().getContactList().containsKey(username)){
+        if (DemoHelper.getInstance().getContactList().containsKey(username)) {
             //let the user know the contact already in your contact list
-            if(EMClient.getInstance().contactManager().getBlackListUsernames().contains(username)){
+            if (EMClient.getInstance().contactManager().getBlackListUsernames().contains(username)) {
                 new EaseAlertDialog(getContext(), R.string.user_already_in_contactlist).show();
                 return;
             }

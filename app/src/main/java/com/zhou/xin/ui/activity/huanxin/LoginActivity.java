@@ -64,7 +64,7 @@ public class LoginActivity extends BaseActivity {
     @OnClick({R.id.bt_login, R.id.back, R.id.tv_forget}) void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
-                login();
+                login();//登录
                 break;
             case R.id.back:
                 finish();
@@ -197,6 +197,7 @@ public class LoginActivity extends BaseActivity {
     private void XinLogin(final String username, final String pwd) {
         // After logout，the DemoDB may still be accessed due to async callback, so the DemoDB will be re-opened again.
         // close it before login to make sure DemoDB not overlap
+        Log.d(TAG, "XinLogin: "+username+pwd);
         DemoDBManager.getInstance().closeDB();
         // reset current user name before login
         DemoHelper.getInstance().setCurrentUserName(username);
