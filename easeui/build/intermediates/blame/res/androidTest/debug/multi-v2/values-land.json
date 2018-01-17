@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\AndroidStudioProject\\Xin\\easeui\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-land\\values-land.xml",
+            "outputFile": "H:\\AndroidStudioProject\\Xin\\easeui\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-land\\values-land.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Wanve4K\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\7ba07774f35f72feadac828249021036\\res\\values-land\\values-land.xml",
+                    "source": "A:\\Users\\zhou\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\095f4bdeb46334eb924bd1b916d3b8d1\\res\\values-land\\values-land.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
