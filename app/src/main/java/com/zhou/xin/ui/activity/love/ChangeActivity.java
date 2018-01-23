@@ -8,19 +8,36 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
+import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.bean.UserInfo;
+import com.zhou.xin.utils.CurrentTimeUtil;
+import com.zhou.xin.utils.DES3Util;
+import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.utils.ToastUtil;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * 修改密码
  */
 public class ChangeActivity extends BaseActivity {
+
+    private static final String ATG = "ChangeActivity";
 
     @BindView(R.id.tv_head) TextView tv_head;
     @BindView(R.id.et_old) EditText et_old;
@@ -54,7 +71,7 @@ public class ChangeActivity extends BaseActivity {
      */
     private void changePassword() {
         String etOld = et_old.getText().toString().trim();
-        String etNew = et_new.getText().toString().trim();
+        final String etNew = et_new.getText().toString().trim();
         String etConfirm = et_confirm.getText().toString().trim();
         if (TextUtils.isEmpty(etOld)){
             ToastUtil.show(getApplicationContext(),"原密码不能为空");
@@ -84,6 +101,54 @@ public class ChangeActivity extends BaseActivity {
             return;
         }
 
-        //余下修改成功之后记得再次保存一次原密码  SpUtil.putString(getApplicationContext(), Constant.PASSWORD,password);
+        String token = App.getInstance().getUserInfo().getToken();
+        String opt = "15";
+        String _t = CurrentTimeUtil.nowTime();
+        String oldPwd = DES3Util.encrypt3DES(psd, Constant.ENCRYPTION_KEY, Charset.forName("UTF-8"));
+        String newPwd = DES3Util.encrypt3DES(etNew, Constant.ENCRYPTION_KEY, Charset.forName("UTF-8"));
+        String joint = "_t=" + _t + "&newPwd="+newPwd+ "&oldPwd=" + oldPwd + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
+        String _s = Md5Util.encoder(joint);
+        System.out.println("拼接后_t的数据--------" + joint);
+
+        dialog.show();
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody body = new FormBody.Builder()
+                .add("token",token)
+                .add("opt",opt)
+                .add("oldPwd",oldPwd)
+                .add("newPwd",newPwd)
+                .add("_t",_t)
+                .add("_s",_s)
+                .build();
+        Request request = new Request.Builder()
+                .url(Constant.LOGIN_URL)
+                .post(body)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                dialog.dismiss();
+                Log.d(ATG, "onFailure: "+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                Gson gson = new Gson();
+                UserInfo userInfo = gson.fromJson(string, UserInfo.class);
+                if (userInfo.getError().equals("-1")){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.show(getApplicationContext(),"密码修改成功");
+                            SpUtil.putString(getApplicationContext(), Constant.PASSWORD,etNew);
+                        }
+                    });
+                }
+                dialog.dismiss();
+            }
+        });
     }
 }
