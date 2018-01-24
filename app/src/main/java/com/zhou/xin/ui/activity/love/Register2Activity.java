@@ -108,6 +108,11 @@ public class Register2Activity extends BaseActivity {
             return;
         }
 
+        if (TextUtils.isEmpty(password)) {
+            ToastUtil.show(getApplicationContext(), "密码不能小于6位");
+            return;
+        }
+
         if (TextUtils.isEmpty(inviteCode)) {
             ToastUtil.show(getApplicationContext(), "邀请码不能为空");
             return;
@@ -147,8 +152,12 @@ public class Register2Activity extends BaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Log.d(TAG, "注册onResponse: " + response.body().string());
-                //环信注册
-                xinRegister(username, password);
+                /**
+                 * 环信注册
+                 * 环信的密码固定位电话号码的拼接后md5加密
+                 */
+
+                xinRegister(username, username);
 
                 //保存密码，用在修改密码处于原密码进行对比
                 SpUtil.putString(getApplicationContext(),Constant.PASSWORD,password);
@@ -163,7 +172,8 @@ public class Register2Activity extends BaseActivity {
             public void run() {
                 // call method in SDK
                 try {
-                    EMClient.getInstance().createAccount(username, pwd);
+                    String psswordd = Md5Util.encoder(pwd+Constant.APP_ENCRYPTION_KEY);
+                    EMClient.getInstance().createAccount(username, psswordd);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

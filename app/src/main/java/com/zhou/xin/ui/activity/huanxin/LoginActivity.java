@@ -58,6 +58,7 @@ public class LoginActivity extends BaseActivity {
     protected void init() {
         tv_head.setText("登陆");
         etUsername.setText("2014414");
+        Log.d(TAG, "init: "+Md5Util.encoder("2014414"+Constant.APP_ENCRYPTION_KEY));
         etPassword.setText("123");
     }
 
@@ -140,11 +141,11 @@ public class LoginActivity extends BaseActivity {
         String token = userInfo.getToken();
         String uid = userInfo.getUid();
 
-        if (!userInfo.getError().equals("-1")) {
+        if (userInfo.getError().equals("-3")) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    ToastUtil.show(getApplicationContext(), "访问超时，请检查您的系统时间是否正确");
+                    ToastUtil.show(getApplicationContext(), "用户名或密码错误");
                 }
             });
             return;
@@ -183,7 +184,7 @@ public class LoginActivity extends BaseActivity {
         App.getInstence().setUserInfo(userInfo);
         if (userInfo.getError().equals("-1")) {
             //进行环信登录
-            XinLogin(username,password);
+            XinLogin(username,username);
             SpUtil.putString(getApplicationContext(), Constant.PASSWORD,password);
         } else if (userInfo.getError().equals("-2")) {
             startToActivity(RegisterActivity.class);
@@ -197,12 +198,13 @@ public class LoginActivity extends BaseActivity {
     private void XinLogin(final String username, final String pwd) {
         // After logout，the DemoDB may still be accessed due to async callback, so the DemoDB will be re-opened again.
         // close it before login to make sure DemoDB not overlap
-        Log.d(TAG, "XinLogin: "+username+pwd);
+        String pssword = Md5Util.encoder(pwd+Constant.APP_ENCRYPTION_KEY);
+        Log.d(TAG, "XinLogin: "+username+pssword);
         DemoDBManager.getInstance().closeDB();
         // reset current user name before login
         DemoHelper.getInstance().setCurrentUserName(username);
         final long start = System.currentTimeMillis();
-        EMClient.getInstance().login(username, pwd, new EMCallBack() {
+        EMClient.getInstance().login(username, pssword, new EMCallBack() {
             @Override
             public void onSuccess() {
                 dialog.dismiss();

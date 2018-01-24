@@ -85,10 +85,16 @@ public class ChangeActivity extends BaseActivity {
             ToastUtil.show(getApplicationContext(),"确认密码不能为空");
             return;
         }
+
+        if (etNew.length() < 6){
+            ToastUtil.show(getApplicationContext(),"新密码不得小于6位");
+            return;
+        }
         if (!etNew.equals(etConfirm)){
             ToastUtil.show(getApplicationContext(),"新密码输入不一致");
             return;
         }
+
 
         String psd = SpUtil.getString(getApplicationContext(), Constant.PASSWORD, "");
         if (psd == null){
@@ -136,13 +142,14 @@ public class ChangeActivity extends BaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
+                Log.d("", "onResponse: "+string);
                 Gson gson = new Gson();
                 UserInfo userInfo = gson.fromJson(string, UserInfo.class);
                 if (userInfo.getError().equals("-1")){
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ToastUtil.show(getApplicationContext(),"密码修改成功");
+                            ToastUtil.show(getApplicationContext(),"密码修改成功，下次登录记得使用新密码");
                             SpUtil.putString(getApplicationContext(), Constant.PASSWORD,etNew);
                         }
                     });

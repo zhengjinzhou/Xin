@@ -30,7 +30,7 @@
         android:layout_marginRight="@dimen/space_16"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_login"
-        android:hint="请输入密码"
+        android:hint="请输入密码(不得小于6位)"
         android:inputType="textPassword"
         android:maxLines="1"
         android:padding="@dimen/space_12"
