@@ -145,6 +145,7 @@ public class LoginActivity extends BaseActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    dialog.dismiss();
                     ToastUtil.show(getApplicationContext(), "用户名或密码错误");
                 }
             });
