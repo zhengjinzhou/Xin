@@ -13,6 +13,7 @@
         <include layout="@layout/headerbar" />
 
         <EditText
+            android:textSize="@dimen/space_16"
             android:id="@+id/et_opinion"
             android:layout_width="match_parent"
             android:layout_height="180dp"
@@ -37,16 +38,15 @@
             android:text="添加图片建议" />
 
         <RelativeLayout
+            android:layout_margin="@dimen/space_8"
             android:id="@+id/rl_add"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_8"
-            android:layout_marginTop="@dimen/space_16">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="108dp"
+                android:layout_height="88dp"
                 android:src="@drawable/opinion_add" />
         </RelativeLayout>
 

@@ -18,7 +18,7 @@
             android:layout_height="180dp"
             android:background="@null"
             android:gravity="start"
-            android:hint="举报原因"
+            android:hint="举报原因(仅限300字)"
             android:maxLength="300"
             android:padding="@dimen/space_8"
             android:textSize="@dimen/space_16" />
@@ -41,13 +41,12 @@
             android:id="@+id/rl_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_8"
-            android:layout_marginTop="@dimen/space_16">
+            android:layout_margin="@dimen/space_8">
 
             <ImageView
                 android:id="@+id/iv_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="108dp"
+                android:layout_height="88dp"
                 android:src="@drawable/opinion_add" />
         </RelativeLayout>
 

@@ -8,39 +8,84 @@
 
     <include layout="@layout/headerbar" />
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="         您可以通过复制邀请码，发送给您的朋友，对方通过您的邀请码进行注册"
-        android:textColor="#ccc"
-        android:textSize="@dimen/space_12" />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_240"
+            android:background="@drawable/main_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_50"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="您的邀请码："
+                android:textColor="@color/white"
+                android:textSize="@dimen/space_16" />
+
+            <TextView
+                android:id="@+id/tv_inviteCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/space_6"
+                android:textColor="@color/orange"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/space_24"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:maxLines="1"
+        android:padding="@dimen/space_8"
+        android:gravity="center"
+        android:text="-------------------------邀请好友-------------------------"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
+        android:layout_margin="@dimen/space_8"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/space_16"
-            android:text="您的邀请码：" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:layout_weight="1"
+            android:src="@drawable/login_qq" />
 
-        <TextView
-            android:id="@+id/tv_inviteCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_login"
-            android:padding="@dimen/space_16"
-            android:text=""
-            android:textIsSelectable="true" />
+        <ImageView
+        android:layout_width="0dp"
+        android:layout_height="66dp"
+        android:layout_weight="1"
+        android:src="@drawable/login_weibo" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:layout_weight="1"
+            android:src="@drawable/login_wechat" />
+
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_invite"
-        android:gravity="center"
-        android:padding="@dimen/space_16"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="一键邀请您的所有好友" />
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/space_20"
+        android:background="@drawable/bg_invite"
+        android:gravity="center"
+        android:padding="@dimen/space_10"
+        android:text="一键邀请您的所有好友"
+        android:textColor="@color/white" />
 </LinearLayout>
