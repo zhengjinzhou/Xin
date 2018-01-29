@@ -1,76 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhou.xin.widget.ReboundScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg"
-    android:orientation="vertical">
-
-    <include layout="@layout/headerbar" />
-
-    <ImageView
-        android:layout_marginTop="@dimen/space_8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/fall_in_love" />
-
-    <TextView
-        android:id="@+id/tv_code"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/space_5"
-        android:textColor="@color/btn_white_pressed" />
+    android:background="@color/app_bg">
 
     <LinearLayout
-        android:layout_marginTop="@dimen/space_16"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/rl_app"
-            android:layout_width="match_parent"
+        <include layout="@layout/headerbar" />
+
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_select"
-            android:padding="@dimen/space_16">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="关于应用" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/next" />
-        </RelativeLayout>
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/space_8"
+            android:src="@drawable/fall_in_love" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="8dp" />
-        <RelativeLayout
-            android:id="@+id/rl_update"
+            android:id="@+id/tv_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_select"
-            android:padding="@dimen/space_16">
+            android:gravity="center"
+            android:padding="@dimen/space_5"
+            android:textColor="@color/btn_white_pressed" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_16"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_select"
+                android:padding="@dimen/space_16">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="关于应用" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/next" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="版本更新" />
+                android:layout_height="8dp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/rl_update"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/next" />
-        </RelativeLayout>
+                android:background="@drawable/bg_select"
+                android:padding="@dimen/space_16">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="版本更新" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/next" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</com.zhou.xin.widget.ReboundScrollView>
