@@ -42,6 +42,7 @@ import com.zhou.xin.ui.fragment.ContactListFragment;
 import com.zhou.xin.ui.fragment.ConversationListFragment;
 import com.zhou.xin.ui.fragment.HomeFragment;
 import com.zhou.xin.ui.fragment.MeFragment;
+import com.zhou.xin.utils.ToastUtil;
 
 import java.util.List;
 
@@ -463,10 +464,41 @@ public class MainActivity extends BaseActivity {
         showExceptionDialogFromIntent(intent);
     }
 
+    /**
+     * 再按一下退出程序
+     *
+     * @param event
+     * @return
+     */
+    private long currentBackPressedTime = 0;
+    private static int BACK_PRESSED_INTERVAL = 2000;
+    /**
+     * 再按一次退出程序
+     *
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN
+                && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            if (System.currentTimeMillis() - currentBackPressedTime > BACK_PRESSED_INTERVAL) {
+                currentBackPressedTime = System.currentTimeMillis();
+                ToastUtil.show(getApplicationContext(),"再按一下退出程序");
+                return true;
+            } else {
+                finish();
+            }
+        } else if (event.getKeyCode() == KeyEvent.KEYCODE_MENU) {
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(false);
+            moveTaskToBack(true);
             return true;
         }
         return super.onKeyDown(keyCode, event);

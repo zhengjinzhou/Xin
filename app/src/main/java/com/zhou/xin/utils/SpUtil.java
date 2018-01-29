@@ -2,6 +2,10 @@ package com.zhou.xin.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.google.gson.Gson;
 
 /**
  * Created by zhou on 2017/8/5.
@@ -95,5 +99,51 @@ public class SpUtil {
             sp = context.getSharedPreferences(spName,Context.MODE_PRIVATE);
         }
         sp.edit().remove(key).commit();
+    }
+
+    public static void clear() {
+        if (null != sp) {
+            SharedPreferences.Editor editor = sp.edit();
+            editor.clear();
+            editor.apply();
+        } else {
+            Log.e("", "UserCache clear isNull");
+        }
+    }
+
+    public static void putObject(Context ctx,String key, Object object) {
+        if (null == sp) {
+            sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        } else {
+            SharedPreferences.Editor editor = sp.edit();
+            Gson gson = new Gson();
+            editor.putString(key, gson.toJson(object));
+            editor.apply();
+        }
+    }
+
+    public static Object getObject(Context ctx,String key, Class c) {
+
+        Object object = null;
+        if (sp == null) {
+            sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        try {
+            if (null != sp) {
+                String json = sp.getString(key, "");
+                if (TextUtils.isEmpty(json)) {
+                    Log.e("", "UserCache getObject json isNull");
+                    return null;
+                } else {
+                    Gson gson = new Gson();
+                    object = gson.fromJson(json, c);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("", "UserCache Exception isNull");
+            return null;
+        }
+        return object;
     }
 }

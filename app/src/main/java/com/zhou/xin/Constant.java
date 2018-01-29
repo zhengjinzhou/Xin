@@ -29,6 +29,9 @@ public class Constant extends EaseConstant {
     //登陆        获取个人信息
     public static final String LOGIN_URL = URL+"/app/index.do";
 
+    //举报
+    public static final String JUBAO = URL + "/app/accusation.do";
+
     public static final String TOKEN = "";
     public static final String APP_ENCRYPTION_KEY = "IAASIDuioponuYBIUNLIK123ikoIO";
     public static final String ENCRYPTION_KEY = "ASDHOjhudhaos23asdihoh80";

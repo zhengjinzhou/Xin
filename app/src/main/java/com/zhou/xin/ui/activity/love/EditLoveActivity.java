@@ -448,6 +448,7 @@ public class EditLoveActivity extends BaseActivity {
     }
 
     private void submit1() {
+        
         String nickname = et_nickname.getText().toString();
         if (TextUtils.isEmpty(nickname)){
             ToastUtil.show(getApplicationContext(),"昵称不能为空");

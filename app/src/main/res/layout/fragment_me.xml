@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:fitsSystemWindows="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,8 +10,7 @@
 
     <include layout="@layout/headerbar"/>
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scrollView"
+    <com.zhou.xin.widget.ReboundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#efeff4">
@@ -26,6 +27,8 @@
                 android:padding="20dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    app:civ_border_width="@dimen/space_1"
+                    app:civ_border_color="@color/colorPrimary"
                     android:id="@+id/circle"
                     android:layout_width="68dp"
                     android:layout_height="68dp"
@@ -110,5 +113,5 @@
                 android:text="退出登录" />
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </com.zhou.xin.widget.ReboundScrollView>
 </LinearLayout>

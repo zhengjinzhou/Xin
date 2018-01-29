@@ -7,37 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorAccent">
-
-
-        <ImageView
-            android:id="@+id/iv_all_back"
-            android:layout_width="28dp"
-            android:layout_height="23dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/bar_back_white"/>
-
-        <TextView
-            style="@style/StyleHead"
-            android:layout_centerInParent="true"
-            android:text="个人信息"
-            />
-
-        <TextView
-            android:id="@+id/tv_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:padding="14dp"
-            android:text="编辑"
-            android:textColor="#fff"
-            android:textSize="20sp"/>
-
-    </RelativeLayout>
+    <include layout="@layout/headerbar"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

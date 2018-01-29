@@ -42,6 +42,7 @@ import com.zhou.xin.ui.activity.love.SuccessActivity;
 import com.zhou.xin.ui.activity.love.TaskActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
+import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.utils.ToastUtil;
 
 import java.io.IOException;
@@ -237,8 +238,9 @@ public class MeFragment extends BaseFragment {
         inflate.findViewById(R.id.tv_ensure_log_off).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //返回第一个界面
-                ToastUtil.show(getContext(),"退出待续");
+                SpUtil.clear();
+                pop.dismiss();
+                getActivity().finish();
             }
         });
         inflate.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {

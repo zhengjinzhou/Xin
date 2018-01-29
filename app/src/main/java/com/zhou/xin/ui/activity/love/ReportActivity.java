@@ -23,6 +23,8 @@ import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.ToastUtil;
 
+import org.json.JSONArray;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -75,7 +77,8 @@ public class ReportActivity extends BaseActivity {
                             startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+""));
                         }else {
                             List<ReportBean.AccusationCategoryListBean.AcTypesBean> acTypes = s.getAcTypes();
-                            startActivity(Report2Activity.newintent(getApplicationContext(),acTypes.toString()));
+                            String json = new Gson().toJson(acTypes);
+                            startActivity(Report2Activity.newintent(getApplicationContext(),json));
                         }
                     }
                 });

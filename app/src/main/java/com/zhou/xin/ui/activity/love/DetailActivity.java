@@ -41,10 +41,10 @@ public class DetailActivity extends BaseActivity {
     @BindView(R.id.tv_films) TextView tv_films;
     @BindView(R.id.tv_books) TextView tv_books;
     @BindView(R.id.tv_travels) TextView tv_travels;
-    @BindView(R.id.list_pager)
-    ViewPager list_pager;
-    @BindView(R.id.Xcircleindicator)
-    Xcircleindicator mXcircleindicator;
+    @BindView(R.id.list_pager) ViewPager list_pager;
+    @BindView(R.id.Xcircleindicator) Xcircleindicator mXcircleindicator;
+    @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.tv_title) TextView tv_title;
 
     private List<String> photoUrlList;
     private List<View> list_view;
@@ -56,6 +56,9 @@ public class DetailActivity extends BaseActivity {
 
     @Override
     protected void init() {
+        tv_head.setText("个人信息");
+        tv_title.setVisibility(View.VISIBLE);
+        tv_title.setText("编辑");
         setInfo();
     }
 
@@ -146,12 +149,12 @@ public class DetailActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.iv_all_back,R.id.tv_edit}) void onClick(View view){
+    @OnClick({R.id.back,R.id.tv_title}) void onClick(View view){
         switch (view.getId()){
-            case R.id.iv_all_back:
+            case R.id.back:
                 finish();
                 break;
-            case R.id.tv_edit:
+            case R.id.tv_title:
                 startToActivity(EditLoveActivity.class);
                 break;
         }

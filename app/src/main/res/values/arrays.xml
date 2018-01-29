@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="names">
-        <item>action</item>
-        <item>adventure</item>
-        <item>combat</item>
-        <item>moba</item>
-        <item>other</item>
-        <item>role</item>
-        <item>sports</item>
-        <item>words</item>
+    <string-array name="WheelSurfView_names">
+        <item>王 者 皮 肤</item>
+        <item>1 8 0 积 分</item>
+        <item>L O L 皮 肤</item>
+        <item>谢 谢 参 与</item>
+        <item>2 8 积 分</item>
+        <item>微 信 红 包</item>
+        <item>5 Q 币</item>
+    </string-array>
 
+    <string-array name="WheelSurfView_icons">
+        <item>iphone</item>
+        <item>iphone</item>
+        <item>iphone</item>
+        <item>iphone</item>
+        <item>iphone</item>
+        <item>iphone</item>
+        <item>iphone</item>
+    </string-array>
+
+    <string-array name="WheelSurfView_colors">
+        <item>#fef9f7</item>
+        <item>#fbc6a9</item>
+        <item>#ffdecc</item>
+        <item>#fbc6a9</item>
+        <item>#ffdecc</item>
+        <item>#fbc6a9</item>
+        <item>#ffdecc</item>
     </string-array>
 </resources>

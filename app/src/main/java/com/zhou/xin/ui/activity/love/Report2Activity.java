@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 import com.zhou.xin.R;
 import com.zhou.xin.adapter.base.CommonAdapter;
 import com.zhou.xin.adapter.base.ViewHolder;
@@ -52,25 +53,23 @@ public class Report2Activity extends BaseActivity {
         tv_head.setText("举报用户");
         tv_report.setVisibility(View.GONE);
         data = new ArrayList<>();
-
-        final String acTypes = getIntent().getStringExtra("acTypes");
-        if (acTypes != null){
-            Gson gson = new Gson();
-            Log.d(TAG, "init: "+acTypes);
-            List<String> data = Arrays.asList(acTypes);
-            final ReportBean.AccusationCategoryListBean.AcTypesBean acTypesBean = gson.fromJson(acTypes, ReportBean.AccusationCategoryListBean.AcTypesBean.class);
-
-        }
-
+        String acTypes = getIntent().getStringExtra("acTypes");
+        Gson gson = new Gson();
+        data = gson.fromJson(acTypes, new TypeToken<List<ReportBean.AccusationCategoryListBean.AcTypesBean>>() {}.getType());
         initRecycle();
     }
 
     private void initRecycle() {
-
         adapter = new CommonAdapter<ReportBean.AccusationCategoryListBean.AcTypesBean>(this, R.layout.recycle_guild, data) {
             @Override
             public void convert(ViewHolder holder, final ReportBean.AccusationCategoryListBean.AcTypesBean s, int position) {
                 holder.setText(R.id.tv_des,s.getTypeName());
+                holder.setOnClickListener(R.id.rl_guild, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+""));
+                    }
+                });
             }
         };
         recycleView.setLayoutManager(new LinearLayoutManager(this));

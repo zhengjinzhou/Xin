@@ -59,7 +59,7 @@ public class LoginActivity extends BaseActivity {
         tv_head.setText("登陆");
         etUsername.setText("2014414");
         Log.d(TAG, "init: "+Md5Util.encoder("2014414"+Constant.APP_ENCRYPTION_KEY));
-        etPassword.setText("123");
+        etPassword.setText("123456");
     }
 
     @OnClick({R.id.bt_login, R.id.back, R.id.tv_forget}) void onClick(View view) {
