@@ -208,22 +208,36 @@ public class ReportInfoActivity extends BaseActivity {
             ToastUtil.show(getApplicationContext(),"举报原因不能为空");
             return;
         }
-        String aid = "3";
+        if (TextUtils.isEmpty(imagePath)){
+            ToastUtil.show(getApplicationContext(),"照片不能为空");
+            return;
+        }
+        String mobile = "13631789759";
         String typeId = getIntent().getStringExtra("typeId");
         String photo = imagePath;
 
+        Log.d(TAG, "submit: "+mobile +" "+ reportContent +" "+typeId +" "+ photo);
         dialog.show();
         OkHttpClient okHttpClient = new OkHttpClient();
         File file = new File(photo);
-        MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
+
+        MultipartBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("photo", photo, RequestBody.create(MediaType.parse("image/*"), file))
+                .addFormDataPart("mobile", mobile)
+                .addFormDataPart("typeId", typeId)
+                .addFormDataPart("reportContent", reportContent)
+                .build();
+
+        /*MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
         RequestBody fileBody = RequestBody.create(MEDIA_TYPE_MARKDOWN, file);
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("photo",photo,fileBody)
-                .addFormDataPart("aid", aid)
+                .addFormDataPart("mobile", mobile)
                 .addFormDataPart("typeId",typeId)
                 .addFormDataPart("reportContent",reportContent)
-                .build();
+                .build();*/
         Request request = new Request.Builder()
                 .url(Constant.JUBAO)
                 .post(requestBody)
@@ -240,7 +254,7 @@ public class ReportInfoActivity extends BaseActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
                 Log.d(TAG, "onResponse: "+string);
-                dialog.show();
+                dialog.dismiss();
             }
         });
     }

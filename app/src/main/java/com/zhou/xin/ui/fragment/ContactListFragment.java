@@ -17,7 +17,9 @@ import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.NetUtils;
+import com.zhou.xin.Constant;
 import com.zhou.xin.R;
+import com.zhou.xin.base.App;
 import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.db.InviteMessgeDao;
 import com.zhou.xin.db.UserDao;
@@ -26,10 +28,20 @@ import com.zhou.xin.ui.activity.huanxin.BlacklistActivity;
 import com.zhou.xin.ui.activity.huanxin.ChatActivity;
 import com.zhou.xin.ui.activity.huanxin.GroupsActivity;
 import com.zhou.xin.ui.activity.huanxin.NewFriendsMsgActivity;
+import com.zhou.xin.utils.CurrentTimeUtil;
+import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.widget.ContactItemView;
 
+import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by zhou on 2017/12/19.
@@ -217,10 +229,50 @@ public class ContactListFragment extends EaseContactListFragment {
             moveToBlacklist(toBeProcessUsername);
             //发送到后台  拉黑好友
             Log.d(TAG, "onContextItemSelected: "+toBeProcessUsername);
-
+            sendBlack(toBeProcessUsername);
             return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    /**
+     * 发送到后台 拉黑好友
+     *
+     * @param toBeProcessUsername
+     */
+    private void sendBlack(String toBeProcessUsername) {
+        String token = App.getInstance().getUserInfo().getToken();
+        String opt = "8";
+        String mobile = toBeProcessUsername;
+        String _t = CurrentTimeUtil.nowTime();
+        String joint = "_t=" + _t + "&mobile=" + mobile + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
+        Log.d(TAG, "sendBlack: "+joint);
+        String _s = Md5Util.encoder(joint);
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        FormBody body = new FormBody.Builder()
+                .add("mobile", mobile)
+                .add("opt", opt)
+                .add("token", token)
+                .add("_t", _t)
+                .add("_s", _s)
+                .build();
+        Request request = new Request.Builder()
+                .url(Constant.LOGIN_URL)
+                .post(body)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("拉黑黑名单", "onFailure: "+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d("拉黑黑名单", "onResponse: "+response.body().string());
+            }
+        });
     }
 
 
