@@ -160,9 +160,12 @@ public class MeFragment extends BaseFragment {
 
         @Override
         public void onResponse(Call call, final Response response) throws IOException {
+            String string = response.body().string();
+            // Log.d(TAG, "获取个人信息设置选项: "+string);
             Gson gson = new Gson();
-            SelectBean selectBean = gson.fromJson(response.body().string(), SelectBean.class);
+            SelectBean selectBean = gson.fromJson(string, SelectBean.class);
             App.getInstence().setSelectBean(selectBean);
+            Log.d(TAG, "onResponse: "+selectBean.getMajorList().toString());
         }
     };
 

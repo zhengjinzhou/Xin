@@ -193,6 +193,7 @@ public class LoginActivity extends BaseActivity {
     }
     /**
      * 进行环信登录
+     *
      * @param username
      * @param pwd
      */
@@ -200,7 +201,7 @@ public class LoginActivity extends BaseActivity {
         // After logout，the DemoDB may still be accessed due to async callback, so the DemoDB will be re-opened again.
         // close it before login to make sure DemoDB not overlap
         String pssword = Md5Util.encoder(pwd+Constant.APP_ENCRYPTION_KEY);
-        Log.d(TAG, "XinLogin: "+username+pssword);
+        Log.d(TAG, "XinLogin: "+username+ "  "+pssword);
         DemoDBManager.getInstance().closeDB();
         // reset current user name before login
         DemoHelper.getInstance().setCurrentUserName(username);

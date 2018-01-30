@@ -14,6 +14,8 @@ import com.zhou.xin.R;
 import com.zhou.xin.adapter.base.CommonAdapter;
 import com.zhou.xin.adapter.base.ViewHolder;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.bean.BaseInfo;
+import com.zhou.xin.bean.GuildBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,26 +44,26 @@ public class GuildActivity extends BaseActivity {
      * recyclerView
      */
     private void initRecycle() {
-        final List<String> data = new ArrayList<>();
-        data.add("本应用是真实真人真事吗？");
-        data.add("如何找回密码?");
-        data.add("如何修改密码？");
-        data.add("如何了解本应用的任务？");
-        data.add("如何邀请好友加油本应用？");
-        data.add("如何在应用中举报和反馈？");
-        data.add("如何进行线下活动？");
-        data.add("本应用只能和一人聊天么");
-        data.add("本应用中的红包是怎么回事？");
-        data.add("如何联系我们？");
+        final List<GuildBean> data = new ArrayList<>();
+        data.add(new GuildBean(getString(R.string.title1),getString(R.string.desc1)));
+        data.add(new GuildBean(getString(R.string.title2),getString(R.string.desc2)));
+        data.add(new GuildBean(getString(R.string.title3),getString(R.string.desc2)));
+        data.add(new GuildBean(getString(R.string.title4),getString(R.string.desc4)));
+        data.add(new GuildBean(getString(R.string.title5),getString(R.string.desc5)));
+        data.add(new GuildBean("如何在应用中举报和反馈?",""));
+        data.add(new GuildBean("如何进行线下活动?",""));
+        data.add(new GuildBean("本应用只能和一人聊天么?",""));
+        data.add(new GuildBean("本应用中的红包是怎么回事?",""));
+        data.add(new GuildBean("如何联系我们?",""));
 
-        CommonAdapter adapter = new CommonAdapter<String>(this, R.layout.recycle_guild, data) {
+        CommonAdapter adapter = new CommonAdapter<GuildBean>(this, R.layout.recycle_guild, data) {
             @Override
-            public void convert(ViewHolder holder, final String s, final int position) {
-                holder.setText(R.id.tv_des,s);
+            public void convert(ViewHolder holder, final GuildBean s, final int position) {
+                holder.setText(R.id.tv_des,s.getTitle());
                 holder.setOnClickListener(R.id.rl_guild, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(GuildInfoActivity.newIntent(getApplicationContext(),s));
+                        startActivity(GuildInfoActivity.newIntent(getApplicationContext(),s.getTitle(),s.getDesc()));
                     }
                 });
             }

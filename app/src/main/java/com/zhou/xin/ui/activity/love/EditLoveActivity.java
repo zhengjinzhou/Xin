@@ -19,23 +19,31 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.hyphenate.util.DensityUtil;
 import com.yuyh.library.imgsel.ImageLoader;
 import com.yuyh.library.imgsel.ImgSelActivity;
 import com.yuyh.library.imgsel.ImgSelConfig;
+import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.base.other.PermissionsResultListener;
 import com.zhou.xin.bean.BaseInfo;
 import com.zhou.xin.bean.SelectBean;
+import com.zhou.xin.bean.UserInfo;
+import com.zhou.xin.utils.DateUtil;
 import com.zhou.xin.utils.GlideRoundTransform;
 import com.zhou.xin.utils.PersonalFormTools;
 import com.zhou.xin.utils.ToastUtil;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +54,15 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class EditLoveActivity extends BaseActivity {
 
@@ -76,6 +93,11 @@ public class EditLoveActivity extends BaseActivity {
     @BindView(R.id.tv_birthday) TextView tv_birthday;
     @BindView(R.id.et_nickname) EditText et_nickname;
     @BindView(R.id.et_realname) EditText et_realname;
+    @BindView(R.id.et_wechat) EditText et_wechat;
+    @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.et_autograph) EditText et_autograph;
+
+
     private int index = 0;
     private int mark = 0;
     private static final int REQUEST_CODE = 1000;
@@ -84,6 +106,7 @@ public class EditLoveActivity extends BaseActivity {
     private List<ImageView> imgsView = new ArrayList<>();
     private List<ImageView> delView = new ArrayList<>();
     private OptionsPickerView optionsPickerView;
+
     private List<String> listMajor;
     private List<String> listCity;
     private List<String> listProvince;
@@ -96,23 +119,33 @@ public class EditLoveActivity extends BaseActivity {
     private List<String> listBook;
     private List<String> listTravel;
     private List<String> uploadLabel;
-    private Map<String, String> mapLabel;
-    private List<String> uploadSport;
-    private Map<String, String> mapSport;
-    private List<String> uploadMusic;
-    private Map<String, String> mapMusic;
-    private List<String> uploadFood;
-    private Map<String, String> mapFoot;
     private List<String> uploadFilm;
-    private Map<String, String> mapFilm;
+    private List<String> uploadFood;
     private List<String> uploapBook;
-    private Map<String, String> mapBook;
+    private List<String> uploadSport;
+    private List<String> uploadMusic;
     private List<String> uploadTravel;
+
+    private Map<String, String> mapLabel;
+    private Map<String, String> mapSport;
+    private Map<String, String> mapMusic;
+    private Map<String, String> mapFoot;
+    private Map<String, String> mapFilm;
+    private Map<String, String> mapBook;
     private Map<String, String> mapTravel;
-    private String brithday;
+    private Map<String, Integer> mapMajor;
+    private Map<Integer, String> mapCategory;
+    private Map<Integer, String> mapProvince;
+    private Map<String, String> constellationMap;
+    private Map<String, List<String>> mapCity;
 
+    private String brithday= DateUtil.lineDate(new Date());
+    private int sex = 1;//性别
 
-
+    /** ======================================================**/
+    private Integer majorID = 1;
+    private String constellationID= "";
+    /** ======================================================**/
     @Override
     protected int getLayout() {
         return R.layout.activity_edit_love;
@@ -120,6 +153,8 @@ public class EditLoveActivity extends BaseActivity {
 
     @Override
     protected void init() {
+        tv_head.setText("完善信息");
+
         ll_details.setVisibility(View.GONE);
         initData();
     }
@@ -131,7 +166,7 @@ public class EditLoveActivity extends BaseActivity {
         data.add(new BaseInfo(false, ""));
         data.add(new BaseInfo(false, ""));
         data.add(new BaseInfo(false, ""));
-        data.add(new BaseInfo(false, ""));
+        //data.add(new BaseInfo(false, ""));
 
         imgsView.add(img1);
         imgsView.add(img2);
@@ -148,19 +183,23 @@ public class EditLoveActivity extends BaseActivity {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-                String tag = (String) radioGroup.getTag();
-                System.out.println(tag);
+                int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+                if (checkedRadioButtonId == 2131296688)
+                    sex = 1;
+                if (checkedRadioButtonId == 2131296686)
+                    sex =0;
             }
         });
         if (App.getInstence() == null) return;
         if (App.getInstence().getSelectBean() == null) return;
         SelectBean selectBean = App.getInstence().getSelectBean();
         List<SelectBean.CategoryListBean> categoryList = selectBean.getCategoryList();
+
         if (selectBean == null) return;
-        Map<Integer, String> mapCategory = new HashMap<>();
-        Map<Integer, String> mapMajor = new HashMap<>();
-        Map<Integer, String> mapProvince = new HashMap<>();
-        Map<String, List<String>> mapCity = new HashMap<>();
+        mapCategory = new HashMap<>();
+        mapMajor = new HashMap<>();
+        mapProvince = new HashMap<>();
+        mapCity = new HashMap<>();
 
         listMajor = new ArrayList<>();//学院
         //城市
@@ -169,7 +208,7 @@ public class EditLoveActivity extends BaseActivity {
         listProvince = new ArrayList<>();
         //星座类型
         constellationList = new ArrayList<>();
-        Map<String,String> constellationMap = new HashMap<>();
+        constellationMap = new HashMap<>();
 
         //我的个性标签类型
         listLabel = new ArrayList<>();
@@ -235,7 +274,7 @@ public class EditLoveActivity extends BaseActivity {
         }
 
         for (int i=0;i<selectBean.getMajorList().size();i++){
-            mapMajor.put(selectBean.getMajorList().get(i).getId(),selectBean.getMajorList().get(i).getMajorName());
+            mapMajor.put(selectBean.getMajorList().get(i).getMajorName(),selectBean.getMajorList().get(i).getId());
             listMajor.add(selectBean.getMajorList().get(i).getMajorName());
         }
         for (int i = 0;i<selectBean.getProvinceList().size();i++){
@@ -247,19 +286,19 @@ public class EditLoveActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.bt_next, R.id.bt_skip, R.id.iv_all_back, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4
+    @OnClick({R.id.bt_next, R.id.bt_skip, R.id.back, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4
             , R.id.layout_5, R.id.del_1, R.id.del_2, R.id.del_3, R.id.del_4, R.id.del_5, R.id.bt_submit, R.id.tv_province_city
             , R.id.tv_sport, R.id.tv_musics, R.id.tv_foots, R.id.tv_video, R.id.tv_major, R.id.tv_conste,
             R.id.tv_books, R.id.tv_travels,R.id.tv_labels,R.id.tv_birthday})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_birthday:
-                initTime(brithday,tv_birthday);
+                initTime(tv_birthday);
                 break;
             case R.id.tv_travels:
                 showMultiChioceDialog(listTravel.toArray(new String[listTravel.size()]),uploadTravel,mapTravel,tv_travels);
                 break;
-            case R.id.tv_labels:
+            case R.id.tv_labels://我的个性标签
                 showMultiChioceDialog(listLabel.toArray(new String[listLabel.size()]),uploadLabel,mapLabel,tv_labels);
                 break;
             case R.id.tv_books:
@@ -286,7 +325,7 @@ public class EditLoveActivity extends BaseActivity {
                 optionsPickerView.show();
                 break;
             case R.id.tv_major:
-                initOptionPicker("我的学院：", listMajor, tv_major);
+                initOptionPicker("我的学历：", listMajor, tv_major);
                 optionsPickerView.setPicker(listMajor);
                 optionsPickerView.show();
                 break;
@@ -298,12 +337,12 @@ public class EditLoveActivity extends BaseActivity {
                 break;
             //提交一次
             case R.id.bt_skip:
-                submit1();
+                submit();
                 break;
             case R.id.bt_submit:
-                submit2();
+                submit();
                 break;
-            case R.id.iv_all_back:
+            case R.id.back:
                 finish();
                 break;
             case R.id.del_1:
@@ -339,7 +378,12 @@ public class EditLoveActivity extends BaseActivity {
         }
     }
 
-    private void initTime(final String tv, final TextView et){
+    /**
+     * 选择生日
+     *
+     * @param et
+     */
+    private void initTime(final TextView et){
         Calendar selectedDate = Calendar.getInstance();
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
@@ -351,6 +395,7 @@ public class EditLoveActivity extends BaseActivity {
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 et.setText("生日:"+format.format(date));
+                brithday = format.format(date);
             }
         })
                 //年月日时分秒 的显示与否，不设置则默认全部显示
@@ -371,10 +416,11 @@ public class EditLoveActivity extends BaseActivity {
     public void showMultiChioceDialog(final String[] shuzu, final List<String> uoload, final Map<String,String> map, final TextView tv) {
         final List<String> list = new ArrayList<>();
         final EditText editText = new EditText(this);
-        editText.setHint("若还有其他，请输入");
+        editText.setHint("    若还有其他，请输入");
         editText.setMaxLines(3);
-        editText.setPadding(10,10,10,10);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        editText.setBackground(getResources().getDrawable(R.drawable.btn_bg));
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         builder.setView(editText);
         builder.setTitle("多选对话框");
         builder.setIcon(R.mipmap.ic_launcher);
@@ -382,21 +428,23 @@ public class EditLoveActivity extends BaseActivity {
         builder.setMultiChoiceItems(shuzu, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {/*设置多选的点击事件*/
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
                 checkedItems[which] = isChecked;
                 if (isChecked == true){
                     list.add(shuzu[which]);
                     uoload.add(map.get(shuzu[which]));
+                    Log.d(TAG, "onClick: "+uoload.toString());
                 }
                 if (isChecked == false){
                     int i = list.indexOf(shuzu[which]);
                     list.remove(i);
                     uoload.remove(map.get(shuzu[which]));
-
+                    Log.d(TAG, "onClick: "+uoload.toString());
                 }
-                //Toast.makeText(getApplicationContext(), shuzu[which]  + isChecked, Toast.LENGTH_SHORT).show();
-
+               // Toast.makeText(getApplicationContext(), shuzu[which]  + isChecked, Toast.LENGTH_SHORT).show();
             }
         });
+
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -409,15 +457,15 @@ public class EditLoveActivity extends BaseActivity {
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                dialog.cancel();
             }
         });
-        builder.setCancelable(false);
         builder.show();
+
     }
 
     /**
-     * 单项选择
+     * 单项选择  星座和学历 完成
      *
      * @param string
      * @param list
@@ -429,26 +477,21 @@ public class EditLoveActivity extends BaseActivity {
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 txt.setText(string + list.get(options1));
                 //同时获取相应的id，因为上传需要
-                /**
-                 * if (constellationList.contains(tx)) {
-                 constellation = keyConsteList.get(options1);//获取星座id
-                 System.out.println(constellation);
-                 }
-                 if (majorNameList.contains(tx)) {
-                 major = majorIDList.get(options1);
-                 System.out.println(major);
-                 }
-                 */
+                if(listMajor.contains(list.get(options1))){
+                    majorID = mapMajor.get(list.get(options1));
+                }
+                if (constellationList.contains(list.get(options1))){
+                    constellationID = constellationMap.get(list.get(options1));
+                }
             }
         }).build();
     }
 
-    private void submit2() {
+    /**
+     * 简单上传 与完整上传
+     */
+    private void submit() {
 
-    }
-
-    private void submit1() {
-        
         String nickname = et_nickname.getText().toString();
         if (TextUtils.isEmpty(nickname)){
             ToastUtil.show(getApplicationContext(),"昵称不能为空");
@@ -458,6 +501,69 @@ public class EditLoveActivity extends BaseActivity {
             ToastUtil.show(getApplicationContext(), "照片不能为空");
             return;
         }
+
+        /**
+         * ======================================================================================
+         */
+        List<String> entity = getTureData(data);
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        MultipartBody.Builder builider = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        builider.addFormDataPart("uid",  App.getInstance().getUserInfo().getUid());
+        builider.addFormDataPart("token",App.getInstance().getUserInfo().getToken());
+        builider.addFormDataPart("nickname",nickname);//昵称
+        builider.addFormDataPart("sex",sex+"");//性别
+        builider.addFormDataPart("username",et_realname.getText().toString().trim());//真实姓名
+        int age = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date())) - Integer.parseInt(brithday.substring(0, 4));//年龄用当前时间减去生日的时间
+        builider.addFormDataPart("age",age+"");//年龄用当前时间减去生日的时间
+        builider.addFormDataPart("birthday",brithday);//生日
+        builider.addFormDataPart("city","");//城市id
+        builider.addFormDataPart("wechat",et_wechat.getText().toString().trim()+"");//微信号
+        builider.addFormDataPart("major",majorID+"");//学历
+        builider.addFormDataPart("constellation",constellationID);//星座id
+        builider.addFormDataPart("autograph",et_autograph.getText().toString().trim()+"");//签名,
+
+
+        Log.d(TAG, "submit1: "+entity.toString());
+        for (int i=0;i<entity.size();i++){
+            builider.addFormDataPart("photo", entity.get(i), RequestBody.create(MediaType.parse("image/*"), new File(entity.get(i))));
+        }
+        MultipartBody body = builider.build();
+        dialog.show();
+        Request request = new Request.Builder()
+                .url(Constant.UPDATE_URL)
+                .post(body)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                dialog.dismiss();
+                Log.d(TAG, "onFailure: "+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                Log.d(TAG, "onResponse: "+string);
+                dialog.dismiss();
+                final UserInfo userInfo = new Gson().fromJson(string, UserInfo.class);
+                if (userInfo.getError().equals("-1")){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.show(getApplicationContext(),userInfo.getMsg());
+                        }
+                    });
+                }
+            }
+        });
+
+
+        /**
+         * ======================================================================================
+         */
 
     }
 
@@ -573,6 +679,7 @@ public class EditLoveActivity extends BaseActivity {
                 Glide.with(this).load(path).centerCrop().transform(new GlideRoundTransform(this, 12)).into(img1);
                 del_1.setVisibility(View.VISIBLE);
                 data.set((index - 1), new BaseInfo(true, path));
+
                 break;
             case 2:
                 Glide.with(this).load(path).centerCrop().transform(new GlideRoundTransform(this, 12)).into(img2);
@@ -595,5 +702,25 @@ public class EditLoveActivity extends BaseActivity {
                 data.set((index - 1), new BaseInfo(true, path));
                 break;
         }
+    }
+
+
+    /**
+     * 获取被选择的数据
+     * @param data
+     * @return
+     */
+    public List<String> getTureData(List<BaseInfo> data){
+
+        List<String> entity = new ArrayList<>();
+        int count = data.size();
+        for(int i = 0; i < count; i++){
+            BaseInfo info = data.get(i);
+            if(info.isCheck()){
+                entity.add(info.getName());
+            }
+        }
+
+        return entity;
     }
 }

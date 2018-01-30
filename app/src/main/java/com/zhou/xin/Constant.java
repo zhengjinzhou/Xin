@@ -27,8 +27,10 @@ public class Constant extends EaseConstant {
 
     public static final String URL = "http://123.207.55.87:8080/LoveMe";
     //登陆        获取个人信息
-    public static final String LOGIN_URL = URL+"/app/index.do";
+    public static final String LOGIN_URL = URL + "/app/index.do";
 
+    //修改会员个人信息
+    public static final String UPDATE_URL = URL + "/app/update.do";
     //举报
     public static final String JUBAO = URL + "/app/accusation.do";
 
@@ -45,5 +47,5 @@ public class Constant extends EaseConstant {
     public static final String URL_REGISTER = URL + "/app/index.do";
 
     //获取异性推送
-    public static final String ISOMERISM_URL= URL +  "/app/o_push.do";
+    public static final String ISOMERISM_URL = URL + "/app/o_push.do";
 }

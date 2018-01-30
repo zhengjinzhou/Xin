@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.bean.GuildBean;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -15,10 +16,13 @@ import butterknife.OnClick;
 public class GuildInfoActivity extends BaseActivity {
 
     @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.tv_desc) TextView tv_desc;
 
-    public static Intent newIntent(Context context,String str){
+
+    public static Intent newIntent(Context context,String title,String desc){
         Intent intent = new Intent(context,GuildInfoActivity.class);
-        intent.putExtra("head",str);
+        intent.putExtra("guild_title", title);
+        intent.putExtra("guild_desc", desc);
         return intent;
     }
 
@@ -30,8 +34,10 @@ public class GuildInfoActivity extends BaseActivity {
     @Override
     protected void init() {
         if (getIntent() != null){
-            String head = getIntent().getStringExtra("head");
+            String head = getIntent().getStringExtra("guild_title");
+            String desc = getIntent().getStringExtra("guild_desc");
             tv_head.setText(head);
+            tv_desc.setText(desc);
         }
     }
 
