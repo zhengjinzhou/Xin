@@ -130,7 +130,7 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onResponse(Call call, Response response) throws IOException {
             String string = response.body().string();
-            Log.d(TAG, "onResponse: " + string);
+            Log.d(TAG, "登录成功onResponse: " + string);
             getResult(string);
         }
     };
@@ -176,8 +176,10 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onResponse(Call call, Response res) throws IOException {
+                String string = res.body().string();
+                Log.d(TAG, "获取个人信息onResponse: "+string);
                 Gson gson1 = new Gson();
-                PersonalBean personalBean = gson1.fromJson(res.body().string(), PersonalBean.class);
+                PersonalBean personalBean = gson1.fromJson(string, PersonalBean.class);
                 App.getInstence().setPersonalBean(personalBean);
             }
         });

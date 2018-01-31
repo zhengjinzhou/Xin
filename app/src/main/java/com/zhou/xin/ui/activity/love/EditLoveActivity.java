@@ -1,15 +1,13 @@
 package com.zhou.xin.ui.activity.love;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.IdRes;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -19,13 +17,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.hyphenate.util.DensityUtil;
+import com.ta.utdid2.android.utils.StringUtils;
 import com.yuyh.library.imgsel.ImageLoader;
 import com.yuyh.library.imgsel.ImgSelActivity;
 import com.yuyh.library.imgsel.ImgSelConfig;
@@ -46,6 +43,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -138,6 +136,16 @@ public class EditLoveActivity extends BaseActivity {
     private Map<Integer, String> mapProvince;
     private Map<String, String> constellationMap;
     private Map<String, List<String>> mapCity;
+
+    private String label_others = "";
+    private String character_others = "";
+    private String sport_others = "";
+    private String music_others = "";
+    private String food_others = "";
+    private String film_others = "";
+    private String book_others = "";
+    private String travel_others = "";
+
 
     private String brithday= DateUtil.lineDate(new Date());
     private int sex = 1;//性别
@@ -296,22 +304,22 @@ public class EditLoveActivity extends BaseActivity {
                 initTime(tv_birthday);
                 break;
             case R.id.tv_travels:
-                showMultiChioceDialog(listTravel.toArray(new String[listTravel.size()]),uploadTravel,mapTravel,tv_travels);
+                showMultiChioceDialog1(listTravel.toArray(new String[listTravel.size()]),uploadTravel,mapTravel,tv_travels);
                 break;
             case R.id.tv_labels://我的个性标签
                 showMultiChioceDialog(listLabel.toArray(new String[listLabel.size()]),uploadLabel,mapLabel,tv_labels);
                 break;
             case R.id.tv_books:
-                showMultiChioceDialog(listBook.toArray(new String[listBook.size()]),uploapBook,mapBook,tv_books);
+                showMultiChioceDialog1(listBook.toArray(new String[listBook.size()]),uploapBook,mapBook,tv_books);
                 break;
             case R.id.tv_video:
-                showMultiChioceDialog(listFilm.toArray(new String[listFilm.size()]),uploadFilm,mapFilm,tv_video);
+                showMultiChioceDialog1(listFilm.toArray(new String[listFilm.size()]),uploadFilm,mapFilm,tv_video);
                 break;
             case R.id.tv_foots:
-                showMultiChioceDialog(listFood.toArray(new String[listFood.size()]),uploadFood,mapFoot,tv_foots);
+                showMultiChioceDialog1(listFood.toArray(new String[listFood.size()]),uploadFood,mapFoot,tv_foots);
                 break;
             case R.id.tv_musics:
-                showMultiChioceDialog(listMusic.toArray(new String[listMusic.size()]),uploadMusic,mapMusic,tv_musics);
+                showMultiChioceDialog1(listMusic.toArray(new String[listMusic.size()]),uploadMusic,mapMusic,tv_musics);
                 break;
             case R.id.tv_sport:
                 showMultiChioceDialog(listSport.toArray(new String[listSport.size()]),uploadSport,mapSport,tv_sport);
@@ -413,14 +421,72 @@ public class EditLoveActivity extends BaseActivity {
                 .build().show();
     }
 
+    /**
+     * 浪费了
+     *
+     * @param shuzu
+     * @param uoload
+     * @param map
+     * @param tv
+     */
     public void showMultiChioceDialog(final String[] shuzu, final List<String> uoload, final Map<String,String> map, final TextView tv) {
+        final List<String> list = new ArrayList<>();
+        //final EditText editText = new EditText(this);
+        //editText.setHint("    若还有其他，请输入");
+        //editText.setMaxLines(3);
+        //editText.setBackground(getResources().getDrawable(R.drawable.btn_bg));
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //builder.setView(editText);
+        builder.setTitle("多选对话框");
+        builder.setIcon(R.mipmap.ic_launcher);
+        final boolean[] checkedItems = new boolean[shuzu.length];/*设置多选默认状态*/
+        builder.setMultiChoiceItems(shuzu, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {/*设置多选的点击事件*/
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
+                checkedItems[which] = isChecked;
+                if (isChecked == true){
+                    list.add(shuzu[which]);
+                    uoload.add(map.get(shuzu[which]));
+                    Log.d(TAG, "onClick: "+uoload.toString());
+                }
+                if (isChecked == false){
+                    int i = list.indexOf(shuzu[which]);
+                    list.remove(i);
+                    uoload.remove(map.get(shuzu[which]));
+                    Log.d(TAG, "onClick: "+uoload.toString());
+                }
+                // Toast.makeText(getApplicationContext(), shuzu[which]  + isChecked, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //System.out.println(editText.getText());
+                System.out.println(list.toString());
+                System.out.println("map" + uoload.toString());
+                tv.setText(list.toString());
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+
+    }
+
+
+    public void showMultiChioceDialog1(final String[] shuzu, final List<String> uoload, final Map<String,String> map, final TextView tv) {
         final List<String> list = new ArrayList<>();
         final EditText editText = new EditText(this);
         editText.setHint("    若还有其他，请输入");
         editText.setMaxLines(3);
         editText.setBackground(getResources().getDrawable(R.drawable.btn_bg));
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         builder.setView(editText);
         builder.setTitle("多选对话框");
         builder.setIcon(R.mipmap.ic_launcher);
@@ -450,8 +516,8 @@ public class EditLoveActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
                 System.out.println(editText.getText());
                 System.out.println(list.toString());
-                System.out.println("map"+uoload.toString());
-                tv.setText(list.toString());
+                System.out.println("map" + uoload.toString());
+                tv.setText(list.toString()+editText.getText());
             }
         });
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -522,7 +588,16 @@ public class EditLoveActivity extends BaseActivity {
         builider.addFormDataPart("wechat",et_wechat.getText().toString().trim()+"");//微信号
         builider.addFormDataPart("major",majorID+"");//学历
         builider.addFormDataPart("constellation",constellationID);//星座id
-        builider.addFormDataPart("autograph",et_autograph.getText().toString().trim()+"");//签名,
+        builider.addFormDataPart("autograph",et_autograph.getText().toString().trim()+"");//签名
+        builider.addFormDataPart("labels[]",uploadLabel.toString().substring(1,uploadLabel.toString().length()-1)+"&label_others=");//个性标签
+        builider.addFormDataPart("sports[]",uploadSport.toString().substring(1,uploadSport.toString().length()-1)+"&sport_others=");//运动类型
+        builider.addFormDataPart("music[]",uploadMusic.toString().substring(1,uploadMusic.toString().length()-1)+"&music_others=");//音乐类型
+        builider.addFormDataPart("foods[]",uploadFood.toString().substring(1,uploadFood.toString().length()-1)+"&food_others=");//食物
+        builider.addFormDataPart("films[]",uploadFilm.toString().substring(1,uploadFilm.toString().length()-1)+"&film_others=");//影视
+        builider.addFormDataPart("books[]",uploapBook.toString().substring(1,uploapBook.toString().length()-1)+"&book_others=");//书籍
+        builider.addFormDataPart("travels[]",uploadTravel.toString().substring(1,uploadTravel.toString().length()-1)+"&travel_others=");//旅行足迹
+
+        //Log.d(TAG, "submit: 122222"+uploadLabel.toString().substring(1,uploadLabel.toString().length()-1));
 
 
         Log.d(TAG, "submit1: "+entity.toString());
