@@ -1,103 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhou.xin.widget.ReboundScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <include layout="@layout/headerbar" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <include layout="@layout/headerbar" />
-
-        <RelativeLayout
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/space_240"
-                android:background="@drawable/main_bg" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_50"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="您的邀请码："
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/space_16" />
-
-                <TextView
-                    android:id="@+id/tv_inviteCode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="@dimen/space_6"
-                    android:textColor="@color/orange"
-                    android:textIsSelectable="true"
-                    android:textSize="@dimen/space_24"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:maxLines="1"
-            android:padding="@dimen/space_8"
-            android:text="@string/invate_frend" />
+            android:layout_height="@dimen/space_240"
+            android:background="@drawable/main_bg" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_8">
+            android:layout_marginTop="@dimen/space_50"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="66dp"
-                android:layout_weight="1"
-                android:src="@drawable/login_qq" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="您的邀请码："
+                android:textColor="@color/white"
+                android:textSize="@dimen/space_16" />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="66dp"
-                android:layout_weight="1"
-                android:src="@drawable/login_weibo" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="66dp"
-                android:layout_weight="1"
-                android:src="@drawable/login_wechat" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="66dp"
-                android:layout_weight="1"
-                android:padding="@dimen/space_5"
-                android:src="@drawable/share_more" />
-
+            <TextView
+                android:id="@+id/tv_inviteCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/space_6"
+                android:textColor="@color/orange"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/space_24"
+                android:textStyle="bold" />
         </LinearLayout>
+    </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_invite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/space_20"
-            android:background="@drawable/bg_invite"
-            android:gravity="center"
-            android:padding="@dimen/space_10"
-            android:text="一键邀请您的所有好友"
-            android:textColor="@color/white" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="@dimen/space_8"
+        android:text="@string/invate_frend" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_8">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:layout_weight="1"
+            android:src="@drawable/login_qq" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:layout_weight="1"
+            android:src="@drawable/login_weibo" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:layout_weight="1"
+            android:src="@drawable/login_wechat" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:layout_weight="1"
+            android:padding="@dimen/space_5"
+            android:src="@drawable/share_more" />
+
     </LinearLayout>
-</com.zhou.xin.widget.ReboundScrollView>
+
+    <TextView
+        android:id="@+id/tv_invite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/space_20"
+        android:background="@drawable/bg_invite"
+        android:gravity="center"
+        android:padding="@dimen/space_10"
+        android:text="一键邀请您的所有好友"
+        android:textColor="@color/white" />
+</LinearLayout>
