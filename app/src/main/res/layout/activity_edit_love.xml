@@ -8,7 +8,7 @@
 
     <include layout="@layout/headerbar"/>
 
-    <android.support.v4.widget.NestedScrollView
+    <com.zhou.xin.widget.ReboundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize">
@@ -380,7 +380,7 @@
                 <TextView
                     android:id="@+id/tv_major"
                     style="@style/StyleText"
-                    android:text="选择学院"/>
+                    android:text="选择学历"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -478,6 +478,6 @@
                     />
             </LinearLayout>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </com.zhou.xin.widget.ReboundScrollView>
 
 </RelativeLayout>

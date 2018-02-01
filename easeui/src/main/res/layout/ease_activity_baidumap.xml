@@ -22,7 +22,6 @@
             android:textColor="#ffffff"
             android:textSize="18sp" />
 
-
         <Button
             android:id="@+id/btn_location_send"
             android:layout_width="52dp"
@@ -34,7 +33,7 @@
             android:onClick="sendLocation"
             android:text="@string/button_send"
             android:textColor="#fff"
-            android:textSize="17sp" />
+            />
 
     </RelativeLayout>
 

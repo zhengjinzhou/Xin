@@ -187,7 +187,7 @@ public class MainActivity extends BaseActivity {
             public void run() {
                 // refresh unread count
                 updateUnreadLabel();
-                if (currentTabIndex == 1) {
+                if (currentTabIndex == 2) {/**==============我觉得这个1应该改为2========已改=========*/
                     // refresh conversation list
                     if (conversationListFragment != null) {
                         conversationListFragment.refresh();
@@ -245,8 +245,8 @@ public class MainActivity extends BaseActivity {
      *
      * @return
      */
-    public int getUnreadAddressCountTotal() {
-        int unreadAddressCountTotal = 0;
+    public int getUnreadAddressCountTotal() {/**==============我觉得这个0要不要改呢？改为1吗===========已改======*/
+        int unreadAddressCountTotal = 1;
         unreadAddressCountTotal = inviteMessgeDao.getUnreadMessagesCount();
         return unreadAddressCountTotal;
     }
@@ -312,12 +312,12 @@ public class MainActivity extends BaseActivity {
             public void onReceive(Context context, Intent intent) {
                 updateUnreadLabel();
                 updateUnreadAddressLable();
-                if (currentTabIndex == 1) {
+                if (currentTabIndex == 2) {/**==============我觉得这个1要不要改呢？改为2吗============已改=====*/
                     // refresh conversation list
                     if (conversationListFragment != null) {
                         conversationListFragment.refresh();
                     }
-                } else if (currentTabIndex == 2) {
+                } else if (currentTabIndex == 3) {/**==============我觉得这个2要不要改呢？改为3吗==========已改=======*/
                     if(contactListFragment != null) {
                         contactListFragment.refresh();
                     }

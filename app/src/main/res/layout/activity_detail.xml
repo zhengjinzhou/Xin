@@ -9,7 +9,7 @@
 
     <include layout="@layout/headerbar"/>
 
-    <android.support.v4.widget.NestedScrollView
+    <com.zhou.xin.widget.ReboundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -173,6 +173,6 @@
                 style="@style/LineStyle"
                 android:layout_marginTop="10dp" />
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </com.zhou.xin.widget.ReboundScrollView>
 
 </LinearLayout>

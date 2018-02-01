@@ -1,6 +1,5 @@
 package com.zhou.xin.ui.activity.love;
 
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -13,8 +12,6 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -23,11 +20,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
+import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
-import com.zhou.xin.utils.CurrentTimeUtil;
-import com.zhou.xin.utils.Md5Util;
+import com.zhou.xin.bean.UserInfo;
 import com.zhou.xin.utils.ToastUtil;
 
 import java.io.File;
@@ -37,7 +35,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -46,16 +43,19 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
- * 举报用户
+ * 举报用户 完成
  */
 public class ReportInfoActivity extends BaseActivity {
 
     private static final String TAG = "ReportInfoActivity";
     String imagePath = "";
 
-    @BindView(R.id.tv_head) TextView tv_head;
-    @BindView(R.id.iv_img) ImageView iv_img;
-    @BindView(R.id.et_opinion) EditText et_opinion;
+    @BindView(R.id.tv_head)
+    TextView tv_head;
+    @BindView(R.id.iv_img)
+    ImageView iv_img;
+    @BindView(R.id.et_opinion)
+    EditText et_opinion;
 
 
     private static final int CHOOSE_PHOTO = 1;
@@ -93,41 +93,40 @@ public class ReportInfoActivity extends BaseActivity {
 
     /**
      * 得到照片
-     *
      */
     private void getImage() {
         //new 一个file用于存放照片
         File imageFile = new File(Environment.getExternalStorageDirectory(), "outputImage.jpg");
-        if (imageFile.exists()){
+        if (imageFile.exists()) {
             imageFile.delete();
         }
-        try{
+        try {
             imageFile.createNewFile();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-            Log.d(TAG, "getImage: "+e.getMessage());
+            Log.d(TAG, "getImage: " + e.getMessage());
         }
         //转为uri
         Uri imageUri = Uri.fromFile(imageFile);
         //开启选择界面
         Intent intent = new Intent("android.intent.action.GET_CONTENT");
         //设置可以缩放
-        intent.putExtra("scale",true);
+        intent.putExtra("scale", true);
         //设置可以裁剪
-        intent.putExtra("crop",true);
+        intent.putExtra("crop", true);
         intent.setType("image/*");
         //设置输出位置
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         //开始选择
-        startActivityForResult(intent,CHOOSE_PHOTO);
+        startActivityForResult(intent, CHOOSE_PHOTO);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case CHOOSE_PHOTO:
-                if(resultCode==RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     handleImageOnKitkat(data);
                 }
                 break;
@@ -159,7 +158,7 @@ public class ReportInfoActivity extends BaseActivity {
             imagePath = getImagePath(uri, null);
         }
         displayImage(imagePath); // 根据图片路径显示图片
-        Log.d(TAG, "照片的详细地址"+imagePath);
+        Log.d(TAG, "照片的详细地址" + imagePath);
     }
 
     /**
@@ -204,40 +203,27 @@ public class ReportInfoActivity extends BaseActivity {
      */
     private void submit() {
         String reportContent = this.et_opinion.getText().toString().trim();
-        if (TextUtils.isEmpty(reportContent)){
-            ToastUtil.show(getApplicationContext(),"举报原因不能为空");
+        if (TextUtils.isEmpty(reportContent)) {
+            ToastUtil.show(getApplicationContext(), "举报原因不能为空");
             return;
         }
-        if (TextUtils.isEmpty(imagePath)){
-            ToastUtil.show(getApplicationContext(),"照片不能为空");
+        if (TextUtils.isEmpty(imagePath)) {
+            ToastUtil.show(getApplicationContext(), "照片不能为空");
             return;
         }
-        String mobile = "13631789759";
+        String mobile = "13631789659";
         String typeId = getIntent().getStringExtra("typeId");
         String photo = imagePath;
-
-        Log.d(TAG, "submit: "+mobile +" "+ reportContent +" "+typeId +" "+ photo);
         dialog.show();
         OkHttpClient okHttpClient = new OkHttpClient();
-        File file = new File(photo);
+        MultipartBody.Builder builider = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        builider.addFormDataPart("token", App.getInstance().getUserInfo().getToken());
+        builider.addFormDataPart("mobile", mobile);
+        builider.addFormDataPart("typeId", typeId);
+        builider.addFormDataPart("reportContent", reportContent);
+        builider.addFormDataPart("photo", photo, RequestBody.create(MediaType.parse("image/*"), new File(photo)));
+        MultipartBody requestBody = builider.build();
 
-        MultipartBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("photo", photo, RequestBody.create(MediaType.parse("image/*"), file))
-                .addFormDataPart("mobile", mobile)
-                .addFormDataPart("typeId", typeId)
-                .addFormDataPart("reportContent", reportContent)
-                .build();
-
-        /*MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
-        RequestBody fileBody = RequestBody.create(MEDIA_TYPE_MARKDOWN, file);
-        RequestBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("photo",photo,fileBody)
-                .addFormDataPart("mobile", mobile)
-                .addFormDataPart("typeId",typeId)
-                .addFormDataPart("reportContent",reportContent)
-                .build();*/
         Request request = new Request.Builder()
                 .url(Constant.JUBAO)
                 .post(requestBody)
@@ -246,15 +232,31 @@ public class ReportInfoActivity extends BaseActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: "+e.getMessage());
+                Log.d(TAG, "onFailure: " + e.getMessage());
                 dialog.dismiss();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String string = response.body().string();
-                Log.d(TAG, "onResponse: "+string);
                 dialog.dismiss();
+                String string = response.body().string();
+                Gson gson = new Gson();
+                final UserInfo userInfo = gson.fromJson(string, UserInfo.class);
+                if (userInfo.getError().equals("-1")) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.show(getApplicationContext(), userInfo.getMsg());
+                        }
+                    });
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.show(getApplicationContext(), "举报失败！");
+                        }
+                    });
+                }
             }
         });
     }

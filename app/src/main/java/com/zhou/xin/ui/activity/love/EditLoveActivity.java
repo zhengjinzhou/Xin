@@ -32,10 +32,14 @@ import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.base.other.PermissionsResultListener;
 import com.zhou.xin.bean.BaseInfo;
+import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.bean.SelectBean;
 import com.zhou.xin.bean.UserInfo;
+import com.zhou.xin.ui.activity.huanxin.MainActivity;
+import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.DateUtil;
 import com.zhou.xin.utils.GlideRoundTransform;
+import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.PersonalFormTools;
 import com.zhou.xin.utils.ToastUtil;
 
@@ -65,35 +69,64 @@ import okhttp3.Response;
 public class EditLoveActivity extends BaseActivity {
 
     private static final String TAG = "EditActivity";
-    @BindView(R.id.img_1) ImageView img1;
-    @BindView(R.id.img_2) ImageView img2;
-    @BindView(R.id.img_3) ImageView img3;
-    @BindView(R.id.img_4) ImageView img4;
-    @BindView(R.id.img_5) ImageView img5;
-    @BindView(R.id.del_1) ImageView del_1;
-    @BindView(R.id.del_2) ImageView del_2;
-    @BindView(R.id.del_3) ImageView del_3;
-    @BindView(R.id.del_4) ImageView del_4;
-    @BindView(R.id.del_5) ImageView del_5;
-    @BindView(R.id.ll_details) LinearLayout ll_details;
-    @BindView(R.id.bt_next) Button bt_next;
-    @BindView(R.id.bt_skip) Button bt_skip;
-    @BindView(R.id.radioGroup) RadioGroup radioGroup;
-    @BindView(R.id.tv_major) TextView tv_major;
-    @BindView(R.id.tv_conste) TextView tv_conste;
-    @BindView(R.id.tv_travels) TextView tv_travels;
-    @BindView(R.id.tv_labels) TextView tv_labels;
-    @BindView(R.id.tv_books) TextView tv_books;
-    @BindView(R.id.tv_video) TextView tv_video;
-    @BindView(R.id.tv_foots) TextView tv_foots;
-    @BindView(R.id.tv_musics) TextView tv_musics;
-    @BindView(R.id.tv_sport) TextView tv_sport;
-    @BindView(R.id.tv_birthday) TextView tv_birthday;
-    @BindView(R.id.et_nickname) EditText et_nickname;
-    @BindView(R.id.et_realname) EditText et_realname;
-    @BindView(R.id.et_wechat) EditText et_wechat;
-    @BindView(R.id.tv_head) TextView tv_head;
-    @BindView(R.id.et_autograph) EditText et_autograph;
+    @BindView(R.id.img_1)
+    ImageView img1;
+    @BindView(R.id.img_2)
+    ImageView img2;
+    @BindView(R.id.img_3)
+    ImageView img3;
+    @BindView(R.id.img_4)
+    ImageView img4;
+    @BindView(R.id.img_5)
+    ImageView img5;
+    @BindView(R.id.del_1)
+    ImageView del_1;
+    @BindView(R.id.del_2)
+    ImageView del_2;
+    @BindView(R.id.del_3)
+    ImageView del_3;
+    @BindView(R.id.del_4)
+    ImageView del_4;
+    @BindView(R.id.del_5)
+    ImageView del_5;
+    @BindView(R.id.ll_details)
+    LinearLayout ll_details;
+    @BindView(R.id.bt_next)
+    Button bt_next;
+    @BindView(R.id.bt_skip)
+    Button bt_skip;
+    @BindView(R.id.radioGroup)
+    RadioGroup radioGroup;
+    @BindView(R.id.tv_major)
+    TextView tv_major;
+    @BindView(R.id.tv_conste)
+    TextView tv_conste;
+    @BindView(R.id.tv_travels)
+    TextView tv_travels;
+    @BindView(R.id.tv_labels)
+    TextView tv_labels;
+    @BindView(R.id.tv_books)
+    TextView tv_books;
+    @BindView(R.id.tv_video)
+    TextView tv_video;
+    @BindView(R.id.tv_foots)
+    TextView tv_foots;
+    @BindView(R.id.tv_musics)
+    TextView tv_musics;
+    @BindView(R.id.tv_sport)
+    TextView tv_sport;
+    @BindView(R.id.tv_birthday)
+    TextView tv_birthday;
+    @BindView(R.id.et_nickname)
+    EditText et_nickname;
+    @BindView(R.id.et_realname)
+    EditText et_realname;
+    @BindView(R.id.et_wechat)
+    EditText et_wechat;
+    @BindView(R.id.tv_head)
+    TextView tv_head;
+    @BindView(R.id.et_autograph)
+    EditText et_autograph;
 
 
     private int index = 0;
@@ -137,23 +170,28 @@ public class EditLoveActivity extends BaseActivity {
     private Map<String, String> constellationMap;
     private Map<String, List<String>> mapCity;
 
-    private String label_others = "";
-    private String character_others = "";
-    private String sport_others = "";
-    private String music_others = "";
-    private String food_others = "";
-    private String film_others = "";
-    private String book_others = "";
-    private String travel_others = "";
+    private String label_others = "暂无";
+    private String character_others = "暂无";
+    private String sport_others = "暂无";
+    private String music_others = "暂无";
+    private String food_others = "暂无";
+    private String film_others = "暂无";
+    private String book_others = "暂无";
+    private String travel_others = "暂无";
 
 
-    private String brithday= DateUtil.lineDate(new Date());
+    private String brithday = DateUtil.lineDate(new Date());
     private int sex = 1;//性别
 
-    /** ======================================================**/
+    /**
+     * ======================================================
+     **/
     private Integer majorID = 1;
-    private String constellationID= "";
-    /** ======================================================**/
+    private String constellationID = "";
+
+    /**
+     * ======================================================
+     **/
     @Override
     protected int getLayout() {
         return R.layout.activity_edit_love;
@@ -195,7 +233,7 @@ public class EditLoveActivity extends BaseActivity {
                 if (checkedRadioButtonId == 2131296688)
                     sex = 1;
                 if (checkedRadioButtonId == 2131296686)
-                    sex =0;
+                    sex = 0;
             }
         });
         if (App.getInstence() == null) return;
@@ -247,47 +285,47 @@ public class EditLoveActivity extends BaseActivity {
         uploadTravel = new ArrayList<>();
         mapTravel = new HashMap<>();
 
-        for (int i=0;i<categoryList.get(0).getTypes().size();i++){
+        for (int i = 0; i < categoryList.get(0).getTypes().size(); i++) {
             listLabel.add(categoryList.get(0).getTypes().get(i).getName());
-            mapLabel.put(categoryList.get(0).getTypes().get(i).getName(),categoryList.get(0).getTypes().get(i).getKey());
+            mapLabel.put(categoryList.get(0).getTypes().get(i).getName(), categoryList.get(0).getTypes().get(i).getKey());
         }
 
-        for (int i=0;i<categoryList.get(1).getTypes().size();i++){
+        for (int i = 0; i < categoryList.get(1).getTypes().size(); i++) {
             listSport.add(categoryList.get(1).getTypes().get(i).getName());
-            mapSport.put(categoryList.get(1).getTypes().get(i).getName(),categoryList.get(1).getTypes().get(i).getKey());
+            mapSport.put(categoryList.get(1).getTypes().get(i).getName(), categoryList.get(1).getTypes().get(i).getKey());
         }
-        for (int i=0;i<categoryList.get(2).getTypes().size();i++){
+        for (int i = 0; i < categoryList.get(2).getTypes().size(); i++) {
             listMusic.add(categoryList.get(2).getTypes().get(i).getName());
-            mapMusic.put(categoryList.get(2).getTypes().get(i).getName(),categoryList.get(2).getTypes().get(i).getKey());
+            mapMusic.put(categoryList.get(2).getTypes().get(i).getName(), categoryList.get(2).getTypes().get(i).getKey());
         }
-        for (int i=0;i<categoryList.get(3).getTypes().size();i++){
+        for (int i = 0; i < categoryList.get(3).getTypes().size(); i++) {
             listFood.add(categoryList.get(3).getTypes().get(i).getName());
-            mapFoot.put(categoryList.get(3).getTypes().get(i).getName(),categoryList.get(3).getTypes().get(i).getKey());
+            mapFoot.put(categoryList.get(3).getTypes().get(i).getName(), categoryList.get(3).getTypes().get(i).getKey());
         }
-        for (int i=0;i<categoryList.get(4).getTypes().size();i++){
+        for (int i = 0; i < categoryList.get(4).getTypes().size(); i++) {
             listFilm.add(categoryList.get(4).getTypes().get(i).getName());
-            mapFilm.put(categoryList.get(4).getTypes().get(i).getName(),categoryList.get(4).getTypes().get(i).getKey());
+            mapFilm.put(categoryList.get(4).getTypes().get(i).getName(), categoryList.get(4).getTypes().get(i).getKey());
         }
-        for (int i=0;i<categoryList.get(5).getTypes().size();i++){
+        for (int i = 0; i < categoryList.get(5).getTypes().size(); i++) {
             listBook.add(categoryList.get(5).getTypes().get(i).getName());
-            mapBook.put(categoryList.get(5).getTypes().get(i).getName(),categoryList.get(5).getTypes().get(i).getKey());
+            mapBook.put(categoryList.get(5).getTypes().get(i).getName(), categoryList.get(5).getTypes().get(i).getKey());
         }
-        for (int i=0;i<categoryList.get(6).getTypes().size();i++){
+        for (int i = 0; i < categoryList.get(6).getTypes().size(); i++) {
             listTravel.add(categoryList.get(6).getTypes().get(i).getName());
-            mapTravel.put(categoryList.get(6).getTypes().get(i).getName(),categoryList.get(6).getTypes().get(i).getKey());
+            mapTravel.put(categoryList.get(6).getTypes().get(i).getName(), categoryList.get(6).getTypes().get(i).getKey());
         }
-        for (int i=0;i<categoryList.get(7).getTypes().size();i++){
+        for (int i = 0; i < categoryList.get(7).getTypes().size(); i++) {
             constellationList.add(categoryList.get(7).getTypes().get(i).getName());
-            constellationMap.put(categoryList.get(7).getTypes().get(i).getName(),categoryList.get(7).getTypes().get(i).getKey());
+            constellationMap.put(categoryList.get(7).getTypes().get(i).getName(), categoryList.get(7).getTypes().get(i).getKey());
         }
 
-        for (int i=0;i<selectBean.getMajorList().size();i++){
-            mapMajor.put(selectBean.getMajorList().get(i).getMajorName(),selectBean.getMajorList().get(i).getId());
+        for (int i = 0; i < selectBean.getMajorList().size(); i++) {
+            mapMajor.put(selectBean.getMajorList().get(i).getMajorName(), selectBean.getMajorList().get(i).getId());
             listMajor.add(selectBean.getMajorList().get(i).getMajorName());
         }
-        for (int i = 0;i<selectBean.getProvinceList().size();i++){
+        for (int i = 0; i < selectBean.getProvinceList().size(); i++) {
             listProvince.add(selectBean.getProvinceList().get(i).getName());
-            for (int j=0;j<selectBean.getProvinceList().get(i).getCitys().size();j++){
+            for (int j = 0; j < selectBean.getProvinceList().get(i).getCitys().size(); j++) {
                 listCity.add(selectBean.getProvinceList().get(i).getCitys().get(j).getName());
             }
             mapCity.put(selectBean.getProvinceList().get(i).getName(), listCity);//好复杂的省份嵌套城市
@@ -297,32 +335,32 @@ public class EditLoveActivity extends BaseActivity {
     @OnClick({R.id.bt_next, R.id.bt_skip, R.id.back, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4
             , R.id.layout_5, R.id.del_1, R.id.del_2, R.id.del_3, R.id.del_4, R.id.del_5, R.id.bt_submit, R.id.tv_province_city
             , R.id.tv_sport, R.id.tv_musics, R.id.tv_foots, R.id.tv_video, R.id.tv_major, R.id.tv_conste,
-            R.id.tv_books, R.id.tv_travels,R.id.tv_labels,R.id.tv_birthday})
+            R.id.tv_books, R.id.tv_travels, R.id.tv_labels, R.id.tv_birthday})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_birthday:
                 initTime(tv_birthday);
                 break;
             case R.id.tv_travels:
-                showMultiChioceDialog1(listTravel.toArray(new String[listTravel.size()]),uploadTravel,mapTravel,tv_travels);
+                showMultiChioceDialog1(listTravel.toArray(new String[listTravel.size()]), uploadTravel, mapTravel, tv_travels);
                 break;
             case R.id.tv_labels://我的个性标签
-                showMultiChioceDialog(listLabel.toArray(new String[listLabel.size()]),uploadLabel,mapLabel,tv_labels);
+                showMultiChioceDialog(listLabel.toArray(new String[listLabel.size()]), uploadLabel, mapLabel, tv_labels);
                 break;
             case R.id.tv_books:
-                showMultiChioceDialog1(listBook.toArray(new String[listBook.size()]),uploapBook,mapBook,tv_books);
+                showMultiChioceDialog1(listBook.toArray(new String[listBook.size()]), uploapBook, mapBook, tv_books);
                 break;
             case R.id.tv_video:
-                showMultiChioceDialog1(listFilm.toArray(new String[listFilm.size()]),uploadFilm,mapFilm,tv_video);
+                showMultiChioceDialog1(listFilm.toArray(new String[listFilm.size()]), uploadFilm, mapFilm, tv_video);
                 break;
             case R.id.tv_foots:
-                showMultiChioceDialog1(listFood.toArray(new String[listFood.size()]),uploadFood,mapFoot,tv_foots);
+                showMultiChioceDialog1(listFood.toArray(new String[listFood.size()]), uploadFood, mapFoot, tv_foots);
                 break;
             case R.id.tv_musics:
-                showMultiChioceDialog1(listMusic.toArray(new String[listMusic.size()]),uploadMusic,mapMusic,tv_musics);
+                showMultiChioceDialog1(listMusic.toArray(new String[listMusic.size()]), uploadMusic, mapMusic, tv_musics);
                 break;
             case R.id.tv_sport:
-                showMultiChioceDialog(listSport.toArray(new String[listSport.size()]),uploadSport,mapSport,tv_sport);
+                showMultiChioceDialog(listSport.toArray(new String[listSport.size()]), uploadSport, mapSport, tv_sport);
                 break;
             case R.id.tv_province_city:
 
@@ -391,18 +429,18 @@ public class EditLoveActivity extends BaseActivity {
      *
      * @param et
      */
-    private void initTime(final TextView et){
+    private void initTime(final TextView et) {
         Calendar selectedDate = Calendar.getInstance();
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
-        startDate.set(1920,0,1);
+        startDate.set(1920, 0, 1);
         //endDate.set(selectedDate.get(Calendar.YEAR),selectedDate.get(Calendar.MONTH),selectedDate.get(Calendar.DATE));
-        endDate.set(2022,2,2);
+        endDate.set(2022, 2, 2);
         new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                et.setText("生日:"+format.format(date));
+                et.setText("生日:" + format.format(date));
                 brithday = format.format(date);
             }
         })
@@ -429,7 +467,7 @@ public class EditLoveActivity extends BaseActivity {
      * @param map
      * @param tv
      */
-    public void showMultiChioceDialog(final String[] shuzu, final List<String> uoload, final Map<String,String> map, final TextView tv) {
+    public void showMultiChioceDialog(final String[] shuzu, final List<String> uoload, final Map<String, String> map, final TextView tv) {
         final List<String> list = new ArrayList<>();
         //final EditText editText = new EditText(this);
         //editText.setHint("    若还有其他，请输入");
@@ -445,16 +483,16 @@ public class EditLoveActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 
                 checkedItems[which] = isChecked;
-                if (isChecked == true){
+                if (isChecked == true) {
                     list.add(shuzu[which]);
                     uoload.add(map.get(shuzu[which]));
-                    Log.d(TAG, "onClick: "+uoload.toString());
+                    Log.d(TAG, "onClick: " + uoload.toString());
                 }
-                if (isChecked == false){
+                if (isChecked == false) {
                     int i = list.indexOf(shuzu[which]);
                     list.remove(i);
                     uoload.remove(map.get(shuzu[which]));
-                    Log.d(TAG, "onClick: "+uoload.toString());
+                    Log.d(TAG, "onClick: " + uoload.toString());
                 }
                 // Toast.makeText(getApplicationContext(), shuzu[which]  + isChecked, Toast.LENGTH_SHORT).show();
             }
@@ -480,7 +518,7 @@ public class EditLoveActivity extends BaseActivity {
     }
 
 
-    public void showMultiChioceDialog1(final String[] shuzu, final List<String> uoload, final Map<String,String> map, final TextView tv) {
+    public void showMultiChioceDialog1(final String[] shuzu, final List<String> uoload, final Map<String, String> map, final TextView tv) {
         final List<String> list = new ArrayList<>();
         final EditText editText = new EditText(this);
         editText.setHint("    若还有其他，请输入");
@@ -496,18 +534,18 @@ public class EditLoveActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 
                 checkedItems[which] = isChecked;
-                if (isChecked == true){
+                if (isChecked == true) {
                     list.add(shuzu[which]);
                     uoload.add(map.get(shuzu[which]));
-                    Log.d(TAG, "onClick: "+uoload.toString());
+                    Log.d(TAG, "onClick: " + uoload.toString());
                 }
-                if (isChecked == false){
+                if (isChecked == false) {
                     int i = list.indexOf(shuzu[which]);
                     list.remove(i);
                     uoload.remove(map.get(shuzu[which]));
-                    Log.d(TAG, "onClick: "+uoload.toString());
+                    Log.d(TAG, "onClick: " + uoload.toString());
                 }
-               // Toast.makeText(getApplicationContext(), shuzu[which]  + isChecked, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), shuzu[which]  + isChecked, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -517,7 +555,7 @@ public class EditLoveActivity extends BaseActivity {
                 System.out.println(editText.getText());
                 System.out.println(list.toString());
                 System.out.println("map" + uoload.toString());
-                tv.setText(list.toString()+editText.getText());
+                tv.setText(list.toString() + editText.getText());
             }
         });
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -543,10 +581,10 @@ public class EditLoveActivity extends BaseActivity {
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 txt.setText(string + list.get(options1));
                 //同时获取相应的id，因为上传需要
-                if(listMajor.contains(list.get(options1))){
+                if (listMajor.contains(list.get(options1))) {
                     majorID = mapMajor.get(list.get(options1));
                 }
-                if (constellationList.contains(list.get(options1))){
+                if (constellationList.contains(list.get(options1))) {
                     constellationID = constellationMap.get(list.get(options1));
                 }
             }
@@ -557,51 +595,50 @@ public class EditLoveActivity extends BaseActivity {
      * 简单上传 与完整上传
      */
     private void submit() {
-
         String nickname = et_nickname.getText().toString();
-        if (TextUtils.isEmpty(nickname)){
-            ToastUtil.show(getApplicationContext(),"昵称不能为空");
+        if (TextUtils.isEmpty(nickname)) {
+            ToastUtil.show(getApplicationContext(), "昵称不能为空");
             return;
         }
-        if(!PersonalFormTools.getInstall().verf(data)){
+        if (!PersonalFormTools.getInstall().verf(data)) {
             ToastUtil.show(getApplicationContext(), "照片不能为空");
             return;
         }
-
-        /**
-         * ======================================================================================
-         */
-        List<String> entity = getTureData(data);
-
+        List<String> entity = getTureData(data);//照片地址相关
         OkHttpClient okHttpClient = new OkHttpClient();
-
         MultipartBody.Builder builider = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        builider.addFormDataPart("uid",  App.getInstance().getUserInfo().getUid());
-        builider.addFormDataPart("token",App.getInstance().getUserInfo().getToken());
-        builider.addFormDataPart("nickname",nickname);//昵称
-        builider.addFormDataPart("sex",sex+"");//性别
-        builider.addFormDataPart("username",et_realname.getText().toString().trim());//真实姓名
+        builider.addFormDataPart("uid", App.getInstance().getUserInfo().getUid());
+        builider.addFormDataPart("token", App.getInstance().getUserInfo().getToken());
+        builider.addFormDataPart("nickname", nickname);//昵称
+        builider.addFormDataPart("sex", sex + "");//性别
+        if (!TextUtils.isEmpty(et_realname.getText().toString().trim()))
+            builider.addFormDataPart("username", et_realname.getText().toString().trim());//真实姓名
         int age = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date())) - Integer.parseInt(brithday.substring(0, 4));//年龄用当前时间减去生日的时间
-        builider.addFormDataPart("age",age+"");//年龄用当前时间减去生日的时间
-        builider.addFormDataPart("birthday",brithday);//生日
-        builider.addFormDataPart("city","");//城市id
-        builider.addFormDataPart("wechat",et_wechat.getText().toString().trim()+"");//微信号
-        builider.addFormDataPart("major",majorID+"");//学历
-        builider.addFormDataPart("constellation",constellationID);//星座id
-        builider.addFormDataPart("autograph",et_autograph.getText().toString().trim()+"");//签名
-        builider.addFormDataPart("labels[]",uploadLabel.toString().substring(1,uploadLabel.toString().length()-1)+"&label_others=");//个性标签
-        builider.addFormDataPart("sports[]",uploadSport.toString().substring(1,uploadSport.toString().length()-1)+"&sport_others=");//运动类型
-        builider.addFormDataPart("music[]",uploadMusic.toString().substring(1,uploadMusic.toString().length()-1)+"&music_others=");//音乐类型
-        builider.addFormDataPart("foods[]",uploadFood.toString().substring(1,uploadFood.toString().length()-1)+"&food_others=");//食物
-        builider.addFormDataPart("films[]",uploadFilm.toString().substring(1,uploadFilm.toString().length()-1)+"&film_others=");//影视
-        builider.addFormDataPart("books[]",uploapBook.toString().substring(1,uploapBook.toString().length()-1)+"&book_others=");//书籍
-        builider.addFormDataPart("travels[]",uploadTravel.toString().substring(1,uploadTravel.toString().length()-1)+"&travel_others=");//旅行足迹
+        builider.addFormDataPart("age", age + "");//年龄用当前时间减去生日的时间
+        builider.addFormDataPart("birthday", brithday);//生日
+        builider.addFormDataPart("city", "");//城市id
+        if (!TextUtils.isEmpty(et_wechat.getText().toString().trim()))
+            builider.addFormDataPart("wechat", et_wechat.getText().toString().trim());//微信号
+        builider.addFormDataPart("major", majorID + "");//学历
+        builider.addFormDataPart("constellation", constellationID);//星座id
+        if (!TextUtils.isEmpty(et_autograph.getText().toString().trim()))
+            builider.addFormDataPart("autograph", et_autograph.getText().toString().trim());//签名
+        builider.addFormDataPart("labels[]", uploadLabel.toString().substring(1, uploadLabel.toString().length() - 1).replace(" ", ""));//个性标签
+        //builider.addFormDataPart("label_others", label_others);
+        builider.addFormDataPart("sports[]", uploadSport.toString().substring(1, uploadSport.toString().length() - 1).replace(" ", ""));//运动类型
+        //builider.addFormDataPart("sport_others", sport_others);
+        builider.addFormDataPart("music[]", uploadMusic.toString().substring(1, uploadMusic.toString().length() - 1).replace(" ", ""));//音乐类型
+        //builider.addFormDataPart("music_others", music_others);
+        builider.addFormDataPart("foods[]", uploadFood.toString().substring(1, uploadFood.toString().length() - 1).replace(" ", ""));//食物
+        //builider.addFormDataPart("food_others", food_others);
+        builider.addFormDataPart("films[]", uploadFilm.toString().substring(1, uploadFilm.toString().length() - 1).replace(" ", ""));//影视
+        //builider.addFormDataPart("film_others", film_others);
+        builider.addFormDataPart("books[]", uploapBook.toString().substring(1, uploapBook.toString().length() - 1).replace(" ", ""));//书籍
+        //builider.addFormDataPart("book_others", book_others);
+        builider.addFormDataPart("travels[]", uploadTravel.toString().substring(1, uploadTravel.toString().length() - 1).replace(" ", ""));//旅行足迹
+        //builider.addFormDataPart("travel_others", travel_others);
 
-        //Log.d(TAG, "submit: 122222"+uploadLabel.toString().substring(1,uploadLabel.toString().length()-1));
-
-
-        Log.d(TAG, "submit1: "+entity.toString());
-        for (int i=0;i<entity.size();i++){
+        for (int i = 0; i < entity.size(); i++) {
             builider.addFormDataPart("photo", entity.get(i), RequestBody.create(MediaType.parse("image/*"), new File(entity.get(i))));
         }
         MultipartBody body = builider.build();
@@ -615,31 +652,56 @@ public class EditLoveActivity extends BaseActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 dialog.dismiss();
-                Log.d(TAG, "onFailure: "+e.getMessage());
+                Log.d(TAG, "修改会员信息onFailure: " + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                Log.d(TAG, "onResponse: "+string);
-                dialog.dismiss();
-                final UserInfo userInfo = new Gson().fromJson(string, UserInfo.class);
-                if (userInfo.getError().equals("-1")){
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtil.show(getApplicationContext(),userInfo.getMsg());
-                        }
-                    });
-                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.show(getApplicationContext(), "更新信息成功！");
+                    }
+                });
+                getResult();
             }
         });
+    }
 
+    private void getResult() {
+        String uid = App.getInstance().getUserInfo().getUid();
+        String token = App.getInstance().getUserInfo().getToken();
+        String opt = "5";
+        String _t = CurrentTimeUtil.nowTime();
+        String joint = "_t=" + _t + "&opt=" + opt + "&token=" + token + "&uid=" + uid + Constant.APP_ENCRYPTION_KEY;
+        String _s = Md5Util.encoder(joint);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody build = new FormBody.Builder()
+                .add("uid", uid)
+                .add("token", token)
+                .add("opt", opt)
+                .add("_t", _t)
+                .add("_s", _s)
+                .build();
+        Request request = new Request.Builder().url(Constant.LOGIN_URL).post(build).build();
+        Call call2 = okHttpClient.newCall(request);
+        call2.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, final IOException e) {
+                Log.d(TAG, "---------onFailure: " + e.getMessage());
+                dialog.dismiss();
+            }
 
-        /**
-         * ======================================================================================
-         */
-
+            @Override
+            public void onResponse(Call call, Response res) throws IOException {
+                String string = res.body().string();
+                dialog.dismiss();
+                Log.d(TAG, "更新个人信息成功: " + string);
+                PersonalBean personalBean = new Gson().fromJson(string, PersonalBean.class);
+                App.getInstence().setPersonalBean(personalBean);
+            }
+        });
     }
 
     private void openPhotoPermissions(final int i) {
@@ -782,16 +844,17 @@ public class EditLoveActivity extends BaseActivity {
 
     /**
      * 获取被选择的数据
+     *
      * @param data
      * @return
      */
-    public List<String> getTureData(List<BaseInfo> data){
+    public List<String> getTureData(List<BaseInfo> data) {
 
         List<String> entity = new ArrayList<>();
         int count = data.size();
-        for(int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
             BaseInfo info = data.get(i);
-            if(info.isCheck()){
+            if (info.isCheck()) {
                 entity.add(info.getName());
             }
         }

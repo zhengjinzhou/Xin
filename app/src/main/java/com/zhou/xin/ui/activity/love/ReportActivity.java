@@ -75,6 +75,7 @@ public class ReportActivity extends BaseActivity {
                     public void onClick(View v) {
                         if (s.getAcTypes().size() == 0){
                             startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+""));
+                            Log.d(TAG, "onClick: "+s.getId());
                         }else {
                             List<ReportBean.AccusationCategoryListBean.AcTypesBean> acTypes = s.getAcTypes();
                             String json = new Gson().toJson(acTypes);

@@ -41,6 +41,7 @@ import com.zhou.xin.ui.activity.love.SafeActivity;
 import com.zhou.xin.ui.activity.love.SuccessActivity;
 import com.zhou.xin.ui.activity.love.TaskActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
+import com.zhou.xin.utils.LogUtil;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.utils.ToastUtil;
@@ -83,11 +84,11 @@ public class MeFragment extends BaseFragment {
     protected void init(View v) {
         back.setVisibility(View.GONE);
         tv_head.setText("我");
-
         initRecycle();
-        getInfo();
         setInfo();
+        getInfo();
     }
+
 
     /**
      * Recycle的自定义布局
@@ -125,6 +126,8 @@ public class MeFragment extends BaseFragment {
 
     /**
      * 联网获取数据
+     *
+     * 获取个人信息设置选项
      */
     private void getInfo() {
         if (App.getInstence().getUserInfo() == null){
@@ -161,11 +164,11 @@ public class MeFragment extends BaseFragment {
         @Override
         public void onResponse(Call call, final Response response) throws IOException {
             String string = response.body().string();
-            // Log.d(TAG, "获取个人信息设置选项: "+string);
+            LogUtil.d("草草草哦啊从奥次哦啊从初次："+string);
             Gson gson = new Gson();
             SelectBean selectBean = gson.fromJson(string, SelectBean.class);
             App.getInstence().setSelectBean(selectBean);
-            Log.d(TAG, "onResponse: "+selectBean.getMajorList().toString());
+
         }
     };
 
