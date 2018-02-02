@@ -128,8 +128,6 @@ public class ContactListFragment extends EaseContactListFragment {
                 }
             }
         });
-
-
         // 进入添加好友页  ，这里是不需要的，到时候删除掉
         /*titleBar.getRightLayout().setOnClickListener(new View.OnClickListener() {
 
@@ -138,8 +136,6 @@ public class ContactListFragment extends EaseContactListFragment {
                 startActivity(new Intent(getActivity(), AddContactActivity.class));
             }
         });*/
-
-
         contactSyncListener = new ContactSyncListener();
         DemoHelper.getInstance().addSyncContactListener(contactSyncListener);
 

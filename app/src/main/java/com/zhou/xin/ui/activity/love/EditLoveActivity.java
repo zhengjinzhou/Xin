@@ -525,7 +525,7 @@ public class EditLoveActivity extends BaseActivity {
         editText.setMaxLines(3);
         editText.setBackground(getResources().getDrawable(R.drawable.btn_bg));
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(editText);
+        //builder.setView(editText);
         builder.setTitle("多选对话框");
         builder.setIcon(R.mipmap.ic_launcher);
         final boolean[] checkedItems = new boolean[shuzu.length];/*设置多选默认状态*/
@@ -613,31 +613,41 @@ public class EditLoveActivity extends BaseActivity {
         builider.addFormDataPart("sex", sex + "");//性别
         if (!TextUtils.isEmpty(et_realname.getText().toString().trim()))
             builider.addFormDataPart("username", et_realname.getText().toString().trim());//真实姓名
-        int age = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date())) - Integer.parseInt(brithday.substring(0, 4));//年龄用当前时间减去生日的时间
-        builider.addFormDataPart("age", age + "");//年龄用当前时间减去生日的时间
-        builider.addFormDataPart("birthday", brithday);//生日
+        if (brithday != DateUtil.lineDate(new Date())) {
+            int age = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date())) - Integer.parseInt(brithday.substring(0, 4));//年龄用当前时间减去生日的时间
+            builider.addFormDataPart("age", age + "");//年龄用当前时间减去生日的时间
+            builider.addFormDataPart("birthday", brithday);//生日
+        }
         builider.addFormDataPart("city", "");//城市id
         if (!TextUtils.isEmpty(et_wechat.getText().toString().trim()))
             builider.addFormDataPart("wechat", et_wechat.getText().toString().trim());//微信号
-        builider.addFormDataPart("major", majorID + "");//学历
-        builider.addFormDataPart("constellation", constellationID);//星座id
+        if (majorID != null) {
+            builider.addFormDataPart("major", majorID + "");//学历
+        }
+        if (!TextUtils.isEmpty(constellationID))
+            builider.addFormDataPart("constellation", constellationID);//星座id
         if (!TextUtils.isEmpty(et_autograph.getText().toString().trim()))
             builider.addFormDataPart("autograph", et_autograph.getText().toString().trim());//签名
-        builider.addFormDataPart("labels[]", uploadLabel.toString().substring(1, uploadLabel.toString().length() - 1).replace(" ", ""));//个性标签
+        if (uploadLabel.size() > 0)
+            builider.addFormDataPart("labels[]", uploadLabel.toString().substring(1, uploadLabel.toString().length() - 1).replace(" ", ""));//个性标签
         //builider.addFormDataPart("label_others", label_others);
-        builider.addFormDataPart("sports[]", uploadSport.toString().substring(1, uploadSport.toString().length() - 1).replace(" ", ""));//运动类型
+        if (uploadSport.size() > 0)
+            builider.addFormDataPart("sports[]", uploadSport.toString().substring(1, uploadSport.toString().length() - 1).replace(" ", ""));//运动类型
         //builider.addFormDataPart("sport_others", sport_others);
-        builider.addFormDataPart("music[]", uploadMusic.toString().substring(1, uploadMusic.toString().length() - 1).replace(" ", ""));//音乐类型
+        if (uploadMusic.size() > 0)
+            builider.addFormDataPart("music[]", uploadMusic.toString().substring(1, uploadMusic.toString().length() - 1).replace(" ", ""));//音乐类型
         //builider.addFormDataPart("music_others", music_others);
-        builider.addFormDataPart("foods[]", uploadFood.toString().substring(1, uploadFood.toString().length() - 1).replace(" ", ""));//食物
+        if (uploadFood.size() > 0)
+            builider.addFormDataPart("foods[]", uploadFood.toString().substring(1, uploadFood.toString().length() - 1).replace(" ", ""));//食物
         //builider.addFormDataPart("food_others", food_others);
-        builider.addFormDataPart("films[]", uploadFilm.toString().substring(1, uploadFilm.toString().length() - 1).replace(" ", ""));//影视
+        if (uploadFilm.size() > 0)
+            builider.addFormDataPart("films[]", uploadFilm.toString().substring(1, uploadFilm.toString().length() - 1).replace(" ", ""));//影视
         //builider.addFormDataPart("film_others", film_others);
-        builider.addFormDataPart("books[]", uploapBook.toString().substring(1, uploapBook.toString().length() - 1).replace(" ", ""));//书籍
+        if (uploapBook.size() > 0)
+            builider.addFormDataPart("books[]", uploapBook.toString().substring(1, uploapBook.toString().length() - 1).replace(" ", ""));//书籍
         //builider.addFormDataPart("book_others", book_others);
         builider.addFormDataPart("travels[]", uploadTravel.toString().substring(1, uploadTravel.toString().length() - 1).replace(" ", ""));//旅行足迹
         //builider.addFormDataPart("travel_others", travel_others);
-
         for (int i = 0; i < entity.size(); i++) {
             builider.addFormDataPart("photo", entity.get(i), RequestBody.create(MediaType.parse("image/*"), new File(entity.get(i))));
         }
@@ -658,12 +668,7 @@ public class EditLoveActivity extends BaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUtil.show(getApplicationContext(), "更新信息成功！");
-                    }
-                });
+                Log.d(TAG, "更新信息成功: " + string);
                 getResult();
             }
         });
@@ -697,7 +702,13 @@ public class EditLoveActivity extends BaseActivity {
             public void onResponse(Call call, Response res) throws IOException {
                 String string = res.body().string();
                 dialog.dismiss();
-                Log.d(TAG, "更新个人信息成功: " + string);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.show(getApplicationContext(), "更新信息成功！");
+                    }
+                });
+                Log.d(TAG, "获取新的信息成功: " + string);
                 PersonalBean personalBean = new Gson().fromJson(string, PersonalBean.class);
                 App.getInstence().setPersonalBean(personalBean);
             }

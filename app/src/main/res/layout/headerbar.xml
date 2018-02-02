@@ -26,7 +26,7 @@
             android:layout_centerVertical="true"
             android:text=""
             android:textColor="#fff"
-            android:textSize="@dimen/space_18" />
+            android:textSize="@dimen/space_20" />
 
         <ImageView
             android:visibility="gone"
@@ -38,6 +38,7 @@
             android:src="@android:drawable/ic_menu_add" />
 
         <TextView
+            android:textSize="@dimen/space_18"
             android:visibility="gone"
             android:textColor="#fff"
             android:id="@+id/tv_title"
