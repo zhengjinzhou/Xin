@@ -180,4 +180,5 @@ public abstract class BaseActivity extends EaseBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+    
 }

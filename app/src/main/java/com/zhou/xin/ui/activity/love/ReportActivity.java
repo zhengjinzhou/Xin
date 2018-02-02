@@ -1,5 +1,6 @@
 package com.zhou.xin.ui.activity.love;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
@@ -50,7 +51,6 @@ public class ReportActivity extends BaseActivity {
     private List<ReportBean.AccusationCategoryListBean> data;
     private CommonAdapter adapter;
 
-
     @Override
     protected int getLayout() {
         return R.layout.activity_report;
@@ -58,6 +58,7 @@ public class ReportActivity extends BaseActivity {
 
     @Override
     protected void init() {
+
         tv_head.setText("举报用户");
         getInfo();
         initRecycle();
@@ -74,12 +75,12 @@ public class ReportActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         if (s.getAcTypes().size() == 0){
-                            startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+""));
+                            startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+"",getIntent().getStringExtra("username")));
                             Log.d(TAG, "onClick: "+s.getId());
                         }else {
                             List<ReportBean.AccusationCategoryListBean.AcTypesBean> acTypes = s.getAcTypes();
                             String json = new Gson().toJson(acTypes);
-                            startActivity(Report2Activity.newintent(getApplicationContext(),json));
+                            startActivity(Report2Activity.newintent(getApplicationContext(),json,getIntent().getStringExtra("username")));
                         }
                     }
                 });

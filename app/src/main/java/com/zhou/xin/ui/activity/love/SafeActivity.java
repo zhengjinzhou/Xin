@@ -42,7 +42,7 @@ public class SafeActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.back,R.id.rl_clean,R.id.rl_change}) void click(View view){
+    @OnClick({R.id.back,R.id.rl_clean,R.id.rl_change,R.id.rl_app}) void click(View view){
         switch (view.getId()){
             case R.id.back:
                 finish();
@@ -56,6 +56,8 @@ public class SafeActivity extends BaseActivity {
             case R.id.rl_change:
                 startToActivity(ChangeActivity.class);//修改用户密码
                 break;
+            case R.id.rl_app:
+                startToActivity(AboutActivity.class);
         }
     }
 }

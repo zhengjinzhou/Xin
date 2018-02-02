@@ -33,11 +33,11 @@
         app:contactItemImage="@drawable/em_groups_icon"
         app:contactItemName="黑名单" />
 
-    <!--<com.zhou.xin.widget.ContactItemView
+    <com.zhou.xin.widget.ContactItemView
         android:id="@+id/conference_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_chat_video_call_normal"
-        app:contactItemName="个人资料" />-->
+        app:contactItemImage="@drawable/success"
+        app:contactItemName="成功牵手" />
 
 </LinearLayout>

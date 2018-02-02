@@ -60,9 +60,10 @@ public class ReportInfoActivity extends BaseActivity {
 
     private static final int CHOOSE_PHOTO = 1;
 
-    public static Intent newIntent(Context context, String str) {
+    public static Intent newIntent(Context context, String str,String jubao) {
         Intent intent = new Intent(context, ReportInfoActivity.class);
         intent.putExtra("typeId", str);
+        intent.putExtra("jubao",jubao);
         return intent;
     }
 
@@ -74,6 +75,7 @@ public class ReportInfoActivity extends BaseActivity {
     @Override
     protected void init() {
         tv_head.setText("举报用户");
+        Log.d(TAG, "init:++++++++++++++++++++++++++++++++++++++ "+getIntent().getStringExtra("jubao"));
     }
 
     @OnClick({R.id.back, R.id.bt_submit, R.id.rl_add})

@@ -28,6 +28,7 @@ import com.zhou.xin.ui.activity.huanxin.BlacklistActivity;
 import com.zhou.xin.ui.activity.huanxin.ChatActivity;
 import com.zhou.xin.ui.activity.huanxin.GroupsActivity;
 import com.zhou.xin.ui.activity.huanxin.NewFriendsMsgActivity;
+import com.zhou.xin.ui.activity.love.SuccessActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.widget.ContactItemView;
@@ -68,6 +69,7 @@ public class ContactListFragment extends EaseContactListFragment {
         headerView.findViewById(R.id.group_item).setOnClickListener(clickListener);
         headerView.findViewById(R.id.hong_bao).setOnClickListener(clickListener);
         headerView.findViewById(R.id.black_list).setOnClickListener(clickListener);
+        headerView.findViewById(R.id.conference_item).setOnClickListener(clickListener);
         listView.addHeaderView(headerView);
         //add loading view
         loadingView = LayoutInflater.from(getActivity()).inflate(R.layout.em_layout_loading_data, null);
@@ -129,13 +131,13 @@ public class ContactListFragment extends EaseContactListFragment {
 
 
         // 进入添加好友页  ，这里是不需要的，到时候删除掉
-        titleBar.getRightLayout().setOnClickListener(new View.OnClickListener() {
+        /*titleBar.getRightLayout().setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), AddContactActivity.class));
             }
-        });
+        });*/
 
 
         contactSyncListener = new ContactSyncListener();
@@ -196,6 +198,9 @@ public class ContactListFragment extends EaseContactListFragment {
                     //进入黑名单界面
                     startActivity(new Intent(getActivity(), BlacklistActivity.class));
                     break;
+                case R.id.conference_item:
+                    //新增的成功牵手
+                    startActivity(new Intent(getActivity(),SuccessActivity.class));
                 default:
                     break;
             }

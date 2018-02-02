@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:gravity="center"
-        android:text="退出后不回删除任何数据，下次登录依然可以使用本账号"
+        android:text="退出后不会删除任何数据，下次登录依然可以使用本账号"
         android:padding="10dp"
         />
     <TextView
