@@ -12,12 +12,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.mabeijianxi.smallvideorecord2.MediaRecorderActivity;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.bean.UserInfo;
 import com.zhou.xin.ui.activity.love.isseue.VideoPlayerActivity;
+import com.zhou.xin.utils.ToastUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -111,6 +114,17 @@ public class PutVideoActivity extends BaseActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 dialog.dismiss();
                 String string = response.body().string();
+                Gson gson = new Gson();
+                final UserInfo userInfo = gson.fromJson(string, UserInfo.class);
+                if (userInfo.getError().equals("-1")){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.show(getApplicationContext(),userInfo.getMsg());
+                            finish();
+                        }
+                    });
+                }
                 Log.d(TAG, "onResponse: " + string);
             }
         });
