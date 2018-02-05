@@ -1,5 +1,7 @@
 package com.zhou.xin.ui.activity.huanxin;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -62,6 +64,11 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void init() {
+        if(Build.VERSION.SDK_INT >= 21){
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    |View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         tv_head.setText("登陆");
         etUsername.setText("2014414");
         Log.d(TAG, "init: "+Md5Util.encoder("2014414"+Constant.APP_ENCRYPTION_KEY));

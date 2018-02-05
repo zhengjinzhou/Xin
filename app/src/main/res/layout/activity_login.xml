@@ -6,7 +6,29 @@
     android:layout_height="match_parent"
     android:background="@drawable/login_bg">
 
-    <include layout="@layout/headerbar" />
+    <RelativeLayout
+        android:layout_marginTop="@dimen/space_25"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:padding="@dimen/space_16">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/space_16"
+            android:src="@drawable/bar_back_white" />
+
+        <TextView
+            android:id="@+id/tv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="#fff"
+            android:textSize="@dimen/space_18" />
+    </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circle"
