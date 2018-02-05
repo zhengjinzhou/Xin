@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="H:\AndroidStudioProject\Xin\redpacketlibrary\libs"><file name="alipaySdk-20161129.jar" path="H:\AndroidStudioProject\Xin\redpacketlibrary\libs\alipaySdk-20161129.jar"/><file name="volley-1.0.19.jar" path="H:\AndroidStudioProject\Xin\redpacketlibrary\libs\volley-1.0.19.jar"/></source></dataSet><dataSet config="debug"><source path="H:\AndroidStudioProject\Xin\redpacketlibrary\build-types\debug\jniLibs"/></dataSet></merger>
