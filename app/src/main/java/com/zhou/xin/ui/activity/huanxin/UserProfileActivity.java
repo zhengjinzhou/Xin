@@ -21,6 +21,7 @@ import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.base.DemoHelper;
+import com.zhou.xin.ui.activity.love.ReportActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -54,9 +55,14 @@ public class UserProfileActivity extends BaseActivity {
         initListener();
     }
 
-    @OnClick({R.id.user_head_avatar, R.id.rl_nickname})
+    @OnClick({R.id.user_head_avatar, R.id.rl_nickname,R.id.rl_jubao})
     void onClick(View view) {
         switch (view.getId()) {
+            case R.id.rl_jubao:
+                Intent inte = new Intent(getApplicationContext(),ReportActivity.class);
+                inte.putExtra("username",EMClient.getInstance().getCurrentUser());
+                startActivity(inte);
+                break;
             case R.id.user_head_avatar:
                 uploadHeadPhoto();
                 break;

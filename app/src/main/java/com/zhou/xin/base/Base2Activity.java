@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.hyphenate.easeui.ui.EaseBaseActivity;
+import com.zhou.xin.R;
 
 /**
  * Created by zhou on 2017/12/20.

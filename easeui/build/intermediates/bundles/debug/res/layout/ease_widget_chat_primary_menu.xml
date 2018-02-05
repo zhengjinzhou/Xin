@@ -126,8 +126,8 @@
             android:layout_marginRight="4dp"
             android:background="@drawable/ease_chat_send_btn_selector"
             android:text="@string/button_send"
-            android:textColor="#666666"
-            android:textSize="16sp"
+            android:textColor="#4b4646"
+            android:textSize="14sp"
             android:visibility="gone" />
     </LinearLayout>
 

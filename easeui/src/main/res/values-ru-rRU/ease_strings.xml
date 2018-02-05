@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="text_ack_msg">Прочитанные</string>
+    <!--<string name="text_ack_msg">Прочитанные</string>
     <string name="text_delivered_msg">Переданные</string>
     <string name="back">Назад</string>
     <string name="save">Сохранить</string>
@@ -111,7 +111,7 @@
     <string name="not_download">Не скачано:</string>
 	<string name="Please_enter_a_username">Пожалуйста, введите имя пользователя</string>
     <string name="is_down_please_wait">Пожалуйста подождите, видео загружается...</string>
-    <string name="Exit_the_group_chat">Выйти из чата</string>
+    <string name="Exit_the_group_chat">Выйти из чата</string>-->
     
     
 </resources>

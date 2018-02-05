@@ -38,9 +38,10 @@ public class Report2Activity extends BaseActivity {
     RecyclerView recycleView;
     private List<ReportBean.AccusationCategoryListBean.AcTypesBean> data;
 
-    public static Intent newintent(Context context,String str){
+    public static Intent newintent(Context context,String str,String jubao){
         Intent intent = new Intent(context,Report2Activity.class);
         intent.putExtra("acTypes",str);
+        intent.putExtra("jubao",jubao);
         return intent;
     }
     @Override
@@ -67,7 +68,7 @@ public class Report2Activity extends BaseActivity {
                 holder.setOnClickListener(R.id.rl_guild, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+""));
+                        startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+"",getIntent().getStringExtra("jubao")));
                     }
                 });
             }

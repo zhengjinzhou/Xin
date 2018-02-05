@@ -8,6 +8,7 @@
         android:targetSdkVersion="22"
         tools:overrideLibrary="com.easemob.redpacket" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -386,10 +387,7 @@
         <activity android:name=".ui.activity.love.DetailActivity" />
         <activity android:name=".ui.activity.love.GuildActivity" />
         <activity android:name=".ui.activity.love.InviteActivity" />
-        <activity android:name=".ui.activity.love.HerActivity" />
         <activity android:name=".ui.activity.love.SafeActivity" />
-        <activity android:name=".ui.activity.love.PrivacyActivity" />
-        <activity android:name=".ui.activity.love.FriendActivity" />
         <activity android:name=".ui.activity.love.AboutActivity" />
         <activity android:name=".ui.activity.love.LotteryActivity" />
         <activity android:name=".ui.activity.love.ForgetActivity" />
@@ -400,12 +398,16 @@
         <activity android:name=".ui.activity.love.AboutInfoActivity" />
         <activity android:name=".ui.activity.love.ChangeActivity" />
         <activity android:name=".ui.activity.love.ActivityActivity" />
-        <activity android:name=".ui.activity.love.SuccessActivity" />
+        <activity android:name=".ui.activity.love.isseue.SuccessActivity" />
         <activity android:name=".ui.activity.love.ActivityInfoActivity" />
         <activity android:name=".ui.activity.love.ReportActivity" />
         <activity android:name=".ui.activity.love.TextActivity" />
         <activity android:name=".ui.activity.love.ReportInfoActivity" />
-        <activity android:name=".ui.activity.love.Report2Activity"></activity>
+        <activity android:name=".ui.activity.love.Report2Activity" />
+        <activity android:name=".ui.activity.love.isseue.PutActivity" />
+        <activity android:name=".ui.activity.love.isseue.PutVideoActivity" />
+        <activity android:name=".ui.activity.love.isseue.VideoPlayerActivity" />
+        <activity android:name="com.mabeijianxi.smallvideorecord2.MediaRecorderActivity" />
     </application>
 
 </manifest>

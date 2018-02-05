@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/headerbar"/>
+    <include layout="@layout/headerbar" />
 
     <EditText
         android:id="@+id/et_mobile"
@@ -55,13 +54,13 @@
     </LinearLayout>
 
     <EditText
-        android:layout_marginTop="8dp"
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout"
         android:layout_marginLeft="@dimen/space_16"
         android:layout_marginRight="@dimen/space_16"
+        android:layout_marginTop="8dp"
         android:background="@drawable/bg_login"
         android:hint="请输入新的密码"
         android:inputType="textPassword"
@@ -70,13 +69,13 @@
         android:singleLine="true" />
 
     <EditText
-        android:layout_marginTop="8dp"
         android:id="@+id/et_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout"
         android:layout_marginLeft="@dimen/space_16"
         android:layout_marginRight="@dimen/space_16"
+        android:layout_marginTop="8dp"
         android:background="@drawable/bg_login"
         android:hint="请再次输入新的密码"
         android:inputType="textPassword"

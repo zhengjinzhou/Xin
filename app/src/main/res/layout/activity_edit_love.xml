@@ -6,29 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorAccent">
+    <include layout="@layout/headerbar"/>
 
-
-        <ImageView
-            android:id="@+id/iv_all_back"
-            android:layout_width="32dp"
-            android:layout_height="28dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:paddingRight="20dp"
-            android:src="@drawable/bar_back_white"/>
-
-        <TextView
-            style="@style/StyleHead"
-            android:layout_centerInParent="true"
-            android:text="完善信息"
-            />
-    </RelativeLayout>
-
-    <android.support.v4.widget.NestedScrollView
+    <com.zhou.xin.widget.ReboundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize">
@@ -341,7 +321,7 @@
                         android:text="微信号："/>
 
                     <EditText
-                        android:id="@+id/et_tv_wechat"
+                        android:id="@+id/et_wechat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/tv_wechat"
@@ -400,7 +380,7 @@
                 <TextView
                     android:id="@+id/tv_major"
                     style="@style/StyleText"
-                    android:text="选择学院"/>
+                    android:text="选择学历"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -498,6 +478,6 @@
                     />
             </LinearLayout>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </com.zhou.xin.widget.ReboundScrollView>
 
 </RelativeLayout>

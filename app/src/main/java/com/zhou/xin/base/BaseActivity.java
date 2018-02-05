@@ -50,12 +50,12 @@ public abstract class BaseActivity extends EaseBaseActivity {
         startActivity(intent);
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         // umeng
         //MobclickAgent.onResume(this);
-    }
+    }*/
 
     @Override
     protected void onStart() {
@@ -180,4 +180,5 @@ public abstract class BaseActivity extends EaseBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+    
 }

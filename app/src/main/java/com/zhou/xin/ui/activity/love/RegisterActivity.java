@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhou.xin.Constant;
@@ -21,6 +22,7 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -31,14 +33,12 @@ import okhttp3.Response;
 public class RegisterActivity extends BaseActivity {
 
     private static final String TAG = "RegisterActivity";
-    @BindView(R.id.tv_head)
-    TextView tv_head;
-    @BindView(R.id.et_mobile)
-    EditText et_mobile;
-    @BindView(R.id.et_code)
-    EditText et_code;
-    @BindView(R.id.tv_code)
-    TextView tv_code;
+    @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.et_mobile) EditText et_mobile;
+    @BindView(R.id.et_code) EditText et_code;
+    @BindView(R.id.tv_code) TextView tv_code;
+    @BindView(R.id.clear) ImageView clear;
+
 
     @Override
     protected int getLayout() {
@@ -48,9 +48,10 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void init() {
         tv_head.setText("注册");
+        clear.setVisibility(View.INVISIBLE);
     }
 
-    @OnClick({R.id.back, R.id.tv_code, R.id.bt_next})
+    @OnClick({R.id.back, R.id.tv_code, R.id.bt_next,R.id.clear})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -62,6 +63,19 @@ public class RegisterActivity extends BaseActivity {
             case R.id.bt_next:
                 toNext();
                 break;
+            case R.id.clear:
+                et_mobile.setText("");
+                break;
+        }
+    }
+
+    @OnTextChanged(value = R.id.et_mobile, callback = OnTextChanged.Callback.TEXT_CHANGED)
+    void changedUserName() {
+        int lenght = et_mobile.getText().toString().length();
+        if (lenght > 0) {
+            clear.setVisibility(View.VISIBLE);
+        } else {
+            clear.setVisibility(View.INVISIBLE);
         }
     }
 

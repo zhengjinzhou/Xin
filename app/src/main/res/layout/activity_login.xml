@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:background="@drawable/login_bg"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg">
 
-    <include
-        layout="@layout/headerbar" />
+    <RelativeLayout
+        android:layout_marginTop="@dimen/space_25"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:padding="@dimen/space_16">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/space_16"
+            android:src="@drawable/bar_back_white" />
+
+        <TextView
+            android:id="@+id/tv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="#fff"
+            android:textSize="@dimen/space_18" />
+    </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circle"
@@ -57,6 +77,15 @@
             android:hint="请输入您的手机号码"
             android:maxLines="1"
             android:singleLine="true" />
+
+        <ImageView
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/space_5"
+            android:src="@drawable/sap" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -86,17 +115,27 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true" />
+
+        <ImageView
+            android:id="@+id/hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/space_5"
+            android:src="@drawable/hint" />
+
     </RelativeLayout>
 
     <TextView
-        android:textColor="@color/white"
         android:id="@+id/tv_forget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/rl2"
         android:layout_marginRight="@dimen/space_16"
-        android:text="忘记密码" />
+        android:text="忘记密码"
+        android:textColor="@color/white" />
 
 
     <Button

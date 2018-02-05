@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,12 +60,18 @@ public class DetailActivity extends BaseActivity {
         tv_head.setText("个人信息");
         tv_title.setVisibility(View.VISIBLE);
         tv_title.setText("编辑");
-        setInfo();
+
     }
 
+    @Override
+    protected void onResume() {
+        setInfo();
+        super.onResume();
+    }
     private void setInfo() {
         photoUrlList = new ArrayList<>();
         PersonalBean personalBean = App.getInstence().getPersonalBean();
+        Log.d("可以吗？", "setInfo: "+personalBean.toString());
         if (personalBean==null){
             return;
         }

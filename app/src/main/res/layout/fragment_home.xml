@@ -10,9 +10,8 @@
 
     <com.zhou.xin.swipe.SwipeFlingAdapterView
         android:id="@+id/swipe_view"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="?attr/actionBarSize"
         swipe:max_visible="4"
         swipe:min_adapter_stack="4"

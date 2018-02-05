@@ -1,10 +1,8 @@
 package com.zhou.xin.ui.fragment;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,24 +24,18 @@ import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseFragment;
 import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.bean.SelectBean;
-import com.zhou.xin.ui.activity.love.AboutActivity;
 import com.zhou.xin.ui.activity.love.ActivityActivity;
 import com.zhou.xin.ui.activity.love.DetailActivity;
-import com.zhou.xin.ui.activity.love.FriendActivity;
 import com.zhou.xin.ui.activity.love.GuildActivity;
-import com.zhou.xin.ui.activity.love.HerActivity;
 import com.zhou.xin.ui.activity.love.InviteActivity;
 import com.zhou.xin.ui.activity.love.LotteryActivity;
 import com.zhou.xin.ui.activity.love.OpinionActivity;
-import com.zhou.xin.ui.activity.love.PrivacyActivity;
 import com.zhou.xin.ui.activity.love.ReportActivity;
 import com.zhou.xin.ui.activity.love.SafeActivity;
-import com.zhou.xin.ui.activity.love.SuccessActivity;
-import com.zhou.xin.ui.activity.love.TaskActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
+import com.zhou.xin.utils.LogUtil;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.SpUtil;
-import com.zhou.xin.utils.ToastUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,9 +75,13 @@ public class MeFragment extends BaseFragment {
     protected void init(View v) {
         back.setVisibility(View.GONE);
         tv_head.setText("我");
-
         initRecycle();
         getInfo();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         setInfo();
     }
 
@@ -94,17 +90,10 @@ public class MeFragment extends BaseFragment {
      */
     private void initRecycle() {
         ArrayList<BaseBean> data = new ArrayList<>();
-        data.add(new BaseBean(HerActivity.class,"对象",R.drawable.guanzhu));
         data.add(new BaseBean(SafeActivity.class,"安全管理",R.drawable.saft));
-        data.add(new BaseBean(PrivacyActivity.class,"隐私管理",R.drawable.privately));
-        data.add(new BaseBean(FriendActivity.class,"好友管理",R.drawable.fensi));
-        data.add(new BaseBean(AboutActivity.class,"关于",R.drawable.about));
         data.add(new BaseBean(LotteryActivity.class,"抽奖活动",R.drawable.lottery));
-        data.add(new BaseBean(TaskActivity.class,"任务系统",R.drawable.task));
         data.add(new BaseBean(OpinionActivity.class,"意见反馈",R.drawable.opinion));
         data.add(new BaseBean(ActivityActivity.class,"线下活动",R.drawable.activity));
-        data.add(new BaseBean(SuccessActivity.class,"成功案例",R.drawable.success));
-        data.add(new BaseBean(ReportActivity.class,"举报用户",R.drawable.jubao));
 
         BaseCommonAdapter adapter = new BaseCommonAdapter<BaseBean>(getContext(), R.layout.recycle_me, data) {
             @Override
@@ -119,12 +108,14 @@ public class MeFragment extends BaseFragment {
                 });
             }
         };
-        recycleView.setLayoutManager(new GridLayoutManager(getContext(),3));
+        recycleView.setLayoutManager(new LinearLayoutManager(getContext()));
         recycleView.setAdapter(adapter);
     }
 
     /**
      * 联网获取数据
+     *
+     * 获取个人信息设置选项
      */
     private void getInfo() {
         if (App.getInstence().getUserInfo() == null){
@@ -160,9 +151,12 @@ public class MeFragment extends BaseFragment {
 
         @Override
         public void onResponse(Call call, final Response response) throws IOException {
+            String string = response.body().string();
+            LogUtil.d("草草草哦啊从奥次哦啊从初次："+string);
             Gson gson = new Gson();
-            SelectBean selectBean = gson.fromJson(response.body().string(), SelectBean.class);
+            SelectBean selectBean = gson.fromJson(string, SelectBean.class);
             App.getInstence().setSelectBean(selectBean);
+
         }
     };
 
@@ -197,21 +191,6 @@ public class MeFragment extends BaseFragment {
             case R.id.tv_invite:
                 startToActivity(InviteActivity.class);
                 break;
-            /*case R.id.tv_cp:
-                startToActivity(HerActivity.class);
-                break;
-            case R.id.tv_safe:
-                startToActivity(SafeActivity.class);
-                break;
-            case R.id.tv_about:
-                startToActivity(AboutActivity.class);
-                break;
-            case R.id.tv_picture:
-                startToActivity(FriendActivity.class);
-                break;
-            case R.id.tv_privacy:
-                startToActivity(PrivacyActivity.class);
-                break;*/
         }
     }
 
@@ -232,7 +211,7 @@ public class MeFragment extends BaseFragment {
             }
         });
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-        lp.alpha = 0.9f;
+        lp.alpha = 0.5f;
         getActivity().getWindow().setAttributes(lp);
         pop.showAtLocation(tv_exit, Gravity.BOTTOM, 0, 0);
         inflate.findViewById(R.id.tv_ensure_log_off).setOnClickListener(new View.OnClickListener() {
