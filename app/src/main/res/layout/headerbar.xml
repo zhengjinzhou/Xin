@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.AppBarLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:elevation="0dp"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:elevation="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,10 +12,10 @@
 
         <ImageView
             android:id="@+id/back"
-            android:paddingRight="@dimen/space_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:paddingRight="@dimen/space_16"
             android:src="@drawable/bar_back_white" />
 
         <TextView
@@ -24,28 +24,26 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text=""
             android:textColor="#fff"
-            android:textSize="@dimen/space_20" />
+            android:textSize="@dimen/space_18" />
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/iv_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@android:drawable/ic_menu_add" />
+            android:visibility="gone" />
 
         <TextView
-            android:textSize="@dimen/space_18"
-            android:visibility="gone"
-            android:textColor="#fff"
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:textColor="#fff"
+            android:textSize="@dimen/text_size_18"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </android.support.design.widget.AppBarLayout>

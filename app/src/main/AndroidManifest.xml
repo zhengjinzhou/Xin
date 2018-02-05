@@ -45,8 +45,6 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
         <activity
             android:name=".ui.activity.love.StartActivity"
             android:screenOrientation="portrait">
@@ -406,7 +404,9 @@
         <activity android:name=".ui.activity.love.ReportActivity" />
         <activity android:name=".ui.activity.love.TextActivity" />
         <activity android:name=".ui.activity.love.ReportInfoActivity" />
-        <activity android:name=".ui.activity.love.Report2Activity"></activity>
+        <activity android:name=".ui.activity.love.Report2Activity" />
+        <activity android:name=".ui.activity.love.isseue.PutActivity" />
+        <activity android:name=".ui.activity.love.PutVideoActivity" />
     </application>
 
 </manifest>

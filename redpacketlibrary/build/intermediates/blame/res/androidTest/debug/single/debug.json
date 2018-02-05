@@ -836,6 +836,10 @@
         "source": "C:\\Users\\Wanve4K\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\7ba07774f35f72feadac828249021036\\res\\drawable-hdpi-v4\\abc_ic_menu_paste_mtrl_am_alpha.png"
     },
     {
+        "merged": "D:\\AndroidStudioProject\\Xin\\redpacketlibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4_bar_back_white.png.flat",
+        "source": "D:\\AndroidStudioProject\\Xin\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\bar_back_white.png"
+    },
+    {
         "merged": "D:\\AndroidStudioProject\\Xin\\redpacketlibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4_ease_app_panel_video_icon.9.png.flat",
         "source": "D:\\AndroidStudioProject\\Xin\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_app_panel_video_icon.9.png"
     },
@@ -1398,10 +1402,6 @@
     {
         "merged": "D:\\AndroidStudioProject\\Xin\\redpacketlibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4_common_google_signin_btn_text_dark_normal_background.9.png.flat",
         "source": "C:\\Users\\Wanve4K\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.0.aar\\a081d24161878ac2ef79e5d808c7a502\\res\\drawable-hdpi-v4\\common_google_signin_btn_text_dark_normal_background.9.png"
-    },
-    {
-        "merged": "D:\\AndroidStudioProject\\Xin\\redpacketlibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4_ease_mm_title_back.png.flat",
-        "source": "D:\\AndroidStudioProject\\Xin\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_mm_title_back.png"
     },
     {
         "merged": "D:\\AndroidStudioProject\\Xin\\redpacketlibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldrtl-xxxhdpi-v17_abc_ic_menu_cut_mtrl_alpha.png.flat",

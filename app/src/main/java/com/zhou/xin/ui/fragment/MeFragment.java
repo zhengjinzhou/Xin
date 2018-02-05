@@ -211,7 +211,7 @@ public class MeFragment extends BaseFragment {
             }
         });
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-        lp.alpha = 0.9f;
+        lp.alpha = 0.5f;
         getActivity().getWindow().setAttributes(lp);
         pop.showAtLocation(tv_exit, Gravity.BOTTOM, 0, 0);
         inflate.findViewById(R.id.tv_ensure_log_off).setOnClickListener(new View.OnClickListener() {

@@ -31,6 +31,11 @@ public class Constant extends EaseConstant {
 
     //修改会员个人信息
     public static final String UPDATE_URL = URL + "/app/update.do";
+    //获取朋友圈
+    public static final String GET_LIST = URL + "/app/v_list.do";
+    //上传朋友圈
+    public static final String POST_LIST = URL + "/app/v_upload.do";
+
     //举报
     public static final String JUBAO = URL + "/app/accusation.do";
 

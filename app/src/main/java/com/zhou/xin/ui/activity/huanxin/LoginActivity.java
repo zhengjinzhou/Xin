@@ -1,9 +1,11 @@
 package com.zhou.xin.ui.activity.huanxin;
 
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
@@ -30,6 +32,7 @@ import java.nio.charset.Charset;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -45,6 +48,9 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.et_password) EditText etPassword;
     @BindView(R.id.tv_head) TextView tv_head;
     @BindView(R.id.tv_forget) TextView tv_forget;
+    @BindView(R.id.clear) ImageView clear;
+    @BindView(R.id.hint) ImageView hint;
+
     private String TAG = "LoginActivity";
     private String username;
     private String password;
@@ -60,9 +66,12 @@ public class LoginActivity extends BaseActivity {
         etUsername.setText("2014414");
         Log.d(TAG, "init: "+Md5Util.encoder("2014414"+Constant.APP_ENCRYPTION_KEY));
         etPassword.setText("123456");
+
+        hint.setVisibility(View.INVISIBLE);
+        clear.setVisibility(View.INVISIBLE);
     }
 
-    @OnClick({R.id.bt_login, R.id.back, R.id.tv_forget}) void onClick(View view) {
+    @OnClick({R.id.bt_login, R.id.back, R.id.tv_forget,R.id.clear,R.id.hint}) void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
                 login();//登录
@@ -73,6 +82,37 @@ public class LoginActivity extends BaseActivity {
             case R.id.tv_forget:
                 startToActivity(ForgetActivity.class);//忘记密码
                 break;
+            case R.id.clear:
+                etUsername.setText("");
+                break;
+            case R.id.hint:
+                if (etPassword.getInputType() == 129) {
+                    etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+                etPassword.setSelection(etPassword.getText().toString().length());
+                break;
+        }
+    }
+
+    @OnTextChanged(value = R.id.et_username, callback = OnTextChanged.Callback.TEXT_CHANGED)
+    void changedUserName() {
+        int lenght = etUsername.getText().toString().length();
+        if (lenght > 0) {
+            clear.setVisibility(View.VISIBLE);
+        } else {
+            clear.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @OnTextChanged(value = R.id.et_password, callback = OnTextChanged.Callback.TEXT_CHANGED)
+    void changedpPsswordName() {
+        int lenght = etPassword.getText().toString().length();
+        if (lenght > 0) {
+            hint.setVisibility(View.VISIBLE);
+        } else {
+            hint.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -137,7 +177,7 @@ public class LoginActivity extends BaseActivity {
 
     private void getResult(String data) {
         Gson gson = new Gson();
-        UserInfo userInfo = gson.fromJson(data, UserInfo.class);
+        final UserInfo userInfo = gson.fromJson(data, UserInfo.class);
         String token = userInfo.getToken();
         String uid = userInfo.getUid();
 
@@ -146,7 +186,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void run() {
                     dialog.dismiss();
-                    ToastUtil.show(getApplicationContext(), "用户名或密码错误");
+                    ToastUtil.show(getApplicationContext(), userInfo.getMsg());
                 }
             });
             return;

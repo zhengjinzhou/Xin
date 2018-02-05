@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <include layout="@layout/headerbar" />
 
@@ -15,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/space_16"
         android:layout_marginRight="@dimen/space_16"
-        android:layout_marginTop="98dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/bg_login"
         android:hint="请输入用户名"
         android:maxLines="1"
