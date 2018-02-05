@@ -2,6 +2,7 @@ package com.zhou.xin.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
@@ -14,10 +15,14 @@ import com.easemob.redpacketsdk.constant.RPConstant;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.mabeijianxi.smallvideorecord2.DeviceUtils;
+import com.mabeijianxi.smallvideorecord2.JianXiCamera;
 import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.bean.ReportBean;
 import com.zhou.xin.bean.SelectBean;
 import com.zhou.xin.bean.UserInfo;
+
+import java.io.File;
 
 /**
  * Created by zhou on 2017/12/19.
@@ -74,6 +79,7 @@ public class App extends Application {
         instance = this;
         app = this;
 
+        initSmallVideo();
         //init demo helper
         DemoHelper.getInstance().init(applicationContext);
         //red packet code : 初始化红包SDK，开启日志输出开关
@@ -122,5 +128,27 @@ public class App extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    /**
+     * 录制视频初始化
+     */
+    public static void initSmallVideo() {
+        // 设置拍摄视频缓存路径
+        File dcim = Environment
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+        if (DeviceUtils.isZte()) {
+            if (dcim.exists()) {
+                JianXiCamera.setVideoCachePath(dcim + "/mabeijianxi/");
+            } else {
+                JianXiCamera.setVideoCachePath(dcim.getPath().replace("/sdcard/",
+                        "/sdcard-ext/")
+                        + "/mabeijianxi/");
+            }
+        } else {
+            JianXiCamera.setVideoCachePath(dcim + "/mabeijianxi/");
+        }
+        // 初始化拍摄，遇到问题可选择开启此标记，以方便生成日志
+        JianXiCamera.initialize(false,null);
     }
 }

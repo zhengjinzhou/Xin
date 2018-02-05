@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -59,9 +60,12 @@ public class PutActivity extends BaseActivity {
     private int index = 0;
     private static final int PER_REQUEST_CODE = 1;
     private static final int REQUEST_CODE = 1000;
-    @BindView(R.id.photos) RecyclerView photos;
-    @BindView(R.id.content) EditText content;
-    @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.photos)
+    RecyclerView photos;
+    @BindView(R.id.content)
+    EditText content;
+    @BindView(R.id.tv_head)
+    TextView tv_head;
 
     @Override
     protected int getLayout() {
@@ -241,7 +245,8 @@ public class PutActivity extends BaseActivity {
     private void upImagers(File f, boolean b) {
         MultipartBody.Builder builider = new MultipartBody.Builder().setType(MultipartBody.FORM);
         builider.addFormDataPart("token", App.getInstence().getUserInfo().getToken());
-        builider.addFormDataPart("content", content.getText().toString());
+        if (!TextUtils.isEmpty(content.getText().toString()))
+            builider.addFormDataPart("content", content.getText().toString());
         if (f == null) return;
         Log.e("TAG", "upImagers: url = " + f.getAbsolutePath());
         Log.e("TAG", "upImagers: size = " + (f.length() / 1024) + "k");

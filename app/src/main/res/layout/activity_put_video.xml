@@ -36,7 +36,6 @@
 
         <ImageView
             android:id="@+id/video"
-            android:src="@drawable/eyb"
             android:padding="@dimen/space_16"
             android:layout_width="140dp"
             android:layout_height="100dp" />

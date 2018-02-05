@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.mabeijianxi.smallvideorecord2.MediaRecorderActivity;
+import com.mabeijianxi.smallvideorecord2.model.MediaRecorderConfig;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.adapter.base.MultiItemCommonAdapter;
@@ -135,7 +137,8 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                     @Override
                     public void onClick(View view) {
                         //视文
-                        startToActivity(PutVideoActivity.class);
+                        //startToActivity(PutVideoActivity.class);
+                        toVideo();
                         pop.dismiss();
                     }
                 });
@@ -147,6 +150,31 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 });
                 break;
         }
+    }
+
+    /**
+     * 使用框架寻找视频
+     */
+    private boolean needFull = true;
+    private int width = 480;
+    private int height = 480;
+    private int minTime = 1000;
+    private int maxTime = 10000;
+    private int maxFramerate = 20;
+    private int bitrate = 580000;
+
+    private void toVideo() {
+        MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
+                .fullScreen(needFull)
+                .smallVideoWidth(needFull?0:width)
+                .smallVideoHeight(height)
+                .recordTimeMax(maxTime)
+                .recordTimeMin(minTime)
+                .maxFrameRate(maxFramerate)
+                .videoBitrate(bitrate)
+                .captureThumbnailsTime(1)
+                .build();
+        MediaRecorderActivity.goSmallVideoRecorder(this, PutVideoActivity.class.getName(), config);
     }
 
     private void initRecycle() {
