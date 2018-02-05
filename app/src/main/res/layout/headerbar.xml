@@ -33,8 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/space_8"
-            android:paddingRight="@dimen/space_8"
             android:visibility="gone" />
 
         <TextView

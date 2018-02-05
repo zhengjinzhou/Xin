@@ -43,14 +43,10 @@ import okhttp3.Response;
 public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "SuccessActivity";
-    @BindView(R.id.tv_head)
-    TextView tv_head;
-    @BindView(R.id.recycleView)
-    RecyclerView recycleView;
-    @BindView(R.id.refresh)
-    SwipeRefreshLayout refresh;
-    @BindView(R.id.iv_add)
-    ImageView iv_add;
+    @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.recycleView) RecyclerView recycleView;
+    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+    @BindView(R.id.iv_add) ImageView iv_add;
 
     private MultiItemCommonAdapter adapter;
 
@@ -63,7 +59,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
     protected void init() {
         tv_head.setText("成功案例");
         iv_add.setVisibility(View.VISIBLE);
-        iv_add.setBackground(getResources().getDrawable(R.drawable.item_down));
+        iv_add.setBackground(getResources().getDrawable(R.drawable.more_unfold));
         getInfo();
         initRecycle();
         refresh.setOnRefreshListener(this);
@@ -166,7 +162,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
     private void toVideo() {
         MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
                 .fullScreen(needFull)
-                .smallVideoWidth(needFull?0:width)
+                .smallVideoWidth(needFull ? 0 : width)
                 .smallVideoHeight(height)
                 .recordTimeMax(maxTime)
                 .recordTimeMin(minTime)
@@ -224,7 +220,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
             }
         }) {
             @Override
-            public void convert(ViewHolder holder, String s, int position) {
+            public void convert(final ViewHolder holder, String s, int position) {
                 int itemCount = getItemCount();
                 if (itemCount == 1) {
                     //textImagerManger(holder,bean,position);
@@ -241,6 +237,14 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                         Report();
                     }
                 });
+
+                //点赞
+                holder.setOnClickListener(R.id.like, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        pointLike();
+                    }
+                });
             }
         };
 
@@ -252,6 +256,16 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
         recycleView.setNestedScrollingEnabled(false);
         recycleView.setLayoutManager(layoutManager);
         recycleView.setAdapter(adapter);
+    }
+
+    /**
+     * 点赞
+     * 图标要变
+     * 数字要变
+     * 要上传后台
+     */
+    private void pointLike() {
+
     }
 
     /**
