@@ -18,6 +18,7 @@ import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
@@ -39,7 +40,7 @@ public class UserProfileActivity extends BaseActivity {
     @BindView(R.id.user_head_avatar) ImageView headAvatar;
     @BindView(R.id.rl_nickname) RelativeLayout rlNickName;
     @BindView(R.id.ic_right_arrow) ImageView iconRightArrow;
-    @BindView(R.id.rl_jubao) ReportActivity rl_jubao;
+    @BindView(R.id.rl_jubao) RelativeLayout rl_jubao;
 
     @Override
     public int getLayout() {
@@ -115,9 +116,6 @@ public class UserProfileActivity extends BaseActivity {
     }
 
     private void initListener() {
-        if (EMClient.getInstance().getCurrentUser().equals(App.getInstance().getUserInfo().getAccountNumber())){
-            rl_jubao.setVisible(false);
-        }
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
         boolean enableUpdate = intent.getBooleanExtra("setting", false);
@@ -153,11 +151,12 @@ public class UserProfileActivity extends BaseActivity {
                         return;
                     }
                     tvNickName.setText(user.getNick());
-                    if (!TextUtils.isEmpty(user.getAvatar())) {
+                    /*if (!TextUtils.isEmpty(user.getAvatar())) {
                         Glide.with(UserProfileActivity.this).load(user.getAvatar()).placeholder(R.drawable.em_default_avatar).into(headAvatar);
                     } else {
                         Glide.with(UserProfileActivity.this).load(R.drawable.em_default_avatar).into(headAvatar);
-                    }
+                    }*/
+                    Glide.with(UserProfileActivity.this).load(Constant.URL+App.getInstance().getPersonalBean().getMemInfo().getPhotoPath()).placeholder(R.drawable.em_default_avatar).into(headAvatar);
                 }
             }
 

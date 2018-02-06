@@ -69,64 +69,35 @@ import okhttp3.Response;
 public class EditLoveActivity extends BaseActivity {
 
     private static final String TAG = "EditActivity";
-    @BindView(R.id.img_1)
-    ImageView img1;
-    @BindView(R.id.img_2)
-    ImageView img2;
-    @BindView(R.id.img_3)
-    ImageView img3;
-    @BindView(R.id.img_4)
-    ImageView img4;
-    @BindView(R.id.img_5)
-    ImageView img5;
-    @BindView(R.id.del_1)
-    ImageView del_1;
-    @BindView(R.id.del_2)
-    ImageView del_2;
-    @BindView(R.id.del_3)
-    ImageView del_3;
-    @BindView(R.id.del_4)
-    ImageView del_4;
-    @BindView(R.id.del_5)
-    ImageView del_5;
-    @BindView(R.id.ll_details)
-    LinearLayout ll_details;
-    @BindView(R.id.bt_next)
-    Button bt_next;
-    @BindView(R.id.bt_skip)
-    Button bt_skip;
-    @BindView(R.id.radioGroup)
-    RadioGroup radioGroup;
-    @BindView(R.id.tv_major)
-    TextView tv_major;
-    @BindView(R.id.tv_conste)
-    TextView tv_conste;
-    @BindView(R.id.tv_travels)
-    TextView tv_travels;
-    @BindView(R.id.tv_labels)
-    TextView tv_labels;
-    @BindView(R.id.tv_books)
-    TextView tv_books;
-    @BindView(R.id.tv_video)
-    TextView tv_video;
-    @BindView(R.id.tv_foots)
-    TextView tv_foots;
-    @BindView(R.id.tv_musics)
-    TextView tv_musics;
-    @BindView(R.id.tv_sport)
-    TextView tv_sport;
-    @BindView(R.id.tv_birthday)
-    TextView tv_birthday;
-    @BindView(R.id.et_nickname)
-    EditText et_nickname;
-    @BindView(R.id.et_realname)
-    EditText et_realname;
-    @BindView(R.id.et_wechat)
-    EditText et_wechat;
-    @BindView(R.id.tv_head)
-    TextView tv_head;
-    @BindView(R.id.et_autograph)
-    EditText et_autograph;
+    @BindView(R.id.img_1) ImageView img1;
+    @BindView(R.id.img_2) ImageView img2;
+    @BindView(R.id.img_3) ImageView img3;
+    @BindView(R.id.img_4) ImageView img4;
+    @BindView(R.id.img_5) ImageView img5;
+    @BindView(R.id.del_1) ImageView del_1;
+    @BindView(R.id.del_2) ImageView del_2;
+    @BindView(R.id.del_3) ImageView del_3;
+    @BindView(R.id.del_4) ImageView del_4;
+    @BindView(R.id.del_5) ImageView del_5;
+    @BindView(R.id.ll_details) LinearLayout ll_details;
+    @BindView(R.id.bt_next) Button bt_next;
+    @BindView(R.id.bt_skip) Button bt_skip;
+    @BindView(R.id.radioGroup) RadioGroup radioGroup;
+    @BindView(R.id.tv_major)TextView tv_major;
+    @BindView(R.id.tv_conste) TextView tv_conste;
+    @BindView(R.id.tv_travels) TextView tv_travels;
+    @BindView(R.id.tv_labels) TextView tv_labels;
+    @BindView(R.id.tv_books) TextView tv_books;
+    @BindView(R.id.tv_video) TextView tv_video;
+    @BindView(R.id.tv_foots) TextView tv_foots;
+    @BindView(R.id.tv_musics) TextView tv_musics;
+    @BindView(R.id.tv_sport) TextView tv_sport;
+    @BindView(R.id.tv_birthday) TextView tv_birthday;
+    @BindView(R.id.et_nickname) EditText et_nickname;
+    @BindView(R.id.et_realname) EditText et_realname;
+    @BindView(R.id.et_wechat) EditText et_wechat;
+    @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.et_autograph) EditText et_autograph;
 
 
     private int index = 0;
@@ -236,9 +207,9 @@ public class EditLoveActivity extends BaseActivity {
                     sex = 0;
             }
         });
-        if (App.getInstence() == null) return;
-        if (App.getInstence().getSelectBean() == null) return;
-        SelectBean selectBean = App.getInstence().getSelectBean();
+        if (App.getInstance() == null) return;
+        if (App.getInstance().getSelectBean() == null) return;
+        SelectBean selectBean = App.getInstance().getSelectBean();
         List<SelectBean.CategoryListBean> categoryList = selectBean.getCategoryList();
 
         if (selectBean == null) return;
@@ -710,7 +681,7 @@ public class EditLoveActivity extends BaseActivity {
                 });
                 Log.d(TAG, "获取新的信息成功: " + string);
                 PersonalBean personalBean = new Gson().fromJson(string, PersonalBean.class);
-                App.getInstence().setPersonalBean(personalBean);
+                App.getInstance().setPersonalBean(personalBean);
             }
         });
     }

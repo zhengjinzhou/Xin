@@ -1079,7 +1079,13 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     public void setChatFragmentHelper(EaseChatFragmentHelper chatFragmentHelper){
         this.chatFragmentHelper = chatFragmentHelper;
     }
-    
+
+    /**
+     * =========================================
+     * 如果想自定义扩展字段，
+     * 需要先自己实现这个方法
+     * =========================================
+     */
     public interface EaseChatFragmentHelper{
         /**
          * set message attribute

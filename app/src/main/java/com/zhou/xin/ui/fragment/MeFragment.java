@@ -118,11 +118,11 @@ public class MeFragment extends BaseFragment {
      * 获取个人信息设置选项
      */
     private void getInfo() {
-        if (App.getInstence().getUserInfo() == null){
+        if (App.getInstance().getUserInfo() == null){
             return;
         }
-        String uid = App.getInstence().getUserInfo().getUid();
-        String token = App.getInstence().getUserInfo().getToken();
+        String uid = App.getInstance().getUserInfo().getUid();
+        String token = App.getInstance().getUserInfo().getToken();
         String opt = "4";
         String _t = CurrentTimeUtil.nowTime();
         String joint = "_t=" + _t + "&opt=" + opt + "&token=" + token + "&uid=" + uid + Constant.APP_ENCRYPTION_KEY;
@@ -155,13 +155,13 @@ public class MeFragment extends BaseFragment {
             LogUtil.d("草草草哦啊从奥次哦啊从初次："+string);
             Gson gson = new Gson();
             SelectBean selectBean = gson.fromJson(string, SelectBean.class);
-            App.getInstence().setSelectBean(selectBean);
+            App.getInstance().setSelectBean(selectBean);
 
         }
     };
 
     private void setInfo() {
-        PersonalBean personalBean = App.getInstence().getPersonalBean();
+        PersonalBean personalBean = App.getInstance().getPersonalBean();
         if (personalBean == null)
             return;
         if (TextUtils.isEmpty(personalBean.getMemInfo().getNickname())) {

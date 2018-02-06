@@ -293,10 +293,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.huanxin.PublicChatRoomsActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.activity.huanxin.RobotsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

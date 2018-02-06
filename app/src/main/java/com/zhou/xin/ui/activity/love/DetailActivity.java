@@ -70,7 +70,7 @@ public class DetailActivity extends BaseActivity {
     }
     private void setInfo() {
         photoUrlList = new ArrayList<>();
-        PersonalBean personalBean = App.getInstence().getPersonalBean();
+        PersonalBean personalBean = App.getInstance().getPersonalBean();
         Log.d("可以吗？", "setInfo: "+personalBean.toString());
         if (personalBean==null){
             return;

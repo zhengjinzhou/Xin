@@ -119,8 +119,8 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
      * 获取异性信息
      */
     private void getInfo() {
-        if (App.getInstence().getUserInfo() != null) {
-            String token = App.getInstence().getUserInfo().getToken();
+        if (App.getInstance().getUserInfo() != null) {
+            String token = App.getInstance().getUserInfo().getToken();
             Log.d(TAG, "getInfo: " + token);
             OkHttpClient okHttpClient = new OkHttpClient();
             FormBody body = new FormBody.Builder()
@@ -241,7 +241,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
      */
     private void sendBackground(String id) {
         Log.d(TAG, "sendBackground: "+id);
-        String token = App.getInstence().getUserInfo().getToken();
+        String token = App.getInstance().getUserInfo().getToken();
         String opt = "6";
         String cid = DES3Util.encrypt3DES(id, Constant.ENCRYPTION_KEY, Charset.forName("UTF-8"));
         String _t = CurrentTimeUtil.nowTime();

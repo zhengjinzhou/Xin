@@ -39,7 +39,6 @@ public class App extends Application {
     private static App app;
 
     public static Context applicationContext;
-    private static App instance;
     // login user name
     public final String PREF_USERNAME = "username";
     //nickname for current user, the nickname instead of ID be shown when user receive notification from APNs
@@ -76,10 +75,12 @@ public class App extends Application {
         MultiDex.install(this);
         super.onCreate();
         applicationContext = this;
-        instance = this;
         app = this;
-
         initSmallVideo();
+        initXin();
+    }
+
+    private void initXin() {
         //init demo helper
         DemoHelper.getInstance().init(applicationContext);
         //red packet code : 初始化红包SDK，开启日志输出开关
@@ -117,11 +118,8 @@ public class App extends Application {
         //end of red packet code
     }
 
-    public static App getInstence() {
-        return app;
-    }//love的,写错了的，不修改了
     public static App getInstance() {
-        return instance;
+        return app;
     }
 
     @Override
@@ -151,4 +149,5 @@ public class App extends Application {
         // 初始化拍摄，遇到问题可选择开启此标记，以方便生成日志
         JianXiCamera.initialize(false,null);
     }
+
 }

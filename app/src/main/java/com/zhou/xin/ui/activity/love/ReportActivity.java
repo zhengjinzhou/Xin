@@ -107,7 +107,7 @@ public class ReportActivity extends BaseActivity {
      * 获取举报类型
      */
     private void getInfo() {
-        String token = App.getInstence().getUserInfo().getToken();
+        String token = App.getInstance().getUserInfo().getToken();
         String opt = "13";
         String _t = CurrentTimeUtil.nowTime();
         String joint = "_t=" + _t + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;

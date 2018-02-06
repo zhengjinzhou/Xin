@@ -433,9 +433,12 @@ public class MainActivity extends BaseActivity {
         if (currentTabIndex != index) {
             FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
             trx.hide(fragments[currentTabIndex]);
-            if (!fragments[index].isAdded()) {
+            /**
+             * 注解这里不知道能不能解决布局错乱问题
+             */
+            /*if (!fragments[index].isAdded()) {
                 trx.add(R.id.fragment_container, fragments[index]);
-            }
+            }*/
             trx.show(fragments[index]).commit();
         }
         mTabs[currentTabIndex].setSelected(false);

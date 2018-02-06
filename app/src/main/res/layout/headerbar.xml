@@ -25,7 +25,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:textColor="#fff"
-            android:textSize="@dimen/space_18" />
+            android:textSize="@dimen/text_size_18" />
 
         <ImageView
             android:id="@+id/iv_add"

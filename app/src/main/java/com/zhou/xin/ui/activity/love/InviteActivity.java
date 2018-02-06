@@ -47,8 +47,8 @@ public class InviteActivity extends BaseActivity {
     }
 
     private void getInvited() {
-        if (App.getInstence().getUserInfo() != null){
-            String token = App.getInstence().getUserInfo().getToken();
+        if (App.getInstance().getUserInfo() != null){
+            String token = App.getInstance().getUserInfo().getToken();
             String opt = "12";
             String _t = CurrentTimeUtil.nowTime();
             String joint = "_t=" + _t +  "&opt=" + opt + "&token="+ token + Constant.APP_ENCRYPTION_KEY;

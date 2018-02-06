@@ -231,11 +231,11 @@ public class LoginActivity extends BaseActivity {
                 Log.d(TAG, "获取个人信息onResponse: "+string);
                 Gson gson1 = new Gson();
                 PersonalBean personalBean = gson1.fromJson(string, PersonalBean.class);
-                App.getInstence().setPersonalBean(personalBean);
+                App.getInstance().setPersonalBean(personalBean);
             }
         });
 
-        App.getInstence().setUserInfo(userInfo);
+        App.getInstance().setUserInfo(userInfo);
         if (userInfo.getError().equals("-1")) {
             //进行环信登录
             XinLogin(username,username);

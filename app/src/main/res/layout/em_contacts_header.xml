@@ -38,6 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:contactItemImage="@drawable/success"
-        app:contactItemName="成功牵手" />
+        app:contactItemName="心灵触感" />
 
 </LinearLayout>

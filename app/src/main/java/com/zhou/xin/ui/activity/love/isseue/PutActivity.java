@@ -244,7 +244,7 @@ public class PutActivity extends BaseActivity {
 
     private void upImagers(File f, boolean b) {
         MultipartBody.Builder builider = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        builider.addFormDataPart("token", App.getInstence().getUserInfo().getToken());
+        builider.addFormDataPart("token", App.getInstance().getUserInfo().getToken());
         if (!TextUtils.isEmpty(content.getText().toString()))
             builider.addFormDataPart("content", content.getText().toString());
         if (f == null) return;

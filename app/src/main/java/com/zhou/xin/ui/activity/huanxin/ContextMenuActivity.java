@@ -1,6 +1,5 @@
 package com.zhou.xin.ui.activity.huanxin;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,7 +9,6 @@ import com.hyphenate.chat.EMMessage;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.Base2Activity;
-import com.zhou.xin.base.BaseActivity;
 
 /**
  * 聊天界面的消息  删除消息，撤回、复制消息、转发

@@ -246,7 +246,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
      * 给后台发送好友申请成功
      */
     private void sendAgree(int flag) {
-        String token = App.getInstence().getUserInfo().getToken();//获取token值
+        String token = App.getInstance().getUserInfo().getToken();//获取token值
         PersonalBean.MemInfoBean memInfo = App.getInstance().getPersonalBean().getMemInfo();
         String id = memInfo.getId()+"";//获取id
         String pid = DES3Util.encrypt3DES(id, Constant.ENCRYPTION_KEY, Charset.forName("UTF-8"));
