@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
@@ -70,12 +72,14 @@ public class LoginActivity extends BaseActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         tv_head.setText("登陆");
-        etUsername.setText("2014414");
-        Log.d(TAG, "init: "+Md5Util.encoder("2014414"+Constant.APP_ENCRYPTION_KEY));
+        etUsername.setText("13631782148");
+        Log.d(TAG, "init: "+Md5Util.encoder("13631782148"+Constant.APP_ENCRYPTION_KEY));
         etPassword.setText("123456");
 
         hint.setVisibility(View.INVISIBLE);
         clear.setVisibility(View.INVISIBLE);
+
+        Glide.with(this).load(SpUtil.getString(this,Constant.APP_PHOTO,"")).into(circle);
     }
 
     @OnClick({R.id.bt_login, R.id.back, R.id.tv_forget,R.id.clear,R.id.hint}) void onClick(View view) {
@@ -279,7 +283,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onError(int i, String s) {
                 dialog.dismiss();
-                Log.d(TAG, "login: onProgress");
+                Log.d(TAG, "login: onProgress"+s);
             }
 
             @Override

@@ -398,7 +398,10 @@
         <activity android:name=".ui.activity.love.AboutInfoActivity" />
         <activity android:name=".ui.activity.love.ChangeActivity" />
         <activity android:name=".ui.activity.love.ActivityActivity" />
-        <activity android:name=".ui.activity.love.isseue.SuccessActivity" />
+        <activity
+            android:name=".ui.activity.love.isseue.SuccessActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.love.ActivityInfoActivity" />
         <activity android:name=".ui.activity.love.ReportActivity" />
         <activity android:name=".ui.activity.love.TextActivity" />
@@ -408,6 +411,7 @@
         <activity android:name=".ui.activity.love.isseue.PutVideoActivity" />
         <activity android:name=".ui.activity.love.isseue.VideoPlayerActivity" />
         <activity android:name="com.mabeijianxi.smallvideorecord2.MediaRecorderActivity" />
+        <activity android:name=".ui.activity.love.isseue.PhotoiewerActivity"></activity>
     </application>
 
 </manifest>

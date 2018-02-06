@@ -126,6 +126,7 @@
             android:background="@color/gray_pressed" />
 
         <RelativeLayout
+
             android:id="@+id/rl_jubao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

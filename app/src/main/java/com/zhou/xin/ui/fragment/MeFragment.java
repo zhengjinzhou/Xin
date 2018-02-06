@@ -173,7 +173,7 @@ public class MeFragment extends BaseFragment {
         iv_gender.setImageResource(R.drawable.male);
         tv_name.setText(personalBean.getMemInfo().getNickname());
         Glide.with(getContext()).load(Constant.URL + personalBean.getMemInfo().getPhotoPath()).into(circle);
-
+        SpUtil.putString(getContext(),Constant.APP_PHOTO,Constant.URL + personalBean.getMemInfo().getPhotoPath());
     }
 
     @OnClick({ R.id.tv_edit, R.id.tv_exit,  R.id.tv_help,R.id.tv_invite})

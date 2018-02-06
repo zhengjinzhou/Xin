@@ -19,6 +19,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.zhou.xin.R;
+import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.ui.activity.love.ReportActivity;
@@ -32,18 +33,13 @@ public class UserProfileActivity extends BaseActivity {
     private static final int REQUESTCODE_CUTTING = 2;
     private ProgressDialog dialog;
 
-    @BindView(R.id.user_nickname)
-    TextView tvNickName;
-    @BindView(R.id.user_username)
-    TextView tvUsername;
-    @BindView(R.id.user_head_headphoto_update)
-    ImageView headPhotoUpdate;
-    @BindView(R.id.user_head_avatar)
-    ImageView headAvatar;
-    @BindView(R.id.rl_nickname)
-    RelativeLayout rlNickName;
-    @BindView(R.id.ic_right_arrow)
-    ImageView iconRightArrow;
+    @BindView(R.id.user_nickname) TextView tvNickName;
+    @BindView(R.id.user_username) TextView tvUsername;
+    @BindView(R.id.user_head_headphoto_update) ImageView headPhotoUpdate;
+    @BindView(R.id.user_head_avatar) ImageView headAvatar;
+    @BindView(R.id.rl_nickname) RelativeLayout rlNickName;
+    @BindView(R.id.ic_right_arrow) ImageView iconRightArrow;
+    @BindView(R.id.rl_jubao) ReportActivity rl_jubao;
 
     @Override
     public int getLayout() {
@@ -119,6 +115,9 @@ public class UserProfileActivity extends BaseActivity {
     }
 
     private void initListener() {
+        if (EMClient.getInstance().getCurrentUser().equals(App.getInstance().getUserInfo().getAccountNumber())){
+            rl_jubao.setVisible(false);
+        }
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
         boolean enableUpdate = intent.getBooleanExtra("setting", false);

@@ -50,20 +50,17 @@ public class ReportInfoActivity extends BaseActivity {
     private static final String TAG = "ReportInfoActivity";
     String imagePath = "";
 
-    @BindView(R.id.tv_head)
-    TextView tv_head;
-    @BindView(R.id.iv_img)
-    ImageView iv_img;
-    @BindView(R.id.et_opinion)
-    EditText et_opinion;
-
-
+    @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.iv_img) ImageView iv_img;
+    @BindView(R.id.et_opinion) EditText et_opinion;
+    private String jubao_mobile;
     private static final int CHOOSE_PHOTO = 1;
 
-    public static Intent newIntent(Context context, String str,String jubao) {
+    public static Intent newIntent(Context context, String str,String jubao,String mobile) {
         Intent intent = new Intent(context, ReportInfoActivity.class);
         intent.putExtra("typeId", str);
         intent.putExtra("jubao",jubao);
+        intent.putExtra("mobile",mobile);
         return intent;
     }
 
@@ -75,7 +72,12 @@ public class ReportInfoActivity extends BaseActivity {
     @Override
     protected void init() {
         tv_head.setText("举报用户");
-        Log.d(TAG, "init:++++++++++++++++++++++++++++++++++++++ "+getIntent().getStringExtra("jubao"));
+        Log.d(TAG, "init:+++++++++++++++ "+getIntent().getStringExtra("jubao")+"+++++++++++++++++++++++"+getIntent().getStringExtra("mobile"));
+        if (!TextUtils.isEmpty(getIntent().getStringExtra("jubao"))){
+            jubao_mobile = getIntent().getStringExtra("jubao");
+        }else {
+            jubao_mobile = getIntent().getStringExtra("mobile");
+        }
     }
 
     @OnClick({R.id.back, R.id.bt_submit, R.id.rl_add})
@@ -213,7 +215,7 @@ public class ReportInfoActivity extends BaseActivity {
             ToastUtil.show(getApplicationContext(), "照片不能为空");
             return;
         }
-        String mobile = "13631789659";
+        String mobile = jubao_mobile;//被举报手机号码mobile
         String typeId = getIntent().getStringExtra("typeId");
         String photo = imagePath;
         dialog.show();
@@ -226,6 +228,7 @@ public class ReportInfoActivity extends BaseActivity {
         builider.addFormDataPart("photo", photo, RequestBody.create(MediaType.parse("image/*"), new File(photo)));
         MultipartBody requestBody = builider.build();
 
+        Log.d(TAG, "拼接一下上传的东西: "+mobile +" " +typeId +" "+ photo+" "+reportContent + " "+App.getInstance().getUserInfo().getToken());
         Request request = new Request.Builder()
                 .url(Constant.JUBAO)
                 .post(requestBody)
@@ -242,6 +245,7 @@ public class ReportInfoActivity extends BaseActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 dialog.dismiss();
                 String string = response.body().string();
+                Log.d(TAG, "onResponse: "+string);
                 Gson gson = new Gson();
                 final UserInfo userInfo = gson.fromJson(string, UserInfo.class);
                 if (userInfo.getError().equals("-1")) {

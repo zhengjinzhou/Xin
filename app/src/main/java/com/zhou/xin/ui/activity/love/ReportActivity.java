@@ -56,6 +56,19 @@ public class ReportActivity extends BaseActivity {
         return R.layout.activity_report;
     }
 
+    /**
+     * 传递手机号码
+     *
+     * @param context
+     * @param mobile
+     * @return
+     */
+    public static Intent newIntent(Context context, String mobile) {
+        Intent intent = new Intent(context, ReportActivity.class);
+        intent.putExtra("mobile", mobile);
+        return intent;
+    }
+
     @Override
     protected void init() {
 
@@ -75,12 +88,12 @@ public class ReportActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         if (s.getAcTypes().size() == 0){
-                            startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+"",getIntent().getStringExtra("username")));
+                            startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+"",getIntent().getStringExtra("username"),getIntent().getStringExtra("mobile")));
                             Log.d(TAG, "onClick: "+s.getId());
                         }else {
                             List<ReportBean.AccusationCategoryListBean.AcTypesBean> acTypes = s.getAcTypes();
                             String json = new Gson().toJson(acTypes);
-                            startActivity(Report2Activity.newintent(getApplicationContext(),json,getIntent().getStringExtra("username")));
+                            startActivity(Report2Activity.newintent(getApplicationContext(),json,getIntent().getStringExtra("username"),getIntent().getStringExtra("mobile")));
                         }
                     }
                 });
@@ -99,6 +112,8 @@ public class ReportActivity extends BaseActivity {
         String _t = CurrentTimeUtil.nowTime();
         String joint = "_t=" + _t + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
         String _s = Md5Util.encoder(joint);
+
+        dialog.show();
 
         OkHttpClient okHttpClient = new OkHttpClient();
         FormBody body = new FormBody.Builder()
@@ -139,6 +154,7 @@ public class ReportActivity extends BaseActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+        dialog.dismiss();
     }
 
     @OnClick({R.id.tv_report,R.id.back}) void onClick(View view){

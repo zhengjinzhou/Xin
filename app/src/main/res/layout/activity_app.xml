@@ -14,6 +14,7 @@
         android:src="@drawable/fall_in_love" />
 
     <TextView
+        android:id="@+id/tv_love"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_logo"

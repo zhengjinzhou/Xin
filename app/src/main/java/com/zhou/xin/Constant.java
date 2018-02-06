@@ -53,4 +53,7 @@ public class Constant extends EaseConstant {
 
     //获取异性推送
     public static final String ISOMERISM_URL = URL + "/app/o_push.do";
+
+    //记住头像
+    public static final String APP_PHOTO = "app_photo";
 }
