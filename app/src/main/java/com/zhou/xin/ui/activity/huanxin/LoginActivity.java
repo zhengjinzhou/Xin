@@ -23,6 +23,7 @@ import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.bean.UserInfo;
 import com.zhou.xin.db.DemoDBManager;
+import com.zhou.xin.huanxin.SharedPreferencesUtils;
 import com.zhou.xin.ui.activity.love.ForgetActivity;
 import com.zhou.xin.ui.activity.love.RegisterActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
@@ -47,13 +48,20 @@ import okhttp3.Response;
 
 public class LoginActivity extends BaseActivity {
 
-    @BindView(R.id.circle) CircleImageView circle;
-    @BindView(R.id.et_username) EditText etUsername;
-    @BindView(R.id.et_password) EditText etPassword;
-    @BindView(R.id.tv_head) TextView tv_head;
-    @BindView(R.id.tv_forget) TextView tv_forget;
-    @BindView(R.id.clear) ImageView clear;
-    @BindView(R.id.hint) ImageView hint;
+    @BindView(R.id.circle)
+    CircleImageView circle;
+    @BindView(R.id.et_username)
+    EditText etUsername;
+    @BindView(R.id.et_password)
+    EditText etPassword;
+    @BindView(R.id.tv_head)
+    TextView tv_head;
+    @BindView(R.id.tv_forget)
+    TextView tv_forget;
+    @BindView(R.id.clear)
+    ImageView clear;
+    @BindView(R.id.hint)
+    ImageView hint;
 
     private String TAG = "LoginActivity";
     private String username;
@@ -66,23 +74,32 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        if(Build.VERSION.SDK_INT >= 21){
+
+        //尝试保存用户名和头像
+        SpUtil.putString(getApplicationContext(),Constant.USER_NAME,"zhangsan");
+        SpUtil.putString(getApplicationContext(),Constant.HEAD_IMAGE_URL,"http://img0.imgtn.bdimg.com/it/u=3707678312,2260123328&fm=27&gp=0.jpg");
+        DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName("zhangsan");
+        DemoHelper.getInstance().getUserProfileManager().setCurrentUserAvatar("http://img0.imgtn.bdimg.com/it/u=3707678312,2260123328&fm=27&gp=0.jpg");
+
+
+        if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    |View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         tv_head.setText("登陆");
         etUsername.setText("13631782148");
-        Log.d(TAG, "init: "+Md5Util.encoder("13631782148"+Constant.APP_ENCRYPTION_KEY));
+        Log.d(TAG, "init: " + Md5Util.encoder("13631782148" + Constant.APP_ENCRYPTION_KEY));
         etPassword.setText("123456");
 
         hint.setVisibility(View.INVISIBLE);
         clear.setVisibility(View.INVISIBLE);
 
-        Glide.with(this).load(SpUtil.getString(this,Constant.APP_PHOTO,"")).into(circle);
+        Glide.with(this).load(SpUtil.getString(this, Constant.APP_PHOTO, "")).placeholder(R.drawable.fall_in_love).into(circle);
     }
 
-    @OnClick({R.id.bt_login, R.id.back, R.id.tv_forget,R.id.clear,R.id.hint}) void onClick(View view) {
+    @OnClick({R.id.bt_login, R.id.back, R.id.tv_forget, R.id.clear, R.id.hint})
+    void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
                 login();//登录
@@ -186,6 +203,9 @@ public class LoginActivity extends BaseActivity {
         }
     };
 
+    /**
+     * opt5为获取个人信息
+     */
     private void getResult(String data) {
         Gson gson = new Gson();
         final UserInfo userInfo = gson.fromJson(data, UserInfo.class);
@@ -228,7 +248,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onResponse(Call call, Response res) throws IOException {
                 String string = res.body().string();
-                Log.d(TAG, "获取个人信息onResponse: "+string);
+                Log.d(TAG, "获取个人信息onResponse: " + string);
                 Gson gson1 = new Gson();
                 PersonalBean personalBean = gson1.fromJson(string, PersonalBean.class);
                 App.getInstance().setPersonalBean(personalBean);
@@ -238,12 +258,13 @@ public class LoginActivity extends BaseActivity {
         App.getInstance().setUserInfo(userInfo);
         if (userInfo.getError().equals("-1")) {
             //进行环信登录
-            XinLogin(username,username);
-            SpUtil.putString(getApplicationContext(), Constant.PASSWORD,password);
+            XinLogin(username, username);
+            SpUtil.putString(getApplicationContext(), Constant.PASSWORD, password);
         } else if (userInfo.getError().equals("-2")) {
             startToActivity(RegisterActivity.class);
         }
     }
+
     /**
      * 进行环信登录
      *
@@ -253,8 +274,8 @@ public class LoginActivity extends BaseActivity {
     private void XinLogin(final String username, final String pwd) {
         // After logout，the DemoDB may still be accessed due to async callback, so the DemoDB will be re-opened again.
         // close it before login to make sure DemoDB not overlap
-        String pssword = Md5Util.encoder(pwd+Constant.APP_ENCRYPTION_KEY);
-        Log.d(TAG, "XinLogin: "+username+ "  "+pssword);
+        String pssword = Md5Util.encoder(pwd + Constant.APP_ENCRYPTION_KEY);
+        Log.d(TAG, "XinLogin: " + username + "  " + pssword);
         DemoDBManager.getInstance().closeDB();
         // reset current user name before login
         DemoHelper.getInstance().setCurrentUserName(username);
@@ -283,7 +304,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onError(int i, String s) {
                 dialog.dismiss();
-                Log.d(TAG, "login: onProgress"+s);
+                Log.d(TAG, "login: onProgress" + s);
             }
 
             @Override

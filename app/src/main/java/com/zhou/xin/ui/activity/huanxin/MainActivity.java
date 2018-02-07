@@ -32,6 +32,7 @@ import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
+import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.db.InviteMessgeDao;
@@ -42,6 +43,7 @@ import com.zhou.xin.ui.fragment.ContactListFragment;
 import com.zhou.xin.ui.fragment.ConversationListFragment;
 import com.zhou.xin.ui.fragment.HomeFragment;
 import com.zhou.xin.ui.fragment.MeFragment;
+import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.utils.ToastUtil;
 
 import java.util.List;
@@ -92,6 +94,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void init() {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             String packageName = getPackageName();
             PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -433,12 +436,9 @@ public class MainActivity extends BaseActivity {
         if (currentTabIndex != index) {
             FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
             trx.hide(fragments[currentTabIndex]);
-            /**
-             * 注解这里不知道能不能解决布局错乱问题
-             */
-            /*if (!fragments[index].isAdded()) {
+            if (!fragments[index].isAdded()) {
                 trx.add(R.id.fragment_container, fragments[index]);
-            }*/
+            }
             trx.show(fragments[index]).commit();
         }
         mTabs[currentTabIndex].setSelected(false);

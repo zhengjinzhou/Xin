@@ -98,7 +98,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
     @Override
     protected void init(View v) {
-
+        
         back.setVisibility(View.GONE);
         tv_head.setText("主页");
         getInfo();

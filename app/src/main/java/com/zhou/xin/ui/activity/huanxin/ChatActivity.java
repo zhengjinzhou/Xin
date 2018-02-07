@@ -7,6 +7,7 @@ import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.util.EasyUtils;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.huanxin.MyChatFragment;
 import com.zhou.xin.runtimepermissions.PermissionsManager;
 import com.zhou.xin.ui.fragment.ChatFragment;
 
@@ -27,7 +28,10 @@ public class ChatActivity extends BaseActivity {
         //get user id or group id
         toChatUsername = getIntent().getExtras().getString("userId");
         //use EaseChatFratFragment
+        //chatFragment = new ChatFragment();
+
         chatFragment = new ChatFragment();
+
         //pass parameters to chat fragment
         chatFragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
@@ -54,6 +58,7 @@ public class ChatActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        //chatFragment.onBackPressed();
         chatFragment.onBackPressed();
         if (EasyUtils.isSingleActivity(this)) {
             Intent intent = new Intent(this, MainActivity.class);

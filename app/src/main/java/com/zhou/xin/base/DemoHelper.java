@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -1263,7 +1264,7 @@ public class DemoHelper {
         showToast(exception);
     }
 
-    private EaseUser getUserInfo(String username){
+   /* private EaseUser getUserInfo(String username){
         // To get instance of EaseUser, here we get it from the user list in memory
         // You'd better cache it if you get it from your server
         EaseUser user = null;
@@ -1280,6 +1281,35 @@ public class DemoHelper {
             EaseCommonUtils.setUserInitialLetter(user);
         }
         return user;
+    }*/
+
+    private EaseUser getUserInfo(String hxId) {
+        // 获取user信息，demo是从内存的好友列表里获取，
+        // 实际开发中，可能还需要从服务器获取用户信息,
+        // 从服务器获取的数据，最好缓存起来，避免频繁的网络请求
+        if (hxId.equals(EMClient.getInstance().getCurrentUser())) {
+            EaseUser currentUserInfo = getUserProfileManager().getCurrentUserInfo();
+            return currentUserInfo;
+
+        }
+        EaseUser easeUser;
+        if (contactList != null && contactList.containsKey(hxId)) {
+        } else { // 如果内存中没有，则将本地数据库中的取出到内存中。
+            getContactList();
+        }
+        // // TODO 获取不在好友列表里的群成员具体信息，即陌生人信息，demo未实现
+        // if (user == null && getRobotList() != null) {
+        // user = getRobotList().get(hxId);
+        // }
+        easeUser = contactList.get(hxId);
+        if(easeUser == null){
+            easeUser = new EaseUser(hxId);
+        } else {
+            if(TextUtils.isEmpty(easeUser.getNick())){ // 如果名字为空，则显示环信号码
+                easeUser.setNick(easeUser.getUsername());
+            }
+        }
+        return easeUser;
     }
 
     /**
@@ -1294,6 +1324,29 @@ public class DemoHelper {
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
                 for (EMMessage message : messages) {
+                    //************接收并处理扩展消息***********************
+                    String userName = message.getStringAttribute("userName", "");
+                    String userPic = message.getStringAttribute("userPic", "");
+                    String hxIdFrom = message.getFrom();
+                    EaseUser easeUser = new EaseUser(hxIdFrom);
+                    easeUser.setAvatar(userPic);
+                    easeUser.setNick(userName);
+                    // 存入内存
+                    getContactList();
+                    contactList.put(hxIdFrom, easeUser);
+                    // 存入db
+                    UserDao dao = new UserDao(App.applicationContext);//===========================================这里是什么
+                    List users = new ArrayList();
+                    users.add(easeUser);
+                    dao.saveContactList(users);
+                    getModel().setContactSynced(true);
+                    // 通知listeners联系人同步完毕
+                    notifyContactsSyncListener(true);
+                    if (isGroupsSyncedWithServer()) {
+                        //notifyForRecevingEvents();
+                    }
+
+                    //************接收并处理扩展消息***********************
                     EMLog.d(TAG, "onMessageReceived id : " + message.getMsgId());
                     // in background, do not refresh UI, notify it in notification bar
                     if(!easeUI.hasForegroundActivies()){

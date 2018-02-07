@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,7 @@ import com.zhou.xin.ui.activity.huanxin.PickAtUserActivity;
 import com.zhou.xin.ui.activity.huanxin.UserProfileActivity;
 import com.zhou.xin.ui.activity.huanxin.VideoCallActivity;
 import com.zhou.xin.ui.activity.huanxin.VoiceCallActivity;
+import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.widget.EaseChatRecallPresenter;
 import com.zhou.xin.widget.EaseChatVoiceCallPresenter;
 
@@ -261,6 +263,15 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             //set message extension
             message.setAttribute("em_robot_message", isRobot);
         }
+        String userName = SpUtil.getString(getContext(), Constant.USER_NAME, "");
+        String userPic = SpUtil.getString(getContext(), Constant.HEAD_IMAGE_URL, "");
+        if (!TextUtils.isEmpty(userPic)){
+            message.setAttribute("userPic", userPic);
+        }
+        if (!TextUtils.isEmpty(userName)) {
+            message.setAttribute("userName", userName);
+        }
+
     }
 
     @Override

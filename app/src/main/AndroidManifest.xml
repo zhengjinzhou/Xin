@@ -376,6 +376,7 @@
             android:name=".ui.activity.huanxin.PickContactNoCheckboxActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
         <activity android:name=".ui.activity.love.SplashActivity" />
         <activity android:name=".ui.activity.love.AppActivity" />
         <activity android:name=".ui.activity.love.RegisterActivity" />
