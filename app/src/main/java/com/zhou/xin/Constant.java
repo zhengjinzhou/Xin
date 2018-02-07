@@ -57,7 +57,7 @@ public class Constant extends EaseConstant {
     //记住头像
     public static final String APP_PHOTO = "app_photo";
 
-
+    public static final String POINT_LIKE = "point_like";//点赞
 
     public static final String HEAD_IMAGE_URL = "headImageUrl";//发送人的头像
     public static final String USER_ID = "userid";
@@ -69,4 +69,11 @@ public class Constant extends EaseConstant {
     public static final String RECEIVOR_USER_SEX = "objectUserSex";
     public static String USER_HEAD_IMG = "user_head_img";
     public static String HX_CURRENT_USER_ID = "hx_current_user_id";
+
+
+    /**
+     * 使用框架录制视频的参数
+     *
+     */
+    public static boolean needFull = true;
 }

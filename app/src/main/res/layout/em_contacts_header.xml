@@ -23,21 +23,21 @@
         android:id="@+id/hong_bao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_groups_icon"
-        app:contactItemName="红包记录" />
+        app:contactItemImage="@drawable/qmr"
+        app:contactItemName="@string/back_red_recommend" />
 
     <com.zhou.xin.widget.ContactItemView
         android:id="@+id/black_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_groups_icon"
-        app:contactItemName="黑名单" />
+        app:contactItemImage="@drawable/topic_icon_anonymity_selected"
+        app:contactItemName="@string/black_card" />
 
     <com.zhou.xin.widget.ContactItemView
         android:id="@+id/conference_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:contactItemImage="@drawable/success"
-        app:contactItemName="心灵触感" />
+        app:contactItemName="@string/friends" />
 
 </LinearLayout>

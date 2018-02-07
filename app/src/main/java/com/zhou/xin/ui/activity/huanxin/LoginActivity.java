@@ -23,7 +23,6 @@ import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.bean.UserInfo;
 import com.zhou.xin.db.DemoDBManager;
-import com.zhou.xin.huanxin.SharedPreferencesUtils;
 import com.zhou.xin.ui.activity.love.ForgetActivity;
 import com.zhou.xin.ui.activity.love.RegisterActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
@@ -95,7 +94,10 @@ public class LoginActivity extends BaseActivity {
         hint.setVisibility(View.INVISIBLE);
         clear.setVisibility(View.INVISIBLE);
 
-        Glide.with(this).load(SpUtil.getString(this, Constant.APP_PHOTO, "")).placeholder(R.drawable.fall_in_love).into(circle);
+        Glide.with(this)
+                .load(SpUtil.getString(this, Constant.APP_PHOTO, ""))
+                .placeholder(R.drawable.ic_avatar)
+                .dontAnimate().into(circle);
     }
 
     @OnClick({R.id.bt_login, R.id.back, R.id.tv_forget, R.id.clear, R.id.hint})
@@ -252,6 +254,12 @@ public class LoginActivity extends BaseActivity {
                 Gson gson1 = new Gson();
                 PersonalBean personalBean = gson1.fromJson(string, PersonalBean.class);
                 App.getInstance().setPersonalBean(personalBean);
+                //设置头像昵称
+                Log.d(TAG, "onResponse: "+personalBean.getMemInfo().getNickname() + "  "+Constant.URL+personalBean.getMemInfo().getPhotoPath());
+                SpUtil.putString(getApplicationContext(), Constant.USER_NAME, personalBean.getMemInfo().getNickname());
+                SpUtil.putString(getApplicationContext(), Constant.HEAD_IMAGE_URL, Constant.URL+personalBean.getMemInfo().getPhotoPath());
+                DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(personalBean.getMemInfo().getNickname());
+                DemoHelper.getInstance().getUserProfileManager().setCurrentUserAvatar(Constant.URL+personalBean.getMemInfo().getPhotoPath());
             }
         });
 

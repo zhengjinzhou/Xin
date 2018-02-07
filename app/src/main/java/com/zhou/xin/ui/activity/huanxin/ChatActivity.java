@@ -7,7 +7,6 @@ import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.util.EasyUtils;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
-import com.zhou.xin.huanxin.MyChatFragment;
 import com.zhou.xin.runtimepermissions.PermissionsManager;
 import com.zhou.xin.ui.fragment.ChatFragment;
 

@@ -377,38 +377,122 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.love.SplashActivity" />
-        <activity android:name=".ui.activity.love.AppActivity" />
-        <activity android:name=".ui.activity.love.RegisterActivity" />
-        <activity android:name=".ui.activity.love.Register2Activity" />
-        <activity android:name=".ui.activity.love.DetailActivity" />
-        <activity android:name=".ui.activity.love.GuildActivity" />
-        <activity android:name=".ui.activity.love.InviteActivity" />
-        <activity android:name=".ui.activity.love.SafeActivity" />
-        <activity android:name=".ui.activity.love.AboutActivity" />
-        <activity android:name=".ui.activity.love.LotteryActivity" />
-        <activity android:name=".ui.activity.love.ForgetActivity" />
-        <activity android:name=".ui.activity.love.EditLoveActivity" />
-        <activity android:name=".ui.activity.love.TaskActivity" />
-        <activity android:name=".ui.activity.love.OpinionActivity" />
-        <activity android:name=".ui.activity.love.GuildInfoActivity" />
-        <activity android:name=".ui.activity.love.AboutInfoActivity" />
-        <activity android:name=".ui.activity.love.ChangeActivity" />
-        <activity android:name=".ui.activity.love.ActivityActivity" />
+        <activity
+            android:name=".ui.activity.love.SplashActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.AppActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.RegisterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.Register2Activity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.DetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.GuildActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.InviteActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.SafeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.AboutActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.LotteryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.ForgetActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.EditLoveActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.TaskActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.OpinionActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.GuildInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.AboutInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.ChangeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.ActivityActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.love.isseue.SuccessActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.love.ActivityInfoActivity" />
-        <activity android:name=".ui.activity.love.ReportActivity" />
-        <activity android:name=".ui.activity.love.TextActivity" />
-        <activity android:name=".ui.activity.love.ReportInfoActivity" />
-        <activity android:name=".ui.activity.love.Report2Activity" />
-        <activity android:name=".ui.activity.love.isseue.PutActivity" />
-        <activity android:name=".ui.activity.love.isseue.PutVideoActivity" />
-        <activity android:name=".ui.activity.love.isseue.VideoPlayerActivity" />
-        <activity android:name="com.mabeijianxi.smallvideorecord2.MediaRecorderActivity" />
-        <activity android:name=".ui.activity.love.isseue.PhotoiewerActivity"></activity>
+        <activity
+            android:name=".ui.activity.love.ActivityInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.ReportActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.TextActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.ReportInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.Report2Activity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.isseue.PutActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.isseue.PutVideoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.isseue.VideoPlayerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mabeijianxi.smallvideorecord2.MediaRecorderActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.isseue.PhotoiewerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

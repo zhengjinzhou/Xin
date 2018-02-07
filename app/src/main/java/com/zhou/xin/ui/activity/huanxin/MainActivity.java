@@ -12,6 +12,7 @@ import android.os.PowerManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +33,6 @@ import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
-import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.db.InviteMessgeDao;
@@ -491,6 +491,7 @@ public class MainActivity extends BaseActivity {
                 return true;
             } else {
                 finish();
+                SpUtil.clear();
             }
         } else if (event.getKeyCode() == KeyEvent.KEYCODE_MENU) {
             return true;

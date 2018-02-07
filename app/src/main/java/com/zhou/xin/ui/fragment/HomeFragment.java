@@ -1,5 +1,4 @@
 package com.zhou.xin.ui.fragment;
-
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -55,18 +54,11 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
         SwipeFlingAdapterView.OnItemClickListener, View.OnClickListener {
 
 
-    @BindView(R.id.swipe_view)
-    SwipeFlingAdapterView swipeView;
-    @BindView(R.id.swipeLeft)
-    View vLeft;
-    @BindView(R.id.swipeRight)
-    View vRight;
-    @BindView(R.id.back)
-    ImageView back;
-    @BindView(R.id.tv_head)
-    TextView tv_head;
-
-
+    @BindView(R.id.swipe_view) SwipeFlingAdapterView swipeView;
+    @BindView(R.id.swipeLeft) View vLeft;
+    @BindView(R.id.swipeRight) View vRight;
+    @BindView(R.id.back) ImageView back;
+    @BindView(R.id.tv_head) TextView tv_head;
     private static final String TAG = "HomeFragment";
     int[] headerIcons = {
             R.drawable.i1,
@@ -98,7 +90,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
     @Override
     protected void init(View v) {
-        
+
         back.setVisibility(View.GONE);
         tv_head.setText("主页");
         getInfo();

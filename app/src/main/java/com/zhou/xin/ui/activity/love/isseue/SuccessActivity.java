@@ -2,6 +2,7 @@ package com.zhou.xin.ui.activity.love.isseue;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -39,6 +40,9 @@ import com.zhou.xin.ui.activity.love.ReportInfoActivity;
 import com.zhou.xin.utils.GlideRoundTransform;
 import com.zhou.xin.utils.LogUtil;
 import com.zhou.xin.utils.PersonalFormTools;
+import com.zhou.xin.utils.SpUtil;
+import com.zhou.xin.utils.ToastUtil;
+import com.zhou.xin.utils.VideoUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,16 +63,12 @@ import okhttp3.Response;
 public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "SuccessActivity";
-    @BindView(R.id.tv_head)
-    TextView tv_head;
-    @BindView(R.id.recycleView)
-    RecyclerView recycleView;
-    @BindView(R.id.refresh)
-    SwipeRefreshLayout refresh;
-    @BindView(R.id.iv_add)
-    ImageView iv_add;
-
+    @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.recycleView) RecyclerView recycleView;
+    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+    @BindView(R.id.iv_add) ImageView iv_add;
     private MultiItemCommonAdapter adapter;
+    private boolean aBoolean;
 
     @Override
     protected int getLayout() {
@@ -77,6 +77,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
 
     @Override
     protected void init() {
+        aBoolean = SpUtil.getBoolean(getApplicationContext(), Constant.POINT_LIKE, false);//判断是否已经点赞过
         tv_head.setText("成功案例");
         iv_add.setVisibility(View.VISIBLE);
         iv_add.setBackground(getResources().getDrawable(R.drawable.more_unfold));
@@ -164,17 +165,14 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 inflate.findViewById(R.id.tv_img).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //图文
-                        startToActivity(PutActivity.class);
+                        startToActivity(PutActivity.class);//图文
                         pop.dismiss();
                     }
                 });
                 inflate.findViewById(R.id.tv_video).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //视文
-                        //startToActivity(PutVideoActivity.class);
-                        toVideo();
+                        VideoUtil.toVideo(SuccessActivity.this);    //视文
                         pop.dismiss();
                     }
                 });
@@ -186,31 +184,6 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 });
                 break;
         }
-    }
-
-    /**
-     * 使用框架寻找视频
-     */
-    private boolean needFull = true;
-    private int width = 480;
-    private int height = 480;
-    private int minTime = 1000;
-    private int maxTime = 10000;
-    private int maxFramerate = 20;
-    private int bitrate = 580000;
-
-    private void toVideo() {
-        MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
-                .fullScreen(needFull)
-                .smallVideoWidth(needFull ? 0 : width)
-                .smallVideoHeight(height)
-                .recordTimeMax(maxTime)
-                .recordTimeMin(minTime)
-                .maxFrameRate(maxFramerate)
-                .videoBitrate(bitrate)
-                .captureThumbnailsTime(1)
-                .build();
-        MediaRecorderActivity.goSmallVideoRecorder(this, PutVideoActivity.class.getName(), config);
     }
 
     private void initRecycle() {
@@ -243,8 +216,6 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
         }) {
             @Override
             public void convert(final ViewHolder holder, final TalkBean.TalkListBean bean, int position) {
-
-                //==============================================公共部分
                 CircleImageView circle = holder.getView(R.id.avatar);
                 Glide.with(getApplicationContext()).load(Constant.URL + bean.getIconUrl())
                         .placeholder(R.drawable.ic_avatar)
@@ -255,8 +226,15 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 if (!TextUtils.isEmpty(bean.getContent()))
                     holder.setText(R.id.content, bean.getContent());
                 holder.setText(R.id.like,bean.getTapTimes()+"");
+                //如果为true，那么久显示已经点击的状态
+                if (aBoolean){
+                    Drawable drawable = getResources().getDrawable(R.drawable.issue_like_point);// 找到资源图片
+                    // 这一步必须要做，否则不会显示。
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
+                    ((TextView)holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
+                }
                 int type = getItemViewType(position);
-                //==============================================公共部分
+
                 if (type == 1) {
                     textImagerManger(holder, bean, position);
                 } else if (type == 2) {
@@ -268,18 +246,10 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 holder.setOnClickListener(R.id.iv_report, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //startToActivity(ReportActivity.class);/***这里到时候要传参数过去*/
                         Report(bean.getMobile());
                     }
                 });
-
-                //点赞
-                holder.setOnClickListener(R.id.like, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        pointLike();
-                    }
-                });
+                PointLike(holder, bean); //点赞
             }
         };
 
@@ -291,6 +261,37 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
         recycleView.setNestedScrollingEnabled(false);
         recycleView.setLayoutManager(layoutManager);
         recycleView.setAdapter(adapter);
+    }
+
+    /**
+     * 点赞
+     *
+     * @param holder
+     * @param bean
+     */
+    private void PointLike(final ViewHolder holder, final TalkBean.TalkListBean bean) {
+        holder.setOnClickListener(R.id.like, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (aBoolean){
+                    ToastUtil.show(getApplicationContext(),"您已经点赞过了");
+                    return;
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int num = bean.getTapTimes() + 1;
+                        holder.setText(R.id.like,num+"");
+                        Drawable drawable = getResources().getDrawable(R.drawable.issue_like_point);// 找到资源图片
+                        // 这一步必须要做，否则不会显示。
+                        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
+                        ((TextView)holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
+                        SpUtil.putBoolean(getApplicationContext(),Constant.POINT_LIKE, true);
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -377,16 +378,6 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 });
             }
         });
-    }
-
-    /**
-     * 点赞
-     * 图标要变
-     * 数字要变
-     * 要上传后台
-     */
-    private void pointLike() {
-
     }
 
     /**

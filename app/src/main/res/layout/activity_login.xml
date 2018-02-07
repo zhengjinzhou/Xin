@@ -36,7 +36,7 @@
         android:layout_height="88dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="98dp"
-        android:src="@drawable/fall_in_love"
+        android:src="@drawable/ic_avatar"
         app:civ_border_color="#f3b8b8"
         app:civ_border_width="2dp" />
 
