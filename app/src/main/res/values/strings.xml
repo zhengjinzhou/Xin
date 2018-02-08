@@ -105,6 +105,8 @@
     <string name="black_card">黑名单</string>
     <string name="friends">朋友圈</string>
     <string name="back_red_recommend">红包记录</string>
+    <string name="had_point">您已经点赞过了</string>
+    <string name="SuccessActivity">成功案例</string>
 
 
     <string-array name="icons">

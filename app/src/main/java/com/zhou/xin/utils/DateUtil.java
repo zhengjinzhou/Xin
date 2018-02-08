@@ -1,5 +1,6 @@
 package com.zhou.xin.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -8,6 +9,34 @@ import java.util.Date;
  */
 
 public class DateUtil {
+
+    public static String showTime(String time) throws ParseException {
+        Date currentTime = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date sendTime = sdf.parse(time);
+        long result = currentTime.getTime() - sendTime.getTime();//转为秒
+        String r = "";
+        if(result < 60000){// 一分钟内
+            long seconds = result / 1000;
+            if(seconds == 0){
+                r = "刚刚";
+            }else{
+                r = seconds + "秒前";
+            }
+        }else if (result >= 60000 && result < 3600000){// 一小时内
+            long seconds = result / 60000;
+            r = seconds + "分钟前";
+        }else if (result >= 3600000 && result < 86400000){// 一天内
+            long seconds = result / 3600000;
+            r = seconds + "小时前";
+        }else if (result >= 86400000 && result < 1702967296){// 三十天内
+            long seconds = result / 86400000;
+            r = seconds + "天前";
+        }else{// 日期格式
+            return "1月前";
+        }
+        return r;
+    }
 
     //2007.07.04
     public static String dotDate(Date date) {

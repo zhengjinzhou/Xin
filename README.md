@@ -13,3 +13,5 @@
         现在仅是在HomeFagment的里面加入，如果到时候还有这情况，重新再其他界面设置
 
 解决环信头像问题：https://www.jianshu.com/p/f869cffb2677?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+
+app瘦身博客https://www.jianshu.com/p/8f14679809b3

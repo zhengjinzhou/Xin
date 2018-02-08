@@ -11,11 +11,11 @@
     <include layout="@layout/headerbar" />
 
     <EditText
+        android:textSize="15sp"
         android:id="@+id/et_old"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout"
-        android:layout_marginTop="@dimen/space_8"
         android:background="@drawable/bg_login"
         android:hint="请输入原密码"
         android:inputType="textPassword"
@@ -24,6 +24,7 @@
         android:singleLine="true" />
 
     <EditText
+        android:textSize="15sp"
         android:id="@+id/et_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,6 +38,7 @@
         android:singleLine="true" />
 
     <EditText
+        android:textSize="15sp"
         android:id="@+id/et_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

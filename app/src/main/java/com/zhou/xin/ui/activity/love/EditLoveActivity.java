@@ -42,6 +42,7 @@ import com.zhou.xin.utils.GlideRoundTransform;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.PersonalFormTools;
 import com.zhou.xin.utils.ToastUtil;
+import com.zhou.xin.utils.actionPhotoUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -694,7 +695,7 @@ public class EditLoveActivity extends BaseActivity {
                         @Override
                         public void onPermissionGranted() {
                             index = i;
-                            actionPhoto();
+                            actionPhotoUtil.actionPhoto(EditLoveActivity.this,REQUEST_CODE);
                         }
 
                         @Override
@@ -705,47 +706,7 @@ public class EditLoveActivity extends BaseActivity {
             return;
         }
         this.index = i;
-        actionPhoto();
-    }
-
-    private void actionPhoto() {
-        final ImageLoader loader = new ImageLoader() {
-            @Override
-            public void displayImage(Context context, String path, ImageView imageView) {
-                Glide.with(context).load(path).into(imageView);
-            }
-        };
-
-        ImgSelConfig config = new ImgSelConfig.Builder(this, loader)
-                // 是否多选, 默认true
-                .multiSelect(false)
-                // 是否记住上次选中记录, 仅当multiSelect为true的时候配置，默认为true
-                .rememberSelected(false)
-                // “确定”按钮背景色
-                .btnBgColor(Color.GRAY)
-                // “确定”按钮文字颜色
-                .btnTextColor(Color.WHITE)
-                // 使用沉浸式状态栏
-                .statusBarColor(getResources().getColor(R.color.colorPrimary))
-                // 返回图标ResId
-                .backResId(R.drawable.bar_back_white)
-                // 标题
-                .title("图片")
-                // 标题文字颜色
-                .titleColor(Color.WHITE)
-                // TitleBar背景色
-                .titleBgColor(getResources().getColor(R.color.colorPrimary))
-                // 裁剪大小。needCrop为true的时候配置
-                .cropSize(1, 1, 200, 200)
-                .needCrop(false)
-                // 第一个是否显示相机，默认true
-                .needCamera(false)
-                // 最大选择图片数量，默认9
-                .maxNum(6)
-                .build();
-
-        ImgSelActivity.startActivity(this, config, REQUEST_CODE);
-
+        actionPhotoUtil.actionPhoto(EditLoveActivity.this,REQUEST_CODE);
     }
 
     private void setDelPhoto(int index) {
