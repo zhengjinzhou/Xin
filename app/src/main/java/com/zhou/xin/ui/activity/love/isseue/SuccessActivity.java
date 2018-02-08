@@ -37,6 +37,7 @@ import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.bean.TalkBean;
 import com.zhou.xin.ui.activity.love.ReportActivity;
 import com.zhou.xin.ui.activity.love.ReportInfoActivity;
+import com.zhou.xin.utils.DateUtil;
 import com.zhou.xin.utils.GlideRoundTransform;
 import com.zhou.xin.utils.LogUtil;
 import com.zhou.xin.utils.PersonalFormTools;
@@ -45,6 +46,7 @@ import com.zhou.xin.utils.ToastUtil;
 import com.zhou.xin.utils.VideoUtil;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +80,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
     @Override
     protected void init() {
         aBoolean = SpUtil.getBoolean(getApplicationContext(), Constant.POINT_LIKE, false);//判断是否已经点赞过
-        tv_head.setText("成功案例");
+        tv_head.setText(R.string.SuccessActivity);
         iv_add.setVisibility(View.VISIBLE);
         iv_add.setBackground(getResources().getDrawable(R.drawable.more_unfold));
         initRecycle();
@@ -222,7 +224,11 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                         .dontAnimate()
                         .into(circle);
                 holder.setText(R.id.name, bean.getNickName());
-                holder.setText(R.id.date, bean.getPublish_time());
+                try {
+                    holder.setText(R.id.date, DateUtil.showTime(bean.getPublish_time()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 if (!TextUtils.isEmpty(bean.getContent()))
                     holder.setText(R.id.content, bean.getContent());
                 holder.setText(R.id.like,bean.getTapTimes()+"");
@@ -275,7 +281,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
             public void onClick(View v) {
 
                 if (aBoolean){
-                    ToastUtil.show(getApplicationContext(),"您已经点赞过了");
+                    ToastUtil.show(getApplicationContext(),getString(R.string.had_point));
                     return;
                 }
                 runOnUiThread(new Runnable() {
