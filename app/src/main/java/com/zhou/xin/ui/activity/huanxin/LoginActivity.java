@@ -87,9 +87,9 @@ public class LoginActivity extends BaseActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         tv_head.setText("登陆");
-        etUsername.setText("13631782148");
+        //etUsername.setText("13631782148");
         Log.d(TAG, "init: " + Md5Util.encoder("13631782148" + Constant.APP_ENCRYPTION_KEY));
-        etPassword.setText("123456");
+        //etPassword.setText("123456");
 
         hint.setVisibility(View.INVISIBLE);
         clear.setVisibility(View.INVISIBLE);

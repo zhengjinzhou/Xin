@@ -48,7 +48,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.love.SplashActivity"
+            android:name=".ui.activity.love.StartActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -305,6 +305,7 @@
             android:name=".ui.activity.huanxin.ContextMenuActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.activity.huanxin.ForwardMessageActivity"
             android:launchMode="singleTask"
@@ -399,6 +400,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.love.GuildActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.love.SplashActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

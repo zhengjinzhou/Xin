@@ -37,9 +37,11 @@ import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.bean.TalkBean;
 import com.zhou.xin.ui.activity.love.ReportActivity;
 import com.zhou.xin.ui.activity.love.ReportInfoActivity;
+import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.DateUtil;
 import com.zhou.xin.utils.GlideRoundTransform;
 import com.zhou.xin.utils.LogUtil;
+import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.PersonalFormTools;
 import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.utils.ToastUtil;
@@ -70,7 +72,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
     @BindView(R.id.iv_add) ImageView iv_add;
     private MultiItemCommonAdapter adapter;
-    private boolean aBoolean;
+    private boolean aBoolean = false;
 
     @Override
     protected int getLayout() {
@@ -79,7 +81,6 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
 
     @Override
     protected void init() {
-        aBoolean = SpUtil.getBoolean(getApplicationContext(), Constant.POINT_LIKE, false);//判断是否已经点赞过
         tv_head.setText(R.string.SuccessActivity);
         iv_add.setVisibility(View.VISIBLE);
         iv_add.setBackground(getResources().getDrawable(R.drawable.more_unfold));
@@ -232,15 +233,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 if (!TextUtils.isEmpty(bean.getContent()))
                     holder.setText(R.id.content, bean.getContent());
                 holder.setText(R.id.like,bean.getTapTimes()+"");
-                //如果为true，那么久显示已经点击的状态
-                if (aBoolean){
-                    Drawable drawable = getResources().getDrawable(R.drawable.issue_like_point);// 找到资源图片
-                    // 这一步必须要做，否则不会显示。
-                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
-                    ((TextView)holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
-                }
                 int type = getItemViewType(position);
-
                 if (type == 1) {
                     textImagerManger(holder, bean, position);
                 } else if (type == 2) {
@@ -281,21 +274,72 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
             public void onClick(View v) {
 
                 if (aBoolean){
-                    ToastUtil.show(getApplicationContext(),getString(R.string.had_point));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d(TAG, "run: 取消");
+                            holder.setText(R.id.like, bean.getTapTimes()+"");
+                            Drawable drawable = getResources().getDrawable(R.drawable.issue_like);// 找到资源图片
+                            // 这一步必须要做，否则不会显示。
+                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
+                            ((TextView)holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
+                            toSend("cancel",bean.getId()+"");
+                            aBoolean = false;
+                        }
+                    });
                     return;
+                }else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d(TAG, "run: 点赞");
+                            int num = bean.getTapTimes() + 1;
+                            holder.setText(R.id.like,num+"");
+                            Drawable drawable = getResources().getDrawable(R.drawable.issue_like_point);// 找到资源图片
+                            // 这一步必须要做，否则不会显示。
+                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
+                            ((TextView)holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
+                            toSend("focus",bean.getId()+"");
+                            aBoolean = true;
+                        }
+                    });
                 }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        int num = bean.getTapTimes() + 1;
-                        holder.setText(R.id.like,num+"");
-                        Drawable drawable = getResources().getDrawable(R.drawable.issue_like_point);// 找到资源图片
-                        // 这一步必须要做，否则不会显示。
-                        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
-                        ((TextView)holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
-                        SpUtil.putBoolean(getApplicationContext(),Constant.POINT_LIKE, true);
-                    }
-                });
+            }
+        });
+    }
+
+    /**
+     * 点赞接口
+     * @param action
+     */
+    private void toSend(String action,String talkId) {
+        Log.d(TAG, "toSend: "+action+","+talkId);
+        String opt = "16";
+        String token = App.getInstance().getUserInfo().getToken();
+        String _t = CurrentTimeUtil.nowTime();
+        String joint = "_t=" + _t + "&action=" + action + "&opt=" + opt + "&talkId=" + talkId +"&token="+token + Constant.APP_ENCRYPTION_KEY;
+        String _s = Md5Util.encoder(joint);
+        System.out.println("拼接后_t的数据--------" + joint);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody body = new FormBody.Builder()
+                .add("opt", opt)
+                .add("token", token)
+                .add("action", action)
+                .add("talkId", talkId)
+                .add("_t", _t)
+                .add("_s", _s)
+                .build();
+        Request request = new Request.Builder().post(body).url(Constant.LOGIN_URL).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "onFailure: "+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d(TAG, "onResponse: "+response.body().string());
             }
         });
     }

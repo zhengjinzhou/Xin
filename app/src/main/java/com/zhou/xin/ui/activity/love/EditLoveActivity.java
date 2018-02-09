@@ -47,6 +47,7 @@ import com.zhou.xin.utils.actionPhotoUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,35 +72,66 @@ import okhttp3.Response;
 public class EditLoveActivity extends BaseActivity {
 
     private static final String TAG = "EditActivity";
-    @BindView(R.id.img_1) ImageView img1;
-    @BindView(R.id.img_2) ImageView img2;
-    @BindView(R.id.img_3) ImageView img3;
-    @BindView(R.id.img_4) ImageView img4;
-    @BindView(R.id.img_5) ImageView img5;
-    @BindView(R.id.del_1) ImageView del_1;
-    @BindView(R.id.del_2) ImageView del_2;
-    @BindView(R.id.del_3) ImageView del_3;
-    @BindView(R.id.del_4) ImageView del_4;
-    @BindView(R.id.del_5) ImageView del_5;
-    @BindView(R.id.ll_details) LinearLayout ll_details;
-    @BindView(R.id.bt_next) Button bt_next;
-    @BindView(R.id.bt_skip) Button bt_skip;
-    @BindView(R.id.radioGroup) RadioGroup radioGroup;
-    @BindView(R.id.tv_major)TextView tv_major;
-    @BindView(R.id.tv_conste) TextView tv_conste;
-    @BindView(R.id.tv_travels) TextView tv_travels;
-    @BindView(R.id.tv_labels) TextView tv_labels;
-    @BindView(R.id.tv_books) TextView tv_books;
-    @BindView(R.id.tv_video) TextView tv_video;
-    @BindView(R.id.tv_foots) TextView tv_foots;
-    @BindView(R.id.tv_musics) TextView tv_musics;
-    @BindView(R.id.tv_sport) TextView tv_sport;
-    @BindView(R.id.tv_birthday) TextView tv_birthday;
-    @BindView(R.id.et_nickname) EditText et_nickname;
-    @BindView(R.id.et_realname) EditText et_realname;
-    @BindView(R.id.et_wechat) EditText et_wechat;
-    @BindView(R.id.tv_head) TextView tv_head;
-    @BindView(R.id.et_autograph) EditText et_autograph;
+    @BindView(R.id.img_1)
+    ImageView img1;
+    @BindView(R.id.img_2)
+    ImageView img2;
+    @BindView(R.id.img_3)
+    ImageView img3;
+    @BindView(R.id.img_4)
+    ImageView img4;
+    @BindView(R.id.img_5)
+    ImageView img5;
+    @BindView(R.id.del_1)
+    ImageView del_1;
+    @BindView(R.id.del_2)
+    ImageView del_2;
+    @BindView(R.id.del_3)
+    ImageView del_3;
+    @BindView(R.id.del_4)
+    ImageView del_4;
+    @BindView(R.id.del_5)
+    ImageView del_5;
+    @BindView(R.id.ll_details)
+    LinearLayout ll_details;
+    @BindView(R.id.bt_next)
+    Button bt_next;
+    @BindView(R.id.bt_skip)
+    Button bt_skip;
+    @BindView(R.id.radioGroup)
+    RadioGroup radioGroup;
+    @BindView(R.id.tv_major)
+    TextView tv_major;
+    @BindView(R.id.tv_conste)
+    TextView tv_conste;
+    @BindView(R.id.tv_travels)
+    TextView tv_travels;
+    @BindView(R.id.tv_labels)
+    TextView tv_labels;
+    @BindView(R.id.tv_books)
+    TextView tv_books;
+    @BindView(R.id.tv_video)
+    TextView tv_video;
+    @BindView(R.id.tv_foots)
+    TextView tv_foots;
+    @BindView(R.id.tv_musics)
+    TextView tv_musics;
+    @BindView(R.id.tv_sport)
+    TextView tv_sport;
+    @BindView(R.id.tv_birthday)
+    TextView tv_birthday;
+    @BindView(R.id.et_nickname)
+    EditText et_nickname;
+    @BindView(R.id.et_realname)
+    EditText et_realname;
+    @BindView(R.id.et_wechat)
+    EditText et_wechat;
+    @BindView(R.id.tv_head)
+    TextView tv_head;
+    @BindView(R.id.et_autograph)
+    EditText et_autograph;
+    @BindView(R.id.tv_province_city)
+    TextView tv_province_city;
 
 
     private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
@@ -116,8 +148,6 @@ public class EditLoveActivity extends BaseActivity {
     private OptionsPickerView optionsPickerView;
 
     private List<String> listMajor;
-    private List<String> listCity;
-    private List<String> listProvince;
     private List<String> constellationList;
     private List<String> listLabel;
     private List<String> listSport;
@@ -143,9 +173,7 @@ public class EditLoveActivity extends BaseActivity {
     private Map<String, String> mapTravel;
     private Map<String, Integer> mapMajor;
     private Map<Integer, String> mapCategory;
-    private Map<Integer, String> mapProvince;
     private Map<String, String> constellationMap;
-    private Map<String, List<SelectBean.ProvinceListBean.CitysBean>> mapCity;
 
     private String label_others = "暂无";
     private String character_others = "暂无";
@@ -156,19 +184,14 @@ public class EditLoveActivity extends BaseActivity {
     private String book_others = "暂无";
     private String travel_others = "暂无";
 
-
     private String brithday = DateUtil.lineDate(new Date());
     private int sex = 1;//性别
 
-    /**
-     * ======================================================
-     **/
     private Integer majorID = 1;
     private String constellationID = "";
+    private Map<String, String> mapCity;
+    private String cityId;
 
-    /**
-     * ======================================================
-     **/
     @Override
     protected int getLayout() {
         return R.layout.activity_edit_love;
@@ -177,7 +200,6 @@ public class EditLoveActivity extends BaseActivity {
     @Override
     protected void init() {
         tv_head.setText("完善信息");
-
         ll_details.setVisibility(View.GONE);
         initData();
 
@@ -189,8 +211,10 @@ public class EditLoveActivity extends BaseActivity {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 String tx = options1Items.get(options1).getPickerViewText()
-                        + mapCity.get(options1).get(options2).getName();
-                Log.d("", "onOptionsSelect: "+tx);
+                        + options2Items.get(options1).get(options2);
+                tv_province_city.setText("地址：" + tx);
+                cityId = mapCity.get(options2Items.get(options1).get(options2));
+
             }
         }).build();
         pvOptions.setPicker(options1Items, options2Items);//二级选择器
@@ -203,7 +227,6 @@ public class EditLoveActivity extends BaseActivity {
         data.add(new BaseInfo(false, ""));
         data.add(new BaseInfo(false, ""));
         data.add(new BaseInfo(false, ""));
-        //data.add(new BaseInfo(false, ""));
 
         imgsView.add(img1);
         imgsView.add(img2);
@@ -235,14 +258,7 @@ public class EditLoveActivity extends BaseActivity {
         if (selectBean == null) return;
         mapCategory = new HashMap<>();
         mapMajor = new HashMap<>();
-        mapProvince = new HashMap<>();
-        mapCity = new HashMap<>();
-
         listMajor = new ArrayList<>();//学院
-        //城市
-        listCity = new ArrayList<>();
-        //省份
-        listProvince = new ArrayList<>();
         //星座类型
         constellationList = new ArrayList<>();
         constellationMap = new HashMap<>();
@@ -275,6 +291,7 @@ public class EditLoveActivity extends BaseActivity {
         listTravel = new ArrayList<>();
         uploadTravel = new ArrayList<>();
         mapTravel = new HashMap<>();
+        mapCity = new HashMap<>();
 
         for (int i = 0; i < categoryList.get(0).getTypes().size(); i++) {
             listLabel.add(categoryList.get(0).getTypes().get(i).getName());
@@ -316,7 +333,13 @@ public class EditLoveActivity extends BaseActivity {
         }
         for (int i = 0; i < selectBean.getProvinceList().size(); i++) {
             options1Items.add(new ProvinceBean(selectBean.getProvinceList().get(i).getId(), selectBean.getProvinceList().get(i).getName()));
-            mapCity.put(selectBean.getProvinceList().get(i).getName(),selectBean.getProvinceList().get(i).getCitys());
+            //城市
+            ArrayList<String> listCity = new ArrayList<>();
+            for (int j = 0; j < selectBean.getProvinceList().get(i).getCitys().size(); j++) {
+                listCity.add(selectBean.getProvinceList().get(i).getCitys().get(j).getName());
+                mapCity.put(selectBean.getProvinceList().get(i).getCitys().get(j).getName(), selectBean.getProvinceList().get(i).getCitys().get(j).getId() + "");
+            }
+            options2Items.add(listCity);
         }
     }
 
@@ -606,7 +629,8 @@ public class EditLoveActivity extends BaseActivity {
             builider.addFormDataPart("age", age + "");//年龄用当前时间减去生日的时间
             builider.addFormDataPart("birthday", brithday);//生日
         }
-        builider.addFormDataPart("city", "");//城市id
+        if (!TextUtils.isEmpty(cityId))
+            builider.addFormDataPart("city", cityId);//城市id
         if (!TextUtils.isEmpty(et_wechat.getText().toString().trim()))
             builider.addFormDataPart("wechat", et_wechat.getText().toString().trim());//微信号
         if (majorID != null) {
@@ -711,7 +735,7 @@ public class EditLoveActivity extends BaseActivity {
                         @Override
                         public void onPermissionGranted() {
                             index = i;
-                            actionPhotoUtil.actionPhoto(EditLoveActivity.this,REQUEST_CODE);
+                            actionPhotoUtil.actionPhoto(EditLoveActivity.this, REQUEST_CODE);
                         }
 
                         @Override
@@ -722,7 +746,7 @@ public class EditLoveActivity extends BaseActivity {
             return;
         }
         this.index = i;
-        actionPhotoUtil.actionPhoto(EditLoveActivity.this,REQUEST_CODE);
+        actionPhotoUtil.actionPhoto(EditLoveActivity.this, REQUEST_CODE);
     }
 
     private void setDelPhoto(int index) {
