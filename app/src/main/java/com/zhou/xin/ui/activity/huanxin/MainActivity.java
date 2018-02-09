@@ -491,7 +491,7 @@ public class MainActivity extends BaseActivity {
                 return true;
             } else {
                 finish();
-                SpUtil.clear();
+                //SpUtil.clear();
             }
         } else if (event.getKeyCode() == KeyEvent.KEYCODE_MENU) {
             return true;

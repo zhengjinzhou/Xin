@@ -60,14 +60,6 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
     @BindView(R.id.back) ImageView back;
     @BindView(R.id.tv_head) TextView tv_head;
     private static final String TAG = "HomeFragment";
-    int[] headerIcons = {
-            R.drawable.i1,
-            R.drawable.i2,
-            R.drawable.i3,
-            R.drawable.i4,
-            R.drawable.i5,
-            R.drawable.i6
-    };
 
     Random ran = new Random();
     private int cardWidth;

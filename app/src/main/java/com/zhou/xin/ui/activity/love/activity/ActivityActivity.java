@@ -1,7 +1,6 @@
-package com.zhou.xin.ui.activity.love;
+package com.zhou.xin.ui.activity.love.activity;
 
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,14 +13,10 @@ import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +25,6 @@ import com.zhou.xin.R;
 import com.zhou.xin.adapter.base.CommonAdapter;
 import com.zhou.xin.adapter.base.ViewHolder;
 import com.zhou.xin.base.BaseActivity;
-import com.zhou.xin.utils.ToastUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,6 +55,7 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
     protected void init() {
         tv_head.setText("线下活动");
         iv_add.setVisibility(View.VISIBLE);
+        iv_add.setImageResource(R.drawable.addto);
         initRecycle();
         refresh.setOnRefreshListener(this);
     }
@@ -92,55 +87,9 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
                 finish();
                 break;
             case R.id.iv_add:
-                sendDailog();
+                startToActivity(SendActivity.class);
                 break;
         }
-    }
-
-    /**
-     * 发布线下活动
-     */
-    private void sendDailog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final AlertDialog dialog = builder.create();
-        View inflate = getLayoutInflater().inflate(R.layout.dialog_send, null);
-        dialog.setView(inflate,0,0,0,0);
-        dialog.show();
-        final EditText et_title = inflate.findViewById(R.id.et_title);
-        final EditText et_input = inflate.findViewById(R.id.et_input);
-        iv_img = inflate.findViewById(R.id.iv_img);
-
-        inflate.findViewById(R.id.ll_img).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getPhone();
-            }
-        });
-        inflate.findViewById(R.id.tv_dismiss).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        inflate.findViewById(R.id.tv_submit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title = et_title.getText().toString();
-                String input = et_input.getText().toString();
-                if (TextUtils.isEmpty(title)){
-                    ToastUtil.show(getApplicationContext(),"标题不能为空");
-                    return;
-                }
-                if (TextUtils.isEmpty(input)){
-                    ToastUtil.show(getApplicationContext(),"介绍不能为空");
-                    return;
-                }
-                if (imagePath == null){
-                    ToastUtil.show(getApplicationContext(),"照片不能为空");
-                    return;
-                }
-            }
-        });
     }
 
     @Override

@@ -7,8 +7,12 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
-        versionName "1.1.0"
+        versionName "1.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // http://stackoverflow.com/questions/30794584/exclude-jnilibs-folder-from-production-apk
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86"
+        }
 
         //Enabling multidex support.
         multiDexEnabled true

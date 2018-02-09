@@ -33,6 +33,7 @@ import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.base.other.PermissionsResultListener;
 import com.zhou.xin.bean.BaseInfo;
 import com.zhou.xin.bean.PersonalBean;
+import com.zhou.xin.bean.ProvinceBean;
 import com.zhou.xin.bean.SelectBean;
 import com.zhou.xin.bean.UserInfo;
 import com.zhou.xin.ui.activity.huanxin.MainActivity;
@@ -101,6 +102,10 @@ public class EditLoveActivity extends BaseActivity {
     @BindView(R.id.et_autograph) EditText et_autograph;
 
 
+    private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
+    private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
+    private OptionsPickerView pvOptions;
+
     private int index = 0;
     private int mark = 0;
     private static final int REQUEST_CODE = 1000;
@@ -140,7 +145,7 @@ public class EditLoveActivity extends BaseActivity {
     private Map<Integer, String> mapCategory;
     private Map<Integer, String> mapProvince;
     private Map<String, String> constellationMap;
-    private Map<String, List<String>> mapCity;
+    private Map<String, List<SelectBean.ProvinceListBean.CitysBean>> mapCity;
 
     private String label_others = "暂无";
     private String character_others = "暂无";
@@ -175,6 +180,20 @@ public class EditLoveActivity extends BaseActivity {
 
         ll_details.setVisibility(View.GONE);
         initData();
+
+        initOption();
+    }
+
+    private void initOption() {
+        pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                String tx = options1Items.get(options1).getPickerViewText()
+                        + mapCity.get(options1).get(options2).getName();
+                Log.d("", "onOptionsSelect: "+tx);
+            }
+        }).build();
+        pvOptions.setPicker(options1Items, options2Items);//二级选择器
     }
 
     private void initData() {
@@ -296,11 +315,8 @@ public class EditLoveActivity extends BaseActivity {
             listMajor.add(selectBean.getMajorList().get(i).getMajorName());
         }
         for (int i = 0; i < selectBean.getProvinceList().size(); i++) {
-            listProvince.add(selectBean.getProvinceList().get(i).getName());
-            for (int j = 0; j < selectBean.getProvinceList().get(i).getCitys().size(); j++) {
-                listCity.add(selectBean.getProvinceList().get(i).getCitys().get(j).getName());
-            }
-            mapCity.put(selectBean.getProvinceList().get(i).getName(), listCity);//好复杂的省份嵌套城市
+            options1Items.add(new ProvinceBean(selectBean.getProvinceList().get(i).getId(), selectBean.getProvinceList().get(i).getName()));
+            mapCity.put(selectBean.getProvinceList().get(i).getName(),selectBean.getProvinceList().get(i).getCitys());
         }
     }
 
@@ -335,7 +351,7 @@ public class EditLoveActivity extends BaseActivity {
                 showMultiChioceDialog(listSport.toArray(new String[listSport.size()]), uploadSport, mapSport, tv_sport);
                 break;
             case R.id.tv_province_city:
-
+                pvOptions.show();
                 break;
             case R.id.tv_conste:
                 initOptionPicker("我的星座类型：", constellationList, tv_conste);
