@@ -823,8 +823,6 @@ public class EditLoveActivity extends BaseActivity {
                 break;
         }
     }
-
-
     /**
      * 获取被选择的数据
      *

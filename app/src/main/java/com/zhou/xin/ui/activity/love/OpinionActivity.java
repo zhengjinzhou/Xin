@@ -19,8 +19,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.zhou.xin.Constant;
 import com.zhou.xin.R;
+import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.bean.UserInfo;
 import com.zhou.xin.utils.ToastUtil;
 
 import java.io.File;
@@ -28,15 +32,26 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class OpinionActivity extends BaseActivity {
 
     private static final int CHOOSE_PHOTO = 1;
     private static final String TAG = "OpinionActivity";
-    @BindView(R.id.tv_head) TextView tv_head;
-    @BindView(R.id.et_opinion) EditText et_opinion;
-    @BindView(R.id.iv_img) ImageView iv_img;
-
+    @BindView(R.id.tv_head)
+    TextView tv_head;
+    @BindView(R.id.et_opinion)
+    EditText et_opinion;
+    @BindView(R.id.iv_img)
+    ImageView iv_img;
+    String imagePath = null;
 
     @Override
     protected int getLayout() {
@@ -48,8 +63,9 @@ public class OpinionActivity extends BaseActivity {
         tv_head.setText("意见反馈");
     }
 
-    @OnClick({R.id.back,R.id.bt_submit,R.id.rl_add}) void click(View view){
-        switch (view.getId()){
+    @OnClick({R.id.back, R.id.bt_submit, R.id.rl_add})
+    void click(View view) {
+        switch (view.getId()) {
             case R.id.back:
                 finish();
                 break;
@@ -93,9 +109,9 @@ public class OpinionActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case CHOOSE_PHOTO:
-                if(resultCode==RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     handleImageOnKitkat(data);
                 }
                 break;
@@ -104,7 +120,7 @@ public class OpinionActivity extends BaseActivity {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void handleImageOnKitkat(Intent data) {
-        String imagePath = null;
+
         Uri uri = data.getData();
         if (DocumentsContract.isDocumentUri(this, uri)) {
             // 如果是document类型的Uri，则通过document id处理
@@ -127,7 +143,7 @@ public class OpinionActivity extends BaseActivity {
             imagePath = getImagePath(uri, null);
         }
         displayImage(imagePath); // 根据图片路径显示图片
-        Log.d(TAG, "照片的详细地址"+imagePath);
+        Log.d(TAG, "照片的详细地址" + imagePath);
     }
 
     private String getImagePath(Uri uri, String selection) {
@@ -157,11 +173,48 @@ public class OpinionActivity extends BaseActivity {
 
     //提交信息
     private void submit() {
-        String opinion = et_opinion.getText().toString().trim();
-        if (TextUtils.isEmpty(opinion)){
-            ToastUtil.show(getApplicationContext(),"意见不能为空");
+        String content = et_opinion.getText().toString().trim();
+        if (TextUtils.isEmpty(content)) {
+            ToastUtil.show(getApplicationContext(), "意见不能为空");
             return;
         }
+        Log.d(TAG, "submit: "+imagePath);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        MultipartBody.Builder builider = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        builider.addFormDataPart("content", content);
+        builider.addFormDataPart("token", App.getInstance().getUserInfo().getToken());
+        if (imagePath != null)
+            builider.addFormDataPart("photo", imagePath, RequestBody.create(MediaType.parse("image/*"), new File(imagePath)));
+        MultipartBody body = builider.build();
+        dialog.show();
+        Request request = new Request.Builder()
+                .url(Constant.o_feedback)
+                .post(body)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                dialog.dismiss();
+                Log.d(TAG, "onFailure: " + e.getMessage());
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                dialog.dismiss();
+                String string = response.body().string();
+                Log.d(TAG, "onResponse: " + string);
+                Gson gson = new Gson();
+                UserInfo userInfo = gson.fromJson(string, UserInfo.class);
+                if (userInfo.getError().equals("-1")){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.show(getApplicationContext(),"反馈成功");
+                        }
+                    });
+                }
+            }
+        });
     }
 }

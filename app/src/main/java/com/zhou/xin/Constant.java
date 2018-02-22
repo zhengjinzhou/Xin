@@ -70,6 +70,7 @@ public class Constant extends EaseConstant {
     public static String USER_HEAD_IMG = "user_head_img";
     public static String HX_CURRENT_USER_ID = "hx_current_user_id";
 
+    public static String o_feedback = URL + "/app/o_feedback.do";
 
     /**
      * 使用框架录制视频的参数
