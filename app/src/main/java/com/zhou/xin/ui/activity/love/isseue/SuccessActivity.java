@@ -72,7 +72,6 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
     @BindView(R.id.iv_add) ImageView iv_add;
     private MultiItemCommonAdapter adapter;
-    private boolean aBoolean = false;
 
     @Override
     protected int getLayout() {
@@ -233,6 +232,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 if (!TextUtils.isEmpty(bean.getContent()))
                     holder.setText(R.id.content, bean.getContent());
                 holder.setText(R.id.like,bean.getTapTimes()+"");
+                toPoint(holder, bean);//点赞
                 int type = getItemViewType(position);
                 if (type == 1) {
                     textImagerManger(holder, bean, position);
@@ -248,7 +248,6 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                         Report(bean.getMobile());
                     }
                 });
-                PointLike(holder, bean); //点赞
             }
         };
 
@@ -263,49 +262,54 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
     }
 
     /**
-     * 点赞
-     *
+     * 点赞相关
      * @param holder
      * @param bean
      */
-    private void PointLike(final ViewHolder holder, final TalkBean.TalkListBean bean) {
-        holder.setOnClickListener(R.id.like, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (aBoolean){
+    private void toPoint(final ViewHolder holder, final TalkBean.TalkListBean bean) {
+        if (bean.getIstap()==1){
+            Drawable drawable = getResources().getDrawable(R.drawable.issue_like_point);// 找到资源图片
+            // 这一步必须要做，否则不会显示。
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
+            ((TextView)holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
+            holder.setOnClickListener(R.id.like, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                holder.setText(R.id.like, bean.getTapTimes()-1+"");
+                                Drawable drawable = getResources().getDrawable(R.drawable.issue_like);// 找到资源图片
+                                // 这一步必须要做，否则不会显示。
+                                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
+                                ((TextView)holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
+                                toSend("cancel",bean.getId()+"");
+                            }
+                        });
+                }
+            });
+        }else if(bean.getIstap()==0){
+            Drawable drawable = getResources().getDrawable(R.drawable.issue_like);// 找到资源图片
+            // 这一步必须要做，否则不会显示。
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
+            ((TextView)holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
+            holder.setOnClickListener(R.id.like, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d(TAG, "run: 取消");
-                            holder.setText(R.id.like, bean.getTapTimes()+"");
-                            Drawable drawable = getResources().getDrawable(R.drawable.issue_like);// 找到资源图片
-                            // 这一步必须要做，否则不会显示。
-                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
-                            ((TextView)holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
-                            toSend("cancel",bean.getId()+"");
-                            aBoolean = false;
-                        }
-                    });
-                    return;
-                }else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.d(TAG, "run: 点赞");
-                            int num = bean.getTapTimes() + 1;
-                            holder.setText(R.id.like,num+"");
+                            holder.setText(R.id.like, bean.getTapTimes()+1+"");
                             Drawable drawable = getResources().getDrawable(R.drawable.issue_like_point);// 找到资源图片
                             // 这一步必须要做，否则不会显示。
                             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
                             ((TextView)holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
                             toSend("focus",bean.getId()+"");
-                            aBoolean = true;
                         }
                     });
                 }
-            }
-        });
+            });
+        }
     }
 
     /**
@@ -422,7 +426,6 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                     @Override
                     public void onClick(View view) {
                         String[] array = photosList.toArray(new String[photosList.size()]);
-                        // Toast.makeText(mContext, "" + pos, Toast.LENGTH_SHORT).show();
                         startActivity(PhotoiewerActivity.newIntent(mContext,array,pos));
                     }
                 });

@@ -213,6 +213,7 @@ public class OpinionActivity extends BaseActivity {
                             ToastUtil.show(getApplicationContext(),"反馈成功");
                         }
                     });
+                    finish();
                 }
             }
         });

@@ -15,6 +15,7 @@ public class TalkBean implements Serializable {
      * msg : 获取成功
      */
 
+
     private String error;
     private String msg;
     private List<TalkListBean> talkList;
@@ -58,6 +59,7 @@ public class TalkBean implements Serializable {
          * video_url :
          */
 
+        private int istap;
         private int code;
         private String content;
         private String iconUrl;
@@ -69,6 +71,14 @@ public class TalkBean implements Serializable {
         private String video_mini;
         private String video_url;
         private List<TpSetBean> tpSet;
+
+        public int getIstap() {
+            return istap;
+        }
+
+        public void setIstap(int istap) {
+            this.istap = istap;
+        }
 
         public int getCode() {
             return code;
@@ -206,7 +216,8 @@ public class TalkBean implements Serializable {
         @Override
         public String toString() {
             return "TalkListBean{" +
-                    "code=" + code +
+                    "istap=" + istap +
+                    ", code=" + code +
                     ", content='" + content + '\'' +
                     ", iconUrl='" + iconUrl + '\'' +
                     ", id=" + id +
