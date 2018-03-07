@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="WheelSurfView_names">
-        <item>王 者 皮 肤</item>
-        <item>1 8 0 积 分</item>
-        <item>L O L 皮 肤</item>
-        <item>谢 谢 参 与</item>
-        <item>2 8 积 分</item>
-        <item>微 信 红 包</item>
-        <item>5 Q 币</item>
+        <item>王者荣耀皮肤</item>
+        <item>王者荣耀皮肤</item>
+        <item>王者荣耀皮肤</item>
+        <item>王者荣耀皮肤</item>
+        <item>QQ会员优惠80%</item>
+        <item>电影票两张</item>
+        <item>省内旅游两张票</item>
     </string-array>
 
     <string-array name="WheelSurfView_icons">

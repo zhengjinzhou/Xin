@@ -68,6 +68,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import retrofit2.http.HEAD;
 
 public class EditLoveActivity extends BaseActivity {
 
@@ -736,6 +737,7 @@ public class EditLoveActivity extends BaseActivity {
                         public void onPermissionGranted() {
                             index = i;
                             actionPhotoUtil.actionPhoto(EditLoveActivity.this, REQUEST_CODE);
+                            actionPhotoUtil.actionPhoto(EditLoveActivity.this,REQUEST_CODE);
                         }
 
                         @Override
@@ -747,6 +749,7 @@ public class EditLoveActivity extends BaseActivity {
         }
         this.index = i;
         actionPhotoUtil.actionPhoto(EditLoveActivity.this, REQUEST_CODE);
+        actionPhotoUtil.actionPhoto(EditLoveActivity.this,REQUEST_CODE);
     }
 
     private void setDelPhoto(int index) {

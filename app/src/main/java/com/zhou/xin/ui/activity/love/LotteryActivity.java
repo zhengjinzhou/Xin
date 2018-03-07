@@ -12,19 +12,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.zhou.xin.Constant;
 import com.zhou.xin.R;
+import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.bean.WinnersBean;
+import com.zhou.xin.utils.CurrentTimeUtil;
+import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.ToastUtil;
 import com.zhou.xin.widget.VerticalTextview;
 import com.zhou.xin.widget.lottery.listener.RotateListener;
 import com.zhou.xin.widget.lottery.view.WheelSurfView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class LotteryActivity extends BaseActivity {
 
@@ -34,6 +47,7 @@ public class LotteryActivity extends BaseActivity {
     @BindView(R.id.textView) VerticalTextview textView;
 
     private List<String> titleList = new ArrayList<>();
+    private List<String> imgUrl = new ArrayList<>();
 
     @Override
     protected int getLayout() {
@@ -43,21 +57,57 @@ public class LotteryActivity extends BaseActivity {
     @Override
     protected void init() {
         tv_head.setText("抽奖活动");
+        initwinnerList();//获取个人中奖记录
+        initLotteryHttp();//获取中奖列表
         //获取第二个视图
         //添加滚动监听
         initLottery();
         initTextView();
     }
 
+    /**
+     * 获取中奖列表
+     */
+    private void initLotteryHttp() {
+        String token = App.getInstance().getUserInfo().getToken();
+        String opt = "17";
+        String _t = CurrentTimeUtil.nowTime();
+        String joint = "_t=" + _t + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
+        final String _s = Md5Util.encoder(joint);
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder()
+                .add("token", token)
+                .add("opt", opt)
+                .add("_t", _t)
+                .add("_s", _s)
+                .build();
+        Request request = new Request.Builder().url(Constant.LOGIN_URL).post(formBody).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "获取中奖列表: "+e.getMessage());
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                Log.d(TAG, "获取中奖列表: "+string);
+                Gson gson = new Gson();
+                WinnersBean winnersListBean = gson.fromJson(string, WinnersBean.class);
+                WinnersBean.LuckdrawBean luckdraw = winnersListBean.getLuckdraw();
+                List<WinnersBean.LuckdrawBean.PrizeSetBean> prizeSet = luckdraw.getPrizeSet();
+                for (int i=0;i<prizeSet.size();i++){
+                    imgUrl.add(prizeSet.get(i).getMini_url());
+
+                }
+            }
+        });
+    }
+
     private void initTextView() {
-        titleList.add("恭喜！！张三中了三等奖");
-        titleList.add("恭喜！！李四中了三等奖");
-        titleList.add("恭喜！！周哥哥中了三等奖");
-        titleList.add("恭喜！！周帅哥中了三等奖");
-        titleList.add("恭喜！！周爷爷中了三等奖");
-        titleList.add("恭喜！！周中了三等奖");
-        titleList.add("你踏着七彩祥云离去");
-        titleList.add("我被留在这里");
 
         textView.setTextList(titleList);
         textView.setText(16, 5, Color.RED);//设置属性
@@ -75,7 +125,8 @@ public class LotteryActivity extends BaseActivity {
         wheelSurfView1.setRotateListener(new RotateListener() {
             @Override
             public void rotateEnd(int position, String des) {
-                ToastUtil.show(getApplicationContext(),"结束了 位置：" + position + "   描述：" + des);
+                ToastUtil.show(getApplicationContext(),"恭喜，您中了" + des);
+                initmember(position);//记录中奖者
             }
 
             @Override
@@ -85,23 +136,8 @@ public class LotteryActivity extends BaseActivity {
 
             @Override
             public void rotateBefore(ImageView goImg) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(LotteryActivity.this);
-                builder.setTitle("温馨提示");
-                builder.setMessage("确定要花费100积分抽奖？");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //模拟位置
-                        int position = new Random().nextInt(7) + 1;
-                        wheelSurfView1.startRotate(position);
-                    }
-                });
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                builder.show();
+                int position = new Random().nextInt(7) + 1;
+                wheelSurfView1.startRotate(position);
             }
         });
     }
@@ -124,5 +160,71 @@ public class LotteryActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         textView.stopAutoScroll();
+    }
+
+    private void initmember(int pos) {
+        String token = App.getInstance().getUserInfo().getToken();
+        String opt = "18";
+        String memberId = App.getInstance().getUserInfo().getUid();
+        String prizeId = pos+"";
+        String _t = CurrentTimeUtil.nowTime();
+        String joint = "_t=" + _t + "&memberId=" + memberId +"&opt=" + opt +"&prizeId="+ prizeId + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
+        String _s = Md5Util.encoder(joint);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder()
+                .add("token", token)
+                .add("opt", opt)
+                .add("memberId",memberId)
+                .add("prizeId",prizeId)
+                .add("_t", _t)
+                .add("_s", _s)
+                .build();
+        Request request = new Request.Builder().url(Constant.LOGIN_URL).post(formBody).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "记录中奖者: "+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                Log.d(TAG, "记录中奖者: "+string);
+            }
+        });
+    }
+
+    /**
+     * 获取个人中奖记录
+     */
+    private void initwinnerList() {
+        String token = App.getInstance().getUserInfo().getToken();
+        String opt = "19";
+        String _t = CurrentTimeUtil.nowTime();
+        String joint = "_t=" + _t + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
+        String _s = Md5Util.encoder(joint);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder()
+                .add("token", token)
+                .add("opt", opt)
+                .add("_t", _t)
+                .add("_s", _s)
+                .build();
+        Request request = new Request.Builder().url(Constant.LOGIN_URL).post(formBody).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "获取个人中奖记录: "+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                Gson gson = new Gson();
+                Log.d(TAG, "获取个人中奖记录: "+string);
+            }
+        });
     }
 }

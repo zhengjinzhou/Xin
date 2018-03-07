@@ -122,7 +122,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
                 public void onResponse(Call call, Response response) throws IOException {
                     // Log.d(TAG, "获取异性信息 onResponse: "+response.body().string());
                     String string = response.body().string();
-                    Log.d(TAG, "onResponse: " + string);
+                    Log.d(TAG, "获取异性信息onResponse: " + string);
                     setResult(string);
                 }
             });
