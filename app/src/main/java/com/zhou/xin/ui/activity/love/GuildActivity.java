@@ -52,9 +52,9 @@ public class GuildActivity extends BaseActivity {
         data.add(new GuildBean(getString(R.string.title3), getString(R.string.desc2)));
         data.add(new GuildBean(getString(R.string.title4), getString(R.string.desc4)));
         data.add(new GuildBean(getString(R.string.title5), getString(R.string.desc5)));
-        data.add(new GuildBean("如何在应用中举报和反馈?", ""));
+        data.add(new GuildBean("如何在应用中举报和反馈?", "在主界面<我>中有-意见反馈，可点击进入，然后可以将您想对我们说的，并且可以附加照片，发送到后台给我们，我们会虚心接受您的意见，并快速改正"));
         data.add(new GuildBean("如何进行线下活动?", "应用中的主界面里有 ‘线下活动’可点击进去，进入的界面有近期的开展的线下活动，您可以挑选您喜欢的活动，再次点击进入，按照流程报名填写信息报名参加即可 "));
-        data.add(new GuildBean("本应用只能和一人聊天么?", ""));
+        data.add(new GuildBean("本应用只能和一人聊天么?", "本应用是为了打造真人聊天，是为了牵线搭桥，让更多单身男女一对一进行聊天交友，通过发展成为恋人"));
         data.add(new GuildBean("本应用中的红包是怎么回事?", "本应用中的红包，不会绑定在很账号中，仅是您与支付宝的绑定，您账户中的余额会自动转入到支付宝中"));
         data.add(new GuildBean("如何联系我们?", "请添加我的qq或者微信号：1457594845"));
 

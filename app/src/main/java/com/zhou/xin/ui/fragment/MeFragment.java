@@ -90,7 +90,7 @@ public class MeFragment extends BaseFragment {
     private void initRecycle() {
         ArrayList<BaseBean> data = new ArrayList<>();
         data.add(new BaseBean(SafeActivity.class,"安全管理",R.drawable.saft));
-        data.add(new BaseBean(LotteryActivity.class,"抽奖活动",R.drawable.lottery));
+        //data.add(new BaseBean(LotteryActivity.class,"抽奖活动",R.drawable.lottery));
         data.add(new BaseBean(OpinionActivity.class,"意见反馈",R.drawable.opinion));
         data.add(new BaseBean(ActivityActivity.class,"线下活动",R.drawable.activity));
 

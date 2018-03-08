@@ -89,13 +89,14 @@ public class PutVideoActivity extends BaseActivity {
      */
     private void upVideo() {
         String videoMiniFile = "/storage/emulated/0/DCIM/Camera/IMG_20171220_021957.jpg";//用来测试的视频缩略图
+        Log.d(TAG, "视频缩略图视频缩略图视频缩略图视频缩略图?: "+videoScreenshot);
         OkHttpClient okHttpClient = new OkHttpClient();
         MultipartBody.Builder builider = new MultipartBody.Builder().setType(MultipartBody.FORM);
         builider.addFormDataPart("token", App.getInstance().getUserInfo().getToken());
         if (!TextUtils.isEmpty(content.getText().toString()))
             builider.addFormDataPart("content", content.getText().toString());
         builider.addFormDataPart("videoFile", videoUri, RequestBody.create(MediaType.parse("file"), new File(videoUri)));
-        builider.addFormDataPart("videoMiniFile", videoMiniFile, RequestBody.create(MediaType.parse("image/*"), new File(videoMiniFile)));
+        builider.addFormDataPart("videoMiniFile", videoScreenshot, RequestBody.create(MediaType.parse("image/*"), new File(videoScreenshot)));
         MultipartBody body = builider.build();
         dialog.show();
         Request request = new Request.Builder()
@@ -113,7 +114,9 @@ public class PutVideoActivity extends BaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 dialog.dismiss();
+
                 String string = response.body().string();
+                Log.d(TAG, "onResponse: " + string);
                 Gson gson = new Gson();
                 final UserInfo userInfo = gson.fromJson(string, UserInfo.class);
                 if (userInfo.getError().equals("-1")){
@@ -125,7 +128,6 @@ public class PutVideoActivity extends BaseActivity {
                         }
                     });
                 }
-                Log.d(TAG, "onResponse: " + string);
             }
         });
     }

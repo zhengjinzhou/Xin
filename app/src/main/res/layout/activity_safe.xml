@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="清楚缓存" />
+            android:text="清除缓存" />
 
         <TextView
             android:id="@+id/tv_cache"
