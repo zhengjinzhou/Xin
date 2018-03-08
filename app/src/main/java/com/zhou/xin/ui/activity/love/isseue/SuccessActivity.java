@@ -378,11 +378,11 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
         int num = 1;
         if (photosList.size() == 2)
             num = 2;
-        if (photosList.size() == 3)
+        if (photosList.size() >= 3)
             num = 3;
         Log.d(TAG, "所有照片的地址: "+photosList.toString());
 
-        GridLayoutManager layoutManager = new GridLayoutManager(this,num,GridLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new GridLayoutManager(this,num,GridLayoutManager.VERTICAL, false);
         layoutManager.setSmoothScrollbarEnabled(true);
         layoutManager.setAutoMeasureEnabled(true);
         photos.setLayoutManager(layoutManager);

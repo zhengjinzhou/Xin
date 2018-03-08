@@ -18,7 +18,7 @@ public class DateUtil {
         String r = "";
         if(result < 60000){// 一分钟内
             long seconds = result / 1000;
-            if(seconds == 0){
+            if(seconds <= 0){
                 r = "刚刚";
             }else{
                 r = seconds + "秒前";

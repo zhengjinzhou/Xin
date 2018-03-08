@@ -107,23 +107,11 @@
                 android:paddingTop="@dimen/space_8"
                 android:text="活动地点照片" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/ivAdd"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:src="@drawable/opinion_add" />
-
                 <android.support.v7.widget.RecyclerView
                     android:layout_toRightOf="@+id/ivAdd"
                     android:id="@+id/recycleView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-            </RelativeLayout>
-
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"

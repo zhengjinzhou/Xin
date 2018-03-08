@@ -118,7 +118,5 @@ public class PhotoiewerActivity extends BaseActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
-
-
     }
 }

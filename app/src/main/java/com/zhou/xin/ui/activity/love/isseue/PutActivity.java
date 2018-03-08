@@ -60,12 +60,9 @@ public class PutActivity extends BaseActivity {
     private int index = 0;
     private static final int PER_REQUEST_CODE = 1;
     private static final int REQUEST_CODE = 1000;
-    @BindView(R.id.photos)
-    RecyclerView photos;
-    @BindView(R.id.content)
-    EditText content;
-    @BindView(R.id.tv_head)
-    TextView tv_head;
+    @BindView(R.id.photos) RecyclerView photos;
+    @BindView(R.id.content) EditText content;
+    @BindView(R.id.tv_head) TextView tv_head;
 
     @Override
     protected int getLayout() {
@@ -230,28 +227,35 @@ public class PutActivity extends BaseActivity {
             return;
         }
         final int count = data.size();
+
+        ArrayList<File> files = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             String url = data.get(i);
             int index = i;
             File f = ImageCompressionTools.getInstance(this).onMianLuban(url);
-            if (index == count - 1) {
+            /*if (index == count - 1) {
                 upImagers(f, true);
             } else {
                 upImagers(f, false);
-            }
+            }*/
+            files.add(f);
         }
+        upImagers(files);
     }
 
-    private void upImagers(File f, boolean b) {
+    private void upImagers(List<File> f) {
+
         MultipartBody.Builder builider = new MultipartBody.Builder().setType(MultipartBody.FORM);
         builider.addFormDataPart("token", App.getInstance().getUserInfo().getToken());
         if (!TextUtils.isEmpty(content.getText().toString()))
             builider.addFormDataPart("content", content.getText().toString());
         if (f == null) return;
-        Log.e("TAG", "upImagers: url = " + f.getAbsolutePath());
-        Log.e("TAG", "upImagers: size = " + (f.length() / 1024) + "k");
+        /*Log.e("TAG", "upImagers: url = " + f.getAbsolutePath());
+        Log.e("TAG", "upImagers: size = " + (f.length() / 1024) + "k");*/
+        for (int i=0;i<f.size();i++){
+            builider.addFormDataPart("photoFile", f.get(i).getAbsolutePath(), RequestBody.create(MediaType.parse("image/*"), f.get(i)));
+        }
 
-        builider.addFormDataPart("photoFile", f.getAbsolutePath(), RequestBody.create(MediaType.parse("image/*"), f));
         dialog.show();
         MultipartBody body = builider.build();
         OkHttpClient okHttpClient = new OkHttpClient();
