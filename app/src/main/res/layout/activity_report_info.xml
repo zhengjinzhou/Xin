@@ -18,8 +18,8 @@
             android:layout_height="180dp"
             android:background="@null"
             android:gravity="start"
-            android:hint="举报原因(仅限300字)"
-            android:maxLength="300"
+            android:hint="举报原因(仅限250字)"
+            android:maxLength="250"
             android:padding="@dimen/space_8"
             android:textSize="@dimen/space_16" />
 

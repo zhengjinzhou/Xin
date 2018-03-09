@@ -93,7 +93,7 @@ public class SendActivity extends BaseActivity {
 
                 if (s.equals("add")) {
                     ImageView img = (ImageView) holder.getView(R.id.img);
-                    img.setImageResource(R.drawable.add_photo);
+                    img.setImageResource(R.drawable.opinion_add);
                     img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
                     holder.getView(R.id.del).setVisibility(View.GONE);

@@ -37,7 +37,7 @@
         android:id="@+id/conference_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/success"
+        app:contactItemImage="@drawable/wechat_kongjian"
         app:contactItemName="@string/friends" />
 
 </LinearLayout>

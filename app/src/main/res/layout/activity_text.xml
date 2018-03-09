@@ -19,7 +19,7 @@
     <TextView
         android:lineSpacingMultiplier="1.5"
         android:padding="@dimen/space_8"
-        android:text="您应该保证您的举报行为基于善意，并代表您本人真实意思。本应用收到您的举报之后，会尽快按照相关规则独立判断并进行处理。本应用会采用合理的措施保护您的个人信息。"
+        android:text="@string/jubao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

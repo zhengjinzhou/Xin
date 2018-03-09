@@ -28,6 +28,9 @@ import com.zhou.xin.ui.activity.love.ReportActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 点击头像进入详细界面
+ */
 public class UserProfileActivity extends BaseActivity {
 
     private static final int REQUESTCODE_PICK = 1;
@@ -61,7 +64,7 @@ public class UserProfileActivity extends BaseActivity {
                 startActivity(inte);
                 break;
             case R.id.user_head_avatar:
-                uploadHeadPhoto();
+                //uploadHeadPhoto();
                 break;
             case R.id.rl_nickname:
                 final EditText editText = new EditText(this);

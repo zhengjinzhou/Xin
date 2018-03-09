@@ -94,8 +94,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void init() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        //这段代码是电池优化的代码，注销后不再看到
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             String packageName = getPackageName();
             PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             if (!pm.isIgnoringBatteryOptimizations(packageName)) {
@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity {
                 } catch (Exception e) {
                 }
             }
-        }
+        }*/
         requestPermissions();
 
         initView();

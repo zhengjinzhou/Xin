@@ -265,7 +265,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
      * @param bean
      */
     private void toPoint(final ViewHolder holder, final TalkBean.TalkListBean bean) {
-        if (bean.getIstap()==1){
+        if (bean.getIstap()==1 ){
             Drawable drawable = getResources().getDrawable(R.drawable.issue_like_point);// 找到资源图片
             // 这一步必须要做，否则不会显示。
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
@@ -286,7 +286,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                         });
                 }
             });
-        }else if(bean.getIstap()==0){
+        }else if(bean.getIstap()==0 ){
             Drawable drawable = getResources().getDrawable(R.drawable.issue_like);// 找到资源图片
             // 这一步必须要做，否则不会显示。
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
@@ -341,7 +341,8 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d(TAG, "onResponse: "+response.body().string());
+                String string = response.body().string();
+                Log.d(TAG, "onResponse: "+string);
             }
         });
     }

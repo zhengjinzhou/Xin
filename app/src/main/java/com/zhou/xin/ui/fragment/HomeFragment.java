@@ -188,6 +188,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
     @Override
     public void onItemClicked(MotionEvent event, View v, Object dataObject) {
 
+        Log.d(TAG, "onItemClicked: "+nameList.toString());
     }
 
     @Override

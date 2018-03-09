@@ -20,7 +20,7 @@
             android:background="@null"
             android:gravity="start"
             android:hint="@string/opinion"
-            android:maxLength="300"
+            android:maxLength="250"
             android:padding="@dimen/space_8" />
 
         <TextView

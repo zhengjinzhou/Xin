@@ -87,7 +87,7 @@ public class PutActivity extends BaseActivity {
 
                 if (s.equals("add")) {
                     ImageView img = (ImageView) holder.getView(R.id.img);
-                    img.setImageResource(R.drawable.add_photo);
+                    img.setImageResource(R.drawable.opinion_add);
                     img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
                     holder.getView(R.id.del).setVisibility(View.GONE);
@@ -268,6 +268,12 @@ public class PutActivity extends BaseActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 dialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.show(getApplicationContext(),"发布超时，请重试！");
+                    }
+                });
                 Log.d(TAG, "onFailure: " + e.getMessage());
             }
 
