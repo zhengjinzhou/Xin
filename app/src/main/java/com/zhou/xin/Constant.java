@@ -77,4 +77,10 @@ public class Constant extends EaseConstant {
      *
      */
     public static boolean needFull = true;
+
+    //自动登录
+    public static final String ISLOGIN = "ISLOGIN";
+    public static final String USERNAME = "USERNAME";
+    //保存当前通讯录人数，用于控制添加好友关系
+    public static final String USER_NUM = "USER_NUM";
 }

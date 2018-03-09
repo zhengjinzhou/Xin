@@ -35,6 +35,7 @@ public class StartActivity extends BaseActivity {
         boolean first = sp.getBoolean("FIRST", false);
         if (first){
             startToActivity(SplashActivity.class);
+            finish();
         }else {
             initViewpager();
         }

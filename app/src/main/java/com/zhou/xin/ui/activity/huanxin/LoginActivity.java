@@ -6,6 +6,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,20 +48,13 @@ import okhttp3.Response;
 
 public class LoginActivity extends BaseActivity {
 
-    @BindView(R.id.circle)
-    CircleImageView circle;
-    @BindView(R.id.et_username)
-    EditText etUsername;
-    @BindView(R.id.et_password)
-    EditText etPassword;
-    @BindView(R.id.tv_head)
-    TextView tv_head;
-    @BindView(R.id.tv_forget)
-    TextView tv_forget;
-    @BindView(R.id.clear)
-    ImageView clear;
-    @BindView(R.id.hint)
-    ImageView hint;
+    @BindView(R.id.circle) CircleImageView circle;
+    @BindView(R.id.et_username) EditText etUsername;
+    @BindView(R.id.et_password) EditText etPassword;
+    @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.tv_forget) TextView tv_forget;
+    @BindView(R.id.clear) ImageView clear;
+    @BindView(R.id.hint) ImageView hint;
 
     private String TAG = "LoginActivity";
     private String username;
@@ -73,6 +67,11 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void init() {
+
+        if (SpUtil.getString(getApplicationContext(), Constant.ISLOGIN,"").equals("ISLOGIN")){
+            login();
+            return;
+        }
 
         //尝试保存用户名和头像
         SpUtil.putString(getApplicationContext(),Constant.USER_NAME,"zhangsan");
@@ -146,8 +145,13 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void login() {
-        username = etUsername.getText().toString().trim();
-        password = etPassword.getText().toString().trim();
+        if (SpUtil.getString(getApplicationContext(), Constant.ISLOGIN,"").equals("ISLOGIN")){
+            username = SpUtil.getString(getApplicationContext(),Constant.USERNAME,"");
+            password = SpUtil.getString(getApplicationContext(),Constant.PASSWORD,"");
+        }else {
+            username = etUsername.getText().toString().trim();
+            password = etPassword.getText().toString().trim();
+        }
         if (TextUtils.isEmpty(username)) {
             ToastUtil.show(getApplicationContext(), "账号不能为空");
             return;
@@ -203,6 +207,63 @@ public class LoginActivity extends BaseActivity {
             getResult(string);
         }
     };
+
+    /**
+     * 进行环信登录
+     *
+     * @param username
+     * @param pwd
+     */
+    private void XinLogin(final String username, final String pwd) {
+        // After logout，the DemoDB may still be accessed due to async callback, so the DemoDB will be re-opened again.
+        // close it before login to make sure DemoDB not overlap
+        String pssword = Md5Util.encoder(pwd + Constant.APP_ENCRYPTION_KEY);
+        Log.d(TAG, "XinLogin: " + username + "  " + pssword);
+        DemoDBManager.getInstance().closeDB();
+        // reset current user name before login
+        DemoHelper.getInstance().setCurrentUserName(username);
+        final long start = System.currentTimeMillis();
+        EMClient.getInstance().login(username, pssword, new EMCallBack() {
+            @Override
+            public void onSuccess() {
+                dialog.dismiss();
+                Log.d(TAG, "login: onSuccess");
+                // ** manually load all local groups and conversation
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+
+                // update current user's display name for APNs
+                boolean updatenick = EMClient.getInstance().pushManager().updatePushNickname(
+                        App.currentUserNick.trim());
+                if (!updatenick) {
+                    Log.e("LoginActivity", "update current user nick fail");
+                }
+
+                // get user's info (this should be get from App's server or 3rd party service)
+                DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
+                startToActivity(MainActivity.class);
+                finish();
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                dialog.dismiss();
+                Log.d(TAG, "login: onProgress" + s);
+            }
+
+            @Override
+            public void onProgress(int code, final String message) {
+                Log.d(TAG, "login: onError: " + code);
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
 
     /**
      * opt5为获取个人信息
@@ -267,64 +328,10 @@ public class LoginActivity extends BaseActivity {
             //进行环信登录
             XinLogin(username, username);
             SpUtil.putString(getApplicationContext(), Constant.PASSWORD, password);
+            SpUtil.putString(getApplicationContext(),Constant.ISLOGIN,"ISLOGIN");
+            SpUtil.putString(getApplicationContext(),Constant.USERNAME,username);
         } else if (userInfo.getError().equals("-2")) {
             startToActivity(RegisterActivity.class);
         }
-    }
-
-    /**
-     * 进行环信登录
-     *
-     * @param username
-     * @param pwd
-     */
-    private void XinLogin(final String username, final String pwd) {
-        // After logout，the DemoDB may still be accessed due to async callback, so the DemoDB will be re-opened again.
-        // close it before login to make sure DemoDB not overlap
-        String pssword = Md5Util.encoder(pwd + Constant.APP_ENCRYPTION_KEY);
-        Log.d(TAG, "XinLogin: " + username + "  " + pssword);
-        DemoDBManager.getInstance().closeDB();
-        // reset current user name before login
-        DemoHelper.getInstance().setCurrentUserName(username);
-        final long start = System.currentTimeMillis();
-        EMClient.getInstance().login(username, pssword, new EMCallBack() {
-            @Override
-            public void onSuccess() {
-                dialog.dismiss();
-                Log.d(TAG, "login: onSuccess");
-                // ** manually load all local groups and conversation
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
-
-                // update current user's display name for APNs
-                boolean updatenick = EMClient.getInstance().pushManager().updatePushNickname(
-                        App.currentUserNick.trim());
-                if (!updatenick) {
-                    Log.e("LoginActivity", "update current user nick fail");
-                }
-                // get user's info (this should be get from App's server or 3rd party service)
-                DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
-                startToActivity(MainActivity.class);
-                finish();
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                dialog.dismiss();
-                Log.d(TAG, "login: onProgress" + s);
-            }
-
-            @Override
-            public void onProgress(int code, final String message) {
-                Log.d(TAG, "login: onError: " + code);
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        dialog.dismiss();
-                        Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
     }
 }

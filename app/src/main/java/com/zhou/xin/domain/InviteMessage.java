@@ -165,6 +165,20 @@ public class InviteMessage {
         /**current user unmute some one in group in other device*/
         MULTI_DEVICE_GROUP_REMOVE_MUTE
     }
+
+    @Override
+    public String toString() {
+        return "InviteMessage{" +
+                "from='" + from + '\'' +
+                ", time=" + time +
+                ", reason='" + reason + '\'' +
+                ", status=" + status +
+                ", groupId='" + groupId + '\'' +
+                ", groupName='" + groupName + '\'' +
+                ", groupInviter='" + groupInviter + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }
 
 

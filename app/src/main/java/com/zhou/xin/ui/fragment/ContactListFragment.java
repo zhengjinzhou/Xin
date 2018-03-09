@@ -113,6 +113,7 @@ public class ContactListFragment extends EaseContactListFragment {
         if (m instanceof Hashtable<?, ?>) {
             m = (Map<String, EaseUser>) ((Hashtable<String, EaseUser>)m).clone();
         }
+
         setContactsMap(m);
         super.setUpView();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

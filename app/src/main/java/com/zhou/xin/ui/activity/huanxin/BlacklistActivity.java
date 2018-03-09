@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,12 +21,16 @@ import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.utils.ToastUtil;
 
 import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ * 黑名单界面
+ */
 public class BlacklistActivity extends BaseActivity {
 
     private BlacklistAdapter adapter;
@@ -75,7 +80,10 @@ public class BlacklistActivity extends BaseActivity {
      * @param tobeRemoveUser
      */
     void removeOutBlacklist(final String tobeRemoveUser) {
-        final ProgressDialog pd = new ProgressDialog(this);
+        Log.d("", "removeOutBlacklist: 11111111111111111111111");
+        ToastUtil.show(getApplicationContext(),"暂不支持移出黑名单！");
+
+        /*final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage(getString(R.string.be_removing));
         pd.setCanceledOnTouchOutside(false);
         pd.show();
@@ -99,7 +107,7 @@ public class BlacklistActivity extends BaseActivity {
                     });
                 }
             }
-        }).start();
+        }).start();*/
     }
 
     public void toGroupDetails(View view) {
