@@ -68,11 +68,6 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void init() {
 
-        if (SpUtil.getString(getApplicationContext(), Constant.ISLOGIN,"").equals("ISLOGIN")){
-            login();
-            return;
-        }
-
         //尝试保存用户名和头像
         SpUtil.putString(getApplicationContext(),Constant.USER_NAME,"zhangsan");
         SpUtil.putString(getApplicationContext(),Constant.HEAD_IMAGE_URL,"http://img0.imgtn.bdimg.com/it/u=3707678312,2260123328&fm=27&gp=0.jpg");
