@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.view.MenuItem;
 
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.zhou.xin.R;
@@ -48,6 +49,15 @@ public abstract class BaseActivity extends EaseBaseActivity {
     protected void startToActivity(Class<?> lazz){
         Intent intent = new Intent(this,lazz);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /*@Override

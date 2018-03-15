@@ -71,7 +71,8 @@
                     android:layout_toRightOf="@+id/tv2"
                     android:focusable="false"
                     android:gravity="center"
-                    android:hint="开始时间" />
+                    android:hint="开始时间"
+                    android:textSize="@dimen/space_14" />
 
                 <TextView
                     android:id="@+id/tv4"
@@ -88,18 +89,21 @@
                     android:layout_toRightOf="@+id/tv4"
                     android:focusable="false"
                     android:gravity="center"
-                    android:hint="结束时间" />
+                    android:hint="结束时间"
+                    android:textSize="@dimen/space_14" />
             </RelativeLayout>
 
             <EditText
-                android:maxLength="250"
                 android:id="@+id/etDes"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:layout_marginTop="@dimen/space_8"
                 android:background="@drawable/bg_bottom"
                 android:gravity="start"
-                android:hint="活动描述...(250字以内)" />
+                android:hint="活动描述...(250字以内)"
+                android:maxLength="250"
+                android:padding="@dimen/space_5"
+                android:textSize="@dimen/space_14" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -108,11 +112,12 @@
                 android:paddingTop="@dimen/space_8"
                 android:text="活动地点照片" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:layout_toRightOf="@+id/ivAdd"
-                    android:id="@+id/recycleView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycleView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ivAdd" />
+
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"

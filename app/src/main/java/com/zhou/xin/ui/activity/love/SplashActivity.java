@@ -141,7 +141,8 @@ public class SplashActivity extends BaseActivity {
                 @Override
                 public void run() {
                     dialog.dismiss();
-                    ToastUtil.show(getApplicationContext(), userInfo.getMsg());
+                    ToastUtil.show(getApplicationContext(), userInfo.getMsg()+"请检查您的手机时间");
+                    finish();
                 }
             });
             return;

@@ -11,6 +11,7 @@
     <include layout="@layout/headerbar"/>
 
     <TextView
+        android:padding="@dimen/space_8"
         android:id="@+id/tv_desc"
         android:textSize="@dimen/space_16"
         android:lineSpacingExtra="4dp"

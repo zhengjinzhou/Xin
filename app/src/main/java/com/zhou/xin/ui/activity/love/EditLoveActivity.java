@@ -73,48 +73,27 @@ import retrofit2.http.HEAD;
 public class EditLoveActivity extends BaseActivity {
 
     private static final String TAG = "EditActivity";
-    @BindView(R.id.img_1)
-    ImageView img1;
-    @BindView(R.id.img_2)
-    ImageView img2;
-    @BindView(R.id.img_3)
-    ImageView img3;
-    @BindView(R.id.img_4)
-    ImageView img4;
-    @BindView(R.id.img_5)
-    ImageView img5;
-    @BindView(R.id.del_1)
-    ImageView del_1;
-    @BindView(R.id.del_2)
-    ImageView del_2;
-    @BindView(R.id.del_3)
-    ImageView del_3;
-    @BindView(R.id.del_4)
-    ImageView del_4;
-    @BindView(R.id.del_5)
-    ImageView del_5;
-    @BindView(R.id.ll_details)
-    LinearLayout ll_details;
-    @BindView(R.id.bt_next)
-    Button bt_next;
-    @BindView(R.id.bt_skip)
-    Button bt_skip;
-    @BindView(R.id.radioGroup)
-    RadioGroup radioGroup;
-    @BindView(R.id.tv_major)
-    TextView tv_major;
-    @BindView(R.id.tv_conste)
-    TextView tv_conste;
-    @BindView(R.id.tv_travels)
-    TextView tv_travels;
-    @BindView(R.id.tv_labels)
-    TextView tv_labels;
-    @BindView(R.id.tv_books)
-    TextView tv_books;
-    @BindView(R.id.tv_video)
-    TextView tv_video;
-    @BindView(R.id.tv_foots)
-    TextView tv_foots;
+    @BindView(R.id.img_1) ImageView img1;
+    @BindView(R.id.img_2) ImageView img2;
+    @BindView(R.id.img_3) ImageView img3;
+    @BindView(R.id.img_4) ImageView img4;
+    @BindView(R.id.img_5) ImageView img5;
+    @BindView(R.id.del_1) ImageView del_1;
+    @BindView(R.id.del_2) ImageView del_2;
+    @BindView(R.id.del_3) ImageView del_3;
+    @BindView(R.id.del_4) ImageView del_4;
+    @BindView(R.id.del_5) ImageView del_5;
+    @BindView(R.id.ll_details) LinearLayout ll_details;
+    @BindView(R.id.bt_next) Button bt_next;
+    @BindView(R.id.bt_skip) Button bt_skip;
+    @BindView(R.id.radioGroup) RadioGroup radioGroup;
+    @BindView(R.id.tv_major) TextView tv_major;
+    @BindView(R.id.tv_conste) TextView tv_conste;
+    @BindView(R.id.tv_travels) TextView tv_travels;
+    @BindView(R.id.tv_labels) TextView tv_labels;
+    @BindView(R.id.tv_books) TextView tv_books;
+    @BindView(R.id.tv_video) TextView tv_video;
+    @BindView(R.id.tv_foots) TextView tv_foots;
     @BindView(R.id.tv_musics)
     TextView tv_musics;
     @BindView(R.id.tv_sport)
@@ -737,7 +716,7 @@ public class EditLoveActivity extends BaseActivity {
                         public void onPermissionGranted() {
                             index = i;
                             actionPhotoUtil.actionPhoto(EditLoveActivity.this, REQUEST_CODE);
-                            actionPhotoUtil.actionPhoto(EditLoveActivity.this,REQUEST_CODE);
+                            //actionPhotoUtil.actionPhoto(EditLoveActivity.this, REQUEST_CODE);
                         }
 
                         @Override
@@ -749,7 +728,7 @@ public class EditLoveActivity extends BaseActivity {
         }
         this.index = i;
         actionPhotoUtil.actionPhoto(EditLoveActivity.this, REQUEST_CODE);
-        actionPhotoUtil.actionPhoto(EditLoveActivity.this,REQUEST_CODE);
+        //actionPhotoUtil.actionPhoto(EditLoveActivity.this, REQUEST_CODE);
     }
 
     private void setDelPhoto(int index) {
