@@ -106,7 +106,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_capture_image"
             android:max="200"
-            android:progress="100" />
+            android:progress="100"
+            android:visibility="gone" />
         <!--     <Button
             android:layout_marginTop="3dp"
             android:id="@+id/btn_toggle_video_stream"
@@ -123,7 +124,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="6dp"
             android:textColor="#afff"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/ll_surface_baseline"
