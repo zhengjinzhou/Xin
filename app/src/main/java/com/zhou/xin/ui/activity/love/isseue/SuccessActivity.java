@@ -35,6 +35,7 @@ import com.zhou.xin.adapter.base.ViewHolder;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.bean.TalkBean;
+import com.zhou.xin.ui.activity.love.ObjectActivity;
 import com.zhou.xin.ui.activity.love.ReportActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.DateUtil;
@@ -149,39 +150,25 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 pop.setOutsideTouchable(true);
                 pop.setFocusable(true);// 点击back退出pop
                 pop.setBackgroundDrawable(new ColorDrawable(Color.WHITE));// 设置背景透明，点击back退出pop
-                pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        pop.dismiss();
-                        WindowManager.LayoutParams lp = getWindow().getAttributes();
-                        lp.alpha = 1f;
-                        getWindow().setAttributes(lp);
-                    }
+                pop.setOnDismissListener(() -> {
+                    pop.dismiss();
+                    WindowManager.LayoutParams lp = getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    getWindow().setAttributes(lp);
                 });
                 WindowManager.LayoutParams lp = getWindow().getAttributes();
                 lp.alpha = 0.5f;
                 getWindow().setAttributes(lp);
                 pop.showAsDropDown(iv_add, 0, 80);
-                inflate.findViewById(R.id.tv_img).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startToActivity(PutActivity.class);//图文
-                        pop.dismiss();
-                    }
+                inflate.findViewById(R.id.tv_img).setOnClickListener(view1 -> {
+                    startToActivity(PutActivity.class);//图文
+                    pop.dismiss();
                 });
-                inflate.findViewById(R.id.tv_video).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        VideoUtil.toVideo(SuccessActivity.this);    //视文
-                        pop.dismiss();
-                    }
+                inflate.findViewById(R.id.tv_video).setOnClickListener(view12 -> {
+                    VideoUtil.toVideo(SuccessActivity.this);    //视文
+                    pop.dismiss();
                 });
-                inflate.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        pop.dismiss();
-                    }
-                });
+                inflate.findViewById(R.id.tv_cancel).setOnClickListener(view13 -> pop.dismiss());
                 break;
         }
     }
@@ -221,6 +208,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                         .placeholder(R.drawable.ic_avatar)
                         .dontAnimate()
                         .into(circle);
+                circle.setOnClickListener(v -> startActivity(ObjectActivity.newIntent(getApplicationContext(),bean.getMobile())));
                 holder.setText(R.id.name, bean.getNickName());
                 try {
                     holder.setText(R.id.date, DateUtil.showTime(bean.getPublish_time()));
@@ -240,12 +228,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                     //textManger(holder,bean,position);
                 }
                 //举报
-                holder.setOnClickListener(R.id.iv_report, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Report(bean.getMobile());
-                    }
-                });
+                holder.setOnClickListener(R.id.iv_report, v -> Report(bean.getMobile()));
             }
         };
 
@@ -271,43 +254,30 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
             // 这一步必须要做，否则不会显示。
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
             ((TextView) holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
-            holder.setOnClickListener(R.id.like, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            holder.setText(R.id.like, bean.getTapTimes() - 1 + "");
-                            Drawable drawable = getResources().getDrawable(R.drawable.issue_like);// 找到资源图片
-                            // 这一步必须要做，否则不会显示。
-                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
-                            ((TextView) holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
-                            toSend("cancel", bean.getId() + "");
-                        }
-                    });
-                }
-            });
+            holder.setOnClickListener(R.id.like, v -> runOnUiThread(() -> {
+                holder.setText(R.id.like, bean.getTapTimes() - 1 + "");
+                Drawable drawable1 = getResources().getDrawable(R.drawable.issue_like);// 找到资源图片
+                // 这一步必须要做，否则不会显示。
+                drawable1.setBounds(0, 0, drawable1.getMinimumWidth(), drawable1.getMinimumHeight());// 设置图片宽高
+                ((TextView) holder.getView(R.id.like)).setCompoundDrawables(drawable1, null, null, null);// 设置到控件中
+                toSend("cancel", bean.getId() + "");
+            }));
         } else if (bean.getIstap() == 0) {
             Drawable drawable = getResources().getDrawable(R.drawable.issue_like);// 找到资源图片
             // 这一步必须要做，否则不会显示。
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
             ((TextView) holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
-            holder.setOnClickListener(R.id.like, new View.OnClickListener() {
+            holder.setOnClickListener(R.id.like, v -> runOnUiThread(new Runnable() {
                 @Override
-                public void onClick(View v) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            holder.setText(R.id.like, bean.getTapTimes() + 1 + "");
-                            Drawable drawable = getResources().getDrawable(R.drawable.issue_like_point);// 找到资源图片
-                            // 这一步必须要做，否则不会显示。
-                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
-                            ((TextView) holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
-                            toSend("focus", bean.getId() + "");
-                        }
-                    });
+                public void run() {
+                    holder.setText(R.id.like, bean.getTapTimes() + 1 + "");
+                    Drawable drawable12 = getResources().getDrawable(R.drawable.issue_like_point);// 找到资源图片
+                    // 这一步必须要做，否则不会显示。
+                    drawable12.setBounds(0, 0, drawable12.getMinimumWidth(), drawable12.getMinimumHeight());// 设置图片宽高
+                    ((TextView) holder.getView(R.id.like)).setCompoundDrawables(drawable12, null, null, null);// 设置到控件中
+                    toSend("focus", bean.getId() + "");
                 }
-            });
+            }));
         }
     }
 
@@ -423,12 +393,10 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                         .dontAnimate()
                         .into(img);
 
-                holder.setOnClickListener(R.id.img, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String[] array = photosList.toArray(new String[photosList.size()]);
-                        startActivity(PhotoiewerActivity.newIntent(mContext, array, pos));
-                    }
+                holder.setOnClickListener(R.id.img, view -> {
+
+                    String[] array = photosList.toArray(new String[photosList.size()]);
+                    startActivity(PhotoiewerActivity.newIntent(mContext, array, pos));
                 });
             }
         });
@@ -442,18 +410,10 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
         final AlertDialog dialog = builder.create();
         View inflate = getLayoutInflater().inflate(R.layout.dialog_report, null);
         dialog.setView(inflate, 0, 0, 0, 0);
-        inflate.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        inflate.findViewById(R.id.tv_sure).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(ReportActivity.newIntent(getApplicationContext(), mobile));//传递举报手机号码过去
-                dialog.dismiss();
-            }
+        inflate.findViewById(R.id.tv_cancel).setOnClickListener(v -> dialog.dismiss());
+        inflate.findViewById(R.id.tv_sure).setOnClickListener(v -> {
+            startActivity(ReportActivity.newIntent(getApplicationContext(), mobile));//传递举报手机号码过去
+            dialog.dismiss();
         });
         dialog.show();
     }
@@ -466,12 +426,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                refresh.setRefreshing(false);
-            }
-        }, 2000);
+        new Handler().postDelayed(() -> refresh.setRefreshing(false), 2000);
     }
 
     @Override

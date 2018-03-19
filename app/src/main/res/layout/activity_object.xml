@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:indicator="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/headerbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/list_pager"
+                android:layout_width="match_parent"
+                android:layout_height="260dp" />
+
+            <com.zhou.xin.widget.Xcircleindicator
+                android:id="@+id/Xcircleindicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="-16dp"
+                indicator:circleInterval="10dp"
+                indicator:fillColor="#adef2b2b"
+                indicator:radius="5dp"
+                indicator:strokeColor="#cecece" />
+
+            <TextView
+                android:paddingTop="@dimen/space_8"
+                android:id="@+id/tv_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="16dp"
+                android:layout_marginTop="-4dp"
+                android:paddingLeft="16dp"
+                android:text="真实姓名"
+                android:textColor="#ea8d8d"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_province"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="省份  "
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  城市"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_constellation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="16dp"
+                android:text="星座"
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <TextView
+                style="@style/LineStyle"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                style="@style/StyleText"
+                android:text="学院类型" />
+
+            <TextView
+                android:id="@+id/tv_major"
+                style="@style/StyleText2" />
+
+            <TextView
+                style="@style/LineStyle"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                style="@style/StyleText"
+                android:text="我的个性标签类型" />
+
+            <TextView
+                android:id="@+id/tv_labels"
+                style="@style/StyleText2" />
+
+            <TextView
+                style="@style/LineStyle"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                style="@style/StyleText"
+                android:text="我喜欢的运动类型" />
+
+            <TextView
+                android:id="@+id/tv_sports"
+                style="@style/StyleText2" />
+
+            <TextView
+                style="@style/LineStyle"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                style="@style/StyleText"
+                android:text="我喜欢的音乐类型" />
+
+            <TextView
+                android:id="@+id/tv_musics"
+                style="@style/StyleText2" />
+
+            <TextView
+                style="@style/LineStyle"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                style="@style/StyleText"
+                android:text="我喜欢的食物类型" />
+
+            <TextView
+                android:id="@+id/tv_foods"
+                style="@style/StyleText2" />
+
+            <TextView
+                style="@style/LineStyle"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                style="@style/StyleText"
+                android:text="我喜欢的电影类型" />
+
+            <TextView
+                android:id="@+id/tv_films"
+                style="@style/StyleText2" />
+
+            <TextView
+                style="@style/LineStyle"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                style="@style/StyleText"
+                android:text="我喜欢的书和动漫类型" />
+
+            <TextView
+                android:id="@+id/tv_books"
+                style="@style/StyleText2" />
+
+            <TextView
+                style="@style/LineStyle"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                style="@style/StyleText"
+                android:text="我的旅行足迹" />
+
+            <TextView
+                android:id="@+id/tv_travels"
+                style="@style/StyleText2" />
+
+            <TextView
+                style="@style/LineStyle"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

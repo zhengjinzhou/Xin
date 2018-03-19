@@ -68,29 +68,26 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void init() {
 
-        //尝试保存用户名和头像
+        /*//尝试保存用户名和头像
         SpUtil.putString(getApplicationContext(),Constant.USER_NAME,"zhangsan");
         SpUtil.putString(getApplicationContext(),Constant.HEAD_IMAGE_URL,"http://img0.imgtn.bdimg.com/it/u=3707678312,2260123328&fm=27&gp=0.jpg");
         DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName("zhangsan");
         DemoHelper.getInstance().getUserProfileManager().setCurrentUserAvatar("http://img0.imgtn.bdimg.com/it/u=3707678312,2260123328&fm=27&gp=0.jpg");
-
+*/
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         tv_head.setText("登陆");
-        /*etUsername.setText("13631782148");
+        etUsername.setText("13631782148");
         Log.d(TAG, "init: " + Md5Util.encoder("13631782148" + Constant.APP_ENCRYPTION_KEY));
-        etPassword.setText("123456");*/
+        etPassword.setText("123456");
 
         hint.setVisibility(View.INVISIBLE);
         clear.setVisibility(View.INVISIBLE);
 
-        Glide.with(this)
-                .load(SpUtil.getString(this, Constant.APP_PHOTO, ""))
-                .placeholder(R.drawable.ic_avatar)
-                .dontAnimate().into(circle);
+        Glide.with(this).load(SpUtil.getString(this, Constant.APP_PHOTO, "")).placeholder(R.drawable.ic_avatar).dontAnimate().into(circle);
     }
 
     @OnClick({R.id.bt_login, R.id.back, R.id.tv_forget, R.id.clear, R.id.hint})

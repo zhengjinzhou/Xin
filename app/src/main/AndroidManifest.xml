@@ -48,8 +48,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:launchMode="singleTask"
             android:name=".ui.activity.love.StartActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -306,7 +306,6 @@
             android:name=".ui.activity.huanxin.ContextMenuActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.huanxin.ForwardMessageActivity"
             android:launchMode="singleTask"
@@ -451,7 +450,6 @@
             android:name=".ui.activity.love.ChangeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.love.isseue.SuccessActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -497,10 +495,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:name=".ui.activity.love.activity.SendActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".ui.activity.love.ObjectActivity"></activity>
     </application>
 
 </manifest>

@@ -97,15 +97,17 @@ public class RegisterActivity extends BaseActivity {
         timerUtils.start();
 
         //联网获取验证码
+        String type = "1";
         String opt = "0";
         String _t = CurrentTimeUtil.nowTime();
-        String joint = "_t=" + _t + "&mobile=" + mobile + "&opt=" + opt + Constant.APP_ENCRYPTION_KEY;
+        String joint = "_t=" + _t + "&mobile=" + mobile + "&opt=" + opt +"&type="+type+ Constant.APP_ENCRYPTION_KEY;
         String _s = Md5Util.encoder(joint);
         Log.d(TAG, "getCode: " + joint + "_s" + _s);
         OkHttpClient okHttpClient = new OkHttpClient();
         FormBody body = new FormBody.Builder()
                 .add("opt", opt)
                 .add("mobile", mobile)
+                .add("type",type)
                 .add("_t", _t)
                 .add("_s", _s)
                 .build();
@@ -139,6 +141,7 @@ public class RegisterActivity extends BaseActivity {
             return;
         }
         startActivity(Register2Activity.newIntent(this, mobile, code));
+        finish();
     }
 }
 

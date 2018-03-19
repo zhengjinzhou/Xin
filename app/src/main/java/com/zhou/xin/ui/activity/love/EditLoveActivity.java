@@ -697,12 +697,13 @@ public class EditLoveActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.show(getApplicationContext(), "更新信息成功！");
+                        ToastUtil.show(getApplicationContext(), "成功！");
                     }
                 });
                 Log.d(TAG, "获取新的信息成功: " + string);
                 PersonalBean personalBean = new Gson().fromJson(string, PersonalBean.class);
                 App.getInstance().setPersonalBean(personalBean);
+                finish();
             }
         });
     }

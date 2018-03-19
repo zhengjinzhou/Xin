@@ -128,8 +128,8 @@ public class Register2Activity extends BaseActivity {
         String _t = CurrentTimeUtil.nowTime();
         String joint = "_t=" + _t + "&code=" + code + "&mobile=" + mobile + "&opt=" + opt + "&password=" + password + "&username=" + username + Constant.APP_ENCRYPTION_KEY;
         String _s = Md5Util.encoder(joint);
-        Log.d(TAG, "getCode: " + joint + "_s" + _s);
-
+        Log.d(TAG, "getCode: " + joint);
+        dialog.show();
         OkHttpClient okHttpClient = new OkHttpClient();
         FormBody body = new FormBody.Builder()
                 .add("opt", opt)
@@ -147,6 +147,7 @@ public class Register2Activity extends BaseActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onFailure: " + e.getMessage());
+                dialog.dismiss();
             }
 
             @Override
@@ -156,9 +157,7 @@ public class Register2Activity extends BaseActivity {
                  * 环信注册
                  * 环信的密码固定位电话号码的拼接后md5加密
                  */
-
                 xinRegister(username, username);
-
                 //保存密码，用在修改密码处于原密码进行对比
                 SpUtil.putString(getApplicationContext(),Constant.PASSWORD,password);
             }
@@ -179,7 +178,8 @@ public class Register2Activity extends BaseActivity {
                         public void run() {
                             DemoHelper.getInstance().setCurrentUserName(username);
                             Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_SHORT).show();
-                            startToActivity(LoginActivity.class);//本应用于环信都注册成功之后跳转到登录界面
+                            startToActivity(AppActivity.class);//本应用于环信都注册成功之后跳转到登录界面
+                            dialog.dismiss();
                         }
                     });
                 } catch (final HyphenateException e) {
