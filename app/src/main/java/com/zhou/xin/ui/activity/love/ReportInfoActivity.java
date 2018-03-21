@@ -249,19 +249,9 @@ public class ReportInfoActivity extends BaseActivity {
                 Gson gson = new Gson();
                 final UserInfo userInfo = gson.fromJson(string, UserInfo.class);
                 if (userInfo.getError().equals("-1")) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtil.show(getApplicationContext(), userInfo.getMsg());
-                        }
-                    });
+                    runOnUiThread(() -> ToastUtil.show(getApplicationContext(), userInfo.getMsg()));
                 } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtil.show(getApplicationContext(), "举报失败！");
-                        }
-                    });
+                    runOnUiThread(() -> ToastUtil.show(getApplicationContext(), "举报失败！"));
                 }
             }
         });

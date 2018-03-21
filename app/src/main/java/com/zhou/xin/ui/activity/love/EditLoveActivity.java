@@ -187,15 +187,12 @@ public class EditLoveActivity extends BaseActivity {
     }
 
     private void initOption() {
-        pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                String tx = options1Items.get(options1).getPickerViewText()
-                        + options2Items.get(options1).get(options2);
-                tv_province_city.setText("地址：" + tx);
-                cityId = mapCity.get(options2Items.get(options1).get(options2));
+        pvOptions = new OptionsPickerView.Builder(this, (options1, options2, options3, v) -> {
+            String tx = options1Items.get(options1).getPickerViewText()
+                    + options2Items.get(options1).get(options2);
+            tv_province_city.setText("地址：" + tx);
+            cityId = mapCity.get(options2Items.get(options1).get(options2));
 
-            }
         }).build();
         pvOptions.setPicker(options1Items, options2Items);//二级选择器
     }
@@ -220,15 +217,12 @@ public class EditLoveActivity extends BaseActivity {
         delView.add(del_4);
         delView.add(del_5);
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-                int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
-                if (checkedRadioButtonId == 2131296688)
-                    sex = 1;
-                if (checkedRadioButtonId == 2131296686)
-                    sex = 0;
-            }
+        radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
+            int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+            if (checkedRadioButtonId == 2131296688)
+                sex = 1;
+            if (checkedRadioButtonId == 2131296686)
+                sex = 0;
         });
         if (App.getInstance() == null) return;
         if (App.getInstance().getSelectBean() == null) return;
@@ -427,13 +421,10 @@ public class EditLoveActivity extends BaseActivity {
         startDate.set(1920, 0, 1);
         //endDate.set(selectedDate.get(Calendar.YEAR),selectedDate.get(Calendar.MONTH),selectedDate.get(Calendar.DATE));
         endDate.set(2022, 2, 2);
-        new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                et.setText("生日:" + format.format(date));
-                brithday = format.format(date);
-            }
+        new TimePickerView.Builder(this, (date, v) -> {//选中事件回调
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            et.setText("生日:" + format.format(date));
+            brithday = format.format(date);
         })
                 //年月日时分秒 的显示与否，不设置则默认全部显示
                 .setType(new boolean[]{true, true, true, false, false, false})
@@ -469,41 +460,31 @@ public class EditLoveActivity extends BaseActivity {
         builder.setTitle("多选对话框");
         builder.setIcon(R.mipmap.ic_launcher);
         final boolean[] checkedItems = new boolean[shuzu.length];/*设置多选默认状态*/
-        builder.setMultiChoiceItems(shuzu, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {/*设置多选的点击事件*/
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+        /*设置多选的点击事件*/
+        builder.setMultiChoiceItems(shuzu, checkedItems, (dialog, which, isChecked) -> {
 
-                checkedItems[which] = isChecked;
-                if (isChecked == true) {
-                    list.add(shuzu[which]);
-                    uoload.add(map.get(shuzu[which]));
-                    Log.d(TAG, "onClick: " + uoload.toString());
-                }
-                if (isChecked == false) {
-                    int i = list.indexOf(shuzu[which]);
-                    list.remove(i);
-                    uoload.remove(map.get(shuzu[which]));
-                    Log.d(TAG, "onClick: " + uoload.toString());
-                }
-                // Toast.makeText(getApplicationContext(), shuzu[which]  + isChecked, Toast.LENGTH_SHORT).show();
+            checkedItems[which] = isChecked;
+            if (isChecked == true) {
+                list.add(shuzu[which]);
+                uoload.add(map.get(shuzu[which]));
+                Log.d(TAG, "onClick: " + uoload.toString());
             }
+            if (isChecked == false) {
+                int i = list.indexOf(shuzu[which]);
+                list.remove(i);
+                uoload.remove(map.get(shuzu[which]));
+                Log.d(TAG, "onClick: " + uoload.toString());
+            }
+            // Toast.makeText(getApplicationContext(), shuzu[which]  + isChecked, Toast.LENGTH_SHORT).show();
         });
 
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //System.out.println(editText.getText());
-                System.out.println(list.toString());
-                System.out.println("map" + uoload.toString());
-                tv.setText(list.toString());
-            }
+        builder.setPositiveButton("确定", (dialog, which) -> {
+            //System.out.println(editText.getText());
+            System.out.println(list.toString());
+            System.out.println("map" + uoload.toString());
+            tv.setText(list.toString());
         });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setNegativeButton("取消", (dialog, which) -> dialog.cancel());
         builder.show();
 
     }
@@ -520,41 +501,31 @@ public class EditLoveActivity extends BaseActivity {
         builder.setTitle("多选对话框");
         builder.setIcon(R.mipmap.ic_launcher);
         final boolean[] checkedItems = new boolean[shuzu.length];/*设置多选默认状态*/
-        builder.setMultiChoiceItems(shuzu, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {/*设置多选的点击事件*/
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+        /*设置多选的点击事件*/
+        builder.setMultiChoiceItems(shuzu, checkedItems, (dialog, which, isChecked) -> {
 
-                checkedItems[which] = isChecked;
-                if (isChecked == true) {
-                    list.add(shuzu[which]);
-                    uoload.add(map.get(shuzu[which]));
-                    Log.d(TAG, "onClick: " + uoload.toString());
-                }
-                if (isChecked == false) {
-                    int i = list.indexOf(shuzu[which]);
-                    list.remove(i);
-                    uoload.remove(map.get(shuzu[which]));
-                    Log.d(TAG, "onClick: " + uoload.toString());
-                }
-                // Toast.makeText(getApplicationContext(), shuzu[which]  + isChecked, Toast.LENGTH_SHORT).show();
+            checkedItems[which] = isChecked;
+            if (isChecked == true) {
+                list.add(shuzu[which]);
+                uoload.add(map.get(shuzu[which]));
+                Log.d(TAG, "onClick: " + uoload.toString());
             }
+            if (isChecked == false) {
+                int i = list.indexOf(shuzu[which]);
+                list.remove(i);
+                uoload.remove(map.get(shuzu[which]));
+                Log.d(TAG, "onClick: " + uoload.toString());
+            }
+            // Toast.makeText(getApplicationContext(), shuzu[which]  + isChecked, Toast.LENGTH_SHORT).show();
         });
 
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                System.out.println(editText.getText());
-                System.out.println(list.toString());
-                System.out.println("map" + uoload.toString());
-                tv.setText(list.toString() + editText.getText());
-            }
+        builder.setPositiveButton("确定", (dialog, which) -> {
+            System.out.println(editText.getText());
+            System.out.println(list.toString());
+            System.out.println("map" + uoload.toString());
+            tv.setText(list.toString() + editText.getText());
         });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setNegativeButton("取消", (dialog, which) -> dialog.cancel());
         builder.show();
 
     }
@@ -567,17 +538,14 @@ public class EditLoveActivity extends BaseActivity {
      * @param txt
      */
     private void initOptionPicker(final String string, final List<String> list, final TextView txt) {
-        optionsPickerView = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                txt.setText(string + list.get(options1));
-                //同时获取相应的id，因为上传需要
-                if (listMajor.contains(list.get(options1))) {
-                    majorID = mapMajor.get(list.get(options1));
-                }
-                if (constellationList.contains(list.get(options1))) {
-                    constellationID = constellationMap.get(list.get(options1));
-                }
+        optionsPickerView = new OptionsPickerView.Builder(this, (options1, options2, options3, v) -> {
+            txt.setText(string + list.get(options1));
+            //同时获取相应的id，因为上传需要
+            if (listMajor.contains(list.get(options1))) {
+                majorID = mapMajor.get(list.get(options1));
+            }
+            if (constellationList.contains(list.get(options1))) {
+                constellationID = constellationMap.get(list.get(options1));
             }
         }).build();
     }
@@ -666,6 +634,9 @@ public class EditLoveActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 获取个人信息
+     */
     private void getResult() {
         String uid = App.getInstance().getUserInfo().getUid();
         String token = App.getInstance().getUserInfo().getToken();
@@ -694,12 +665,7 @@ public class EditLoveActivity extends BaseActivity {
             public void onResponse(Call call, Response res) throws IOException {
                 String string = res.body().string();
                 dialog.dismiss();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUtil.show(getApplicationContext(), "成功！");
-                    }
-                });
+                runOnUiThread(() -> ToastUtil.show(getApplicationContext(), "成功！"));
                 Log.d(TAG, "获取新的信息成功: " + string);
                 PersonalBean personalBean = new Gson().fromJson(string, PersonalBean.class);
                 App.getInstance().setPersonalBean(personalBean);
@@ -717,7 +683,6 @@ public class EditLoveActivity extends BaseActivity {
                         public void onPermissionGranted() {
                             index = i;
                             actionPhotoUtil.actionPhoto(EditLoveActivity.this, REQUEST_CODE);
-                            //actionPhotoUtil.actionPhoto(EditLoveActivity.this, REQUEST_CODE);
                         }
 
                         @Override
@@ -729,7 +694,6 @@ public class EditLoveActivity extends BaseActivity {
         }
         this.index = i;
         actionPhotoUtil.actionPhoto(EditLoveActivity.this, REQUEST_CODE);
-        //actionPhotoUtil.actionPhoto(EditLoveActivity.this, REQUEST_CODE);
     }
 
     private void setDelPhoto(int index) {

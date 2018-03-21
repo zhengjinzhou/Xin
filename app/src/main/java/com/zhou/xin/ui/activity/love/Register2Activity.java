@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
@@ -18,13 +19,16 @@ import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.base.DemoHelper;
+import com.zhou.xin.bean.ZhuCeBean;
 import com.zhou.xin.ui.activity.huanxin.LoginActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
+import com.zhou.xin.utils.DES3Util;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.utils.ToastUtil;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -126,7 +130,8 @@ public class Register2Activity extends BaseActivity {
         //注册
         String opt = "1";
         String _t = CurrentTimeUtil.nowTime();
-        String joint = "_t=" + _t + "&code=" + code + "&mobile=" + mobile + "&opt=" + opt + "&password=" + password + "&username=" + username + Constant.APP_ENCRYPTION_KEY;
+        String pwd = DES3Util.encrypt3DES(password, Constant.ENCRYPTION_KEY, Charset.forName("UTF-8"));
+        String joint = "_t=" + _t + "&code=" + code +"&inviteCode="+inviteCode+ "&mobile=" + mobile + "&opt=" + opt + "&password=" + pwd + "&username=" + username  + Constant.APP_ENCRYPTION_KEY;
         String _s = Md5Util.encoder(joint);
         Log.d(TAG, "getCode: " + joint);
         dialog.show();
@@ -136,12 +141,15 @@ public class Register2Activity extends BaseActivity {
                 .add("mobile", mobile)
                 .add("code", code)
                 .add("username", username)
-                .add("password", password)
+                .add("password", pwd)
                 .add("inviteCode", inviteCode)
                 .add("_t", _t)
                 .add("_s", _s)
                 .build();
-        Request request = new Request.Builder().post(body).url(Constant.URL_REGISTER).build();
+        Request request = new Request.Builder()
+                .url(Constant.URL_REGISTER)
+                .post(body)
+                .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -152,54 +160,54 @@ public class Register2Activity extends BaseActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d(TAG, "注册onResponse: " + response.body().string());
-                /**
-                 * 环信注册
-                 * 环信的密码固定位电话号码的拼接后md5加密
-                 */
-                xinRegister(username, username);
-                //保存密码，用在修改密码处于原密码进行对比
-                SpUtil.putString(getApplicationContext(),Constant.PASSWORD,password);
+                String string = response.body().string();
+                Log.d(TAG, "注册onResponse: " + string);
+                Gson gson = new Gson();
+                ZhuCeBean zhuCeBean = gson.fromJson(string, ZhuCeBean.class);
+                if (zhuCeBean.getError().equals("-1")){
+                    /**
+                     * 环信注册
+                     * 环信的密码固定位电话号码的拼接后md5加密
+                     */
+                    xinRegister(username, username);
+                    //保存密码，用在修改密码处于原密码进行对比
+                    SpUtil.putString(getApplicationContext(),Constant.PASSWORD,password);
+                }else {
+                    dialog.dismiss();
+                    runOnUiThread(() -> ToastUtil.show(getApplicationContext(),zhuCeBean.getMsg()));
+                }
             }
         });
     }
 
     //注册
     private void xinRegister(final String username, final String pwd) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // call method in SDK
-                try {
-                    String psswordd = Md5Util.encoder(pwd+Constant.APP_ENCRYPTION_KEY);
-                    EMClient.getInstance().createAccount(username, psswordd);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            DemoHelper.getInstance().setCurrentUserName(username);
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_SHORT).show();
-                            startToActivity(AppActivity.class);//本应用于环信都注册成功之后跳转到登录界面
-                            dialog.dismiss();
-                        }
-                    });
-                } catch (final HyphenateException e) {
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            int errorCode = e.getErrorCode();
-                            if (errorCode == EMError.NETWORK_ERROR) {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
-                            } else if (errorCode == EMError.USER_ALREADY_EXIST) {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
-                            } else if (errorCode == EMError.USER_AUTHENTICATION_FAILED) {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.registration_failed_without_permission), Toast.LENGTH_SHORT).show();
-                            } else if (errorCode == EMError.USER_ILLEGAL_ARGUMENT) {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
+        new Thread(() -> {
+            // call method in SDK
+            try {
+                String psswordd = Md5Util.encoder(pwd+Constant.APP_ENCRYPTION_KEY);
+                EMClient.getInstance().createAccount(username, psswordd);
+                runOnUiThread(() -> {
+                    DemoHelper.getInstance().setCurrentUserName(username);
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_SHORT).show();
+                    startToActivity(AppActivity.class);//本应用于环信都注册成功之后跳转到登录界面
+                    dialog.dismiss();
+                });
+            } catch (final HyphenateException e) {
+                runOnUiThread(() -> {
+                    int errorCode = e.getErrorCode();
+                    if (errorCode == EMError.NETWORK_ERROR) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
+                    } else if (errorCode == EMError.USER_ALREADY_EXIST) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
+                    } else if (errorCode == EMError.USER_AUTHENTICATION_FAILED) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.registration_failed_without_permission), Toast.LENGTH_SHORT).show();
+                    } else if (errorCode == EMError.USER_ILLEGAL_ARGUMENT) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }).start();
     }

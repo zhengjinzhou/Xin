@@ -146,12 +146,9 @@ public class ChangeActivity extends BaseActivity {
                 Gson gson = new Gson();
                 UserInfo userInfo = gson.fromJson(string, UserInfo.class);
                 if (userInfo.getError().equals("-1")){
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtil.show(getApplicationContext(),"密码修改成功，下次登录记得使用新密码");
-                            SpUtil.putString(getApplicationContext(), Constant.PASSWORD,etNew);
-                        }
+                    runOnUiThread(() -> {
+                        ToastUtil.show(getApplicationContext(),"密码修改成功，下次登录记得使用新密码");
+                        SpUtil.putString(getApplicationContext(), Constant.PASSWORD,etNew);
                     });
                 }
                 dialog.dismiss();

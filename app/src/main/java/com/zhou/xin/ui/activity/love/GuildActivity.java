@@ -62,12 +62,7 @@ public class GuildActivity extends BaseActivity {
             @Override
             public void convert(ViewHolder holder, final GuildBean s, final int position) {
                 holder.setText(R.id.tv_des, s.getTitle());
-                holder.setOnClickListener(R.id.rl_guild, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(GuildInfoActivity.newIntent(getApplicationContext(), s.getTitle(), s.getDesc()));
-                    }
-                });
+                holder.setOnClickListener(R.id.rl_guild, v -> startActivity(GuildInfoActivity.newIntent(getApplicationContext(), s.getTitle(), s.getDesc())));
             }
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

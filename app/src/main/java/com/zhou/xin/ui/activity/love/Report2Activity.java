@@ -66,12 +66,7 @@ public class Report2Activity extends BaseActivity {
             @Override
             public void convert(ViewHolder holder, final ReportBean.AccusationCategoryListBean.AcTypesBean s, int position) {
                 holder.setText(R.id.tv_des,s.getTypeName());
-                holder.setOnClickListener(R.id.rl_guild, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+"",getIntent().getStringExtra("jubao"),getIntent().getStringExtra("mobile")));
-                    }
-                });
+                holder.setOnClickListener(R.id.rl_guild, v -> startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+"",getIntent().getStringExtra("jubao"),getIntent().getStringExtra("mobile"))));
             }
         };
         recycleView.setLayoutManager(new LinearLayoutManager(this));

@@ -128,12 +128,9 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
         TalkBean talkBean = gson.fromJson(data, TalkBean.class);
         if (talkBean.getError().equals("-1")) {
             final List<TalkBean.TalkListBean> talkList = talkBean.getTalkList();
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    adapter.addDatas(talkList);
-                    adapter.notifyDataSetChanged();
-                }
+            runOnUiThread(() -> {
+                adapter.addDatas(talkList);
+                adapter.notifyDataSetChanged();
             });
         }
     }
@@ -267,16 +264,13 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
             // 这一步必须要做，否则不会显示。
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置图片宽高
             ((TextView) holder.getView(R.id.like)).setCompoundDrawables(drawable, null, null, null);// 设置到控件中
-            holder.setOnClickListener(R.id.like, v -> runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    holder.setText(R.id.like, bean.getTapTimes() + 1 + "");
-                    Drawable drawable12 = getResources().getDrawable(R.drawable.issue_like_point);// 找到资源图片
-                    // 这一步必须要做，否则不会显示。
-                    drawable12.setBounds(0, 0, drawable12.getMinimumWidth(), drawable12.getMinimumHeight());// 设置图片宽高
-                    ((TextView) holder.getView(R.id.like)).setCompoundDrawables(drawable12, null, null, null);// 设置到控件中
-                    toSend("focus", bean.getId() + "");
-                }
+            holder.setOnClickListener(R.id.like, v -> runOnUiThread(() -> {
+                holder.setText(R.id.like, bean.getTapTimes() + 1 + "");
+                Drawable drawable12 = getResources().getDrawable(R.drawable.issue_like_point);// 找到资源图片
+                // 这一步必须要做，否则不会显示。
+                drawable12.setBounds(0, 0, drawable12.getMinimumWidth(), drawable12.getMinimumHeight());// 设置图片宽高
+                ((TextView) holder.getView(R.id.like)).setCompoundDrawables(drawable12, null, null, null);// 设置到控件中
+                toSend("focus", bean.getId() + "");
             }));
         }
     }

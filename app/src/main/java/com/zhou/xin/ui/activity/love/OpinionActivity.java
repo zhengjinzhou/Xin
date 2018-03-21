@@ -207,12 +207,7 @@ public class OpinionActivity extends BaseActivity {
                 Gson gson = new Gson();
                 UserInfo userInfo = gson.fromJson(string, UserInfo.class);
                 if (userInfo.getError().equals("-1")){
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtil.show(getApplicationContext(),"反馈成功");
-                        }
-                    });
+                    runOnUiThread(() -> ToastUtil.show(getApplicationContext(),"反馈成功"));
                     finish();
                 }
             }

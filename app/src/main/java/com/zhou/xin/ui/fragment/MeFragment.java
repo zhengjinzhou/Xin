@@ -99,12 +99,7 @@ public class MeFragment extends BaseFragment {
             public void convert(ViewHolder holder, final BaseBean baseBean, int position) {
                 holder.setText(R.id.tv_name,baseBean.getName());
                 holder.setImageResource(R.id.iv_icon,baseBean.getIcon());
-                holder.setOnClickListener(R.id.layout, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startToActivity(baseBean.getaClass());
-                    }
-                });
+                holder.setOnClickListener(R.id.layout, v -> startToActivity(baseBean.getaClass()));
             }
         };
         recycleView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -213,20 +208,12 @@ public class MeFragment extends BaseFragment {
         lp.alpha = 0.5f;
         getActivity().getWindow().setAttributes(lp);
         pop.showAtLocation(tv_exit, Gravity.BOTTOM, 0, 0);
-        inflate.findViewById(R.id.tv_ensure_log_off).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SpUtil.clear();
-                pop.dismiss();
-                getActivity().finish();
-            }
+        inflate.findViewById(R.id.tv_ensure_log_off).setOnClickListener(view -> {
+            SpUtil.clear();
+            pop.dismiss();
+            getActivity().finish();
         });
-        inflate.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pop.dismiss();
-            }
-        });
+        inflate.findViewById(R.id.tv_cancel).setOnClickListener(view -> pop.dismiss());
     }
 
     public class BaseBean{

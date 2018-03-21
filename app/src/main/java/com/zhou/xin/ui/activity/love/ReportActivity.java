@@ -84,17 +84,14 @@ public class ReportActivity extends BaseActivity {
             @Override
             public void convert(ViewHolder holder, final ReportBean.AccusationCategoryListBean s, int position) {
                 holder.setText(R.id.tv_des,s.getCategoryName());
-                holder.setOnClickListener(R.id.rl_guild, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (s.getAcTypes().size() == 0){
-                            startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+"",getIntent().getStringExtra("username"),getIntent().getStringExtra("mobile")));
-                            Log.d(TAG, "onClick: "+s.getId());
-                        }else {
-                            List<ReportBean.AccusationCategoryListBean.AcTypesBean> acTypes = s.getAcTypes();
-                            String json = new Gson().toJson(acTypes);
-                            startActivity(Report2Activity.newintent(getApplicationContext(),json,getIntent().getStringExtra("username"),getIntent().getStringExtra("mobile")));
-                        }
+                holder.setOnClickListener(R.id.rl_guild, v -> {
+                    if (s.getAcTypes().size() == 0){
+                        startActivity(ReportInfoActivity.newIntent(getApplicationContext(),s.getId()+"",getIntent().getStringExtra("username"),getIntent().getStringExtra("mobile")));
+                        Log.d(TAG, "onClick: "+s.getId());
+                    }else {
+                        List<ReportBean.AccusationCategoryListBean.AcTypesBean> acTypes = s.getAcTypes();
+                        String json = new Gson().toJson(acTypes);
+                        startActivity(Report2Activity.newintent(getApplicationContext(),json,getIntent().getStringExtra("username"),getIntent().getStringExtra("mobile")));
                     }
                 });
             }
@@ -147,12 +144,9 @@ public class ReportActivity extends BaseActivity {
         Gson gson = new Gson();
         ReportBean reportBean = gson.fromJson(data, ReportBean.class);
         final List<ReportBean.AccusationCategoryListBean> categoryListBeans = reportBean.getAccusationCategoryList();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                adapter.addDatas(categoryListBeans);
-                adapter.notifyDataSetChanged();
-            }
+        runOnUiThread(() -> {
+            adapter.addDatas(categoryListBeans);
+            adapter.notifyDataSetChanged();
         });
         dialog.dismiss();
     }

@@ -98,32 +98,23 @@ public class SendActivity extends BaseActivity {
 
                     holder.getView(R.id.del).setVisibility(View.GONE);
 
-                    img.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            multiSelect = true;
-                            openPhotoPermissions();
-                        }
+                    img.setOnClickListener(view -> {
+                        multiSelect = true;
+                        openPhotoPermissions();
                     });
 
                 } else {
                     ImageView img = (ImageView) holder.getView(R.id.img);
                     img.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     Glide.with(mContext).load(s).into(img);
-                    holder.getView(R.id.del).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            remove(position);
-                            notifyDataSetChanged();
-                        }
+                    holder.getView(R.id.del).setOnClickListener(view -> {
+                        remove(position);
+                        notifyDataSetChanged();
                     });
-                    img.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            multiSelect = false;
-                            index = position;
-                            openPhotoPermissions();
-                        }
+                    img.setOnClickListener(view -> {
+                        multiSelect = false;
+                        index = position;
+                        openPhotoPermissions();
                     });
                 }
             }
@@ -157,12 +148,7 @@ public class SendActivity extends BaseActivity {
     }
 
     private void actionPhoto() {
-        final ImageLoader loader = new ImageLoader() {
-            @Override
-            public void displayImage(Context context, String path, ImageView imageView) {
-                Glide.with(context).load(path).into(imageView);
-            }
-        };
+        final ImageLoader loader = (ImageLoader) (context, path, imageView) -> Glide.with(context).load(path).into(imageView);
 
         ImgSelConfig config = new ImgSelConfig.Builder(this, loader)
                 // 是否多选, 默认true
@@ -264,13 +250,10 @@ public class SendActivity extends BaseActivity {
         //选中事件回调
         //年月日时分秒 的显示与否，不设置则默认全部显示
         //设置外部遮罩颜色
-        pickerView = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                String s = DateUtil.lineHDate(date);
-                et.setText(s);
-                Log.d("", "onTimeSelect: "+s);
-            }
+        pickerView = new TimePickerView.Builder(this, (date, v) -> {//选中事件回调
+            String s = DateUtil.lineHDate(date);
+            et.setText(s);
+            Log.d("", "onTimeSelect: "+s);
         })
                 //年月日时分秒 的显示与否，不设置则默认全部显示
                 .setType(new boolean[]{true, true, true, true, false, false})

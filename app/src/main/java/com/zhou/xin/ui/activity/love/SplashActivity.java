@@ -65,23 +65,32 @@ public class SplashActivity extends BaseActivity {
          * 被异常销毁的时候
          */
         if (App.getInstance().getUserInfo() == null && SpUtil.getString(getApplicationContext(), Constant.ISLOGIN, "").equals("ISLOGIN")) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    login();
-                }
-            }, 2000);
+            handler.postDelayed(() -> login(), 2000);
             return;
         }
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startToActivity(AppActivity.class);
-                finish();
-            }
+        handler.postDelayed(() -> {
+            startToActivity(AppActivity.class);
+            finish();
         }, 2000);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 登录
@@ -113,12 +122,7 @@ public class SplashActivity extends BaseActivity {
     Callback callback = new Callback() {
         @Override
         public void onFailure(Call call, final IOException e) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    ToastUtil.show(getApplicationContext(), e.getMessage());
-                }
-            });
+            runOnUiThread(() -> ToastUtil.show(getApplicationContext(), e.getMessage()));
         }
 
         @Override
@@ -137,13 +141,10 @@ public class SplashActivity extends BaseActivity {
         String token = userInfo.getToken();
         String uid = userInfo.getUid();
         if (userInfo.getError().equals("-3")) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    dialog.dismiss();
-                    ToastUtil.show(getApplicationContext(), userInfo.getMsg()+"请检查您的手机时间");
-                    finish();
-                }
+            runOnUiThread(() -> {
+                dialog.dismiss();
+                ToastUtil.show(getApplicationContext(), userInfo.getMsg()+"请检查您的手机时间");
+                finish();
             });
             return;
         }
@@ -241,12 +242,10 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onProgress(int code, final String message) {
                 Log.d(TAG, "login: onError: " + code);
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        dialog.dismiss();
-                        Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
-                                Toast.LENGTH_SHORT).show();
-                    }
+                runOnUiThread(() -> {
+                    dialog.dismiss();
+                    Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
+                            Toast.LENGTH_SHORT).show();
                 });
             }
         });

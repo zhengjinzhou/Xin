@@ -113,12 +113,7 @@ public class LotteryActivity extends BaseActivity {
         textView.setText(16, 5, Color.RED);//设置属性
         textView.setTextStillTime(3000);//设置停留时长间隔
         textView.setAnimTime(300);//设置进入和退出的时间间隔
-        textView.setOnItemClickListener(new VerticalTextview.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                ToastUtil.show(getApplicationContext(),"点击了 : " + titleList.get(position));
-            }
-        });
+        textView.setOnItemClickListener(position -> ToastUtil.show(getApplicationContext(),"点击了 : " + titleList.get(position)));
     }
 
     private void initLottery() {
@@ -222,7 +217,6 @@ public class LotteryActivity extends BaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                Gson gson = new Gson();
                 Log.d(TAG, "获取个人中奖记录: "+string);
             }
         });

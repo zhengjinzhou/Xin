@@ -69,11 +69,8 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
         CommonAdapter adapter = new CommonAdapter<String>(this, R.layout.recycle_activity, data) {
             @Override
             public void convert(ViewHolder holder, String s, int position) {
-                holder.setOnClickListener(R.id.ll_activity, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startToActivity(ActivityInfoActivity.class);//要传参
-                    }
+                holder.setOnClickListener(R.id.ll_activity, v -> {
+                    startToActivity(ActivityInfoActivity.class);//要传参
                 });
             }
         };
@@ -94,12 +91,7 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                refresh.setRefreshing(false);
-            }
-        },2000);
+        new Handler().postDelayed(() -> refresh.setRefreshing(false),2000);
     }
 
 }

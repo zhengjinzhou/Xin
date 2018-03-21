@@ -49,15 +49,12 @@ public class StartActivity extends BaseActivity {
         View view2 = getLayoutInflater().inflate(R.layout.layout2, null);
         View view3 = getLayoutInflater().inflate(R.layout.layout3, null);
 
-        view3.findViewById(R.id.bt_next).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startToActivity(AppActivity.class);
-                SharedPreferences.Editor edit = sp.edit();
-                edit.putBoolean("FIRST",true);
-                edit.commit();
-                finish();
-            }
+        view3.findViewById(R.id.bt_next).setOnClickListener(v -> {
+            startToActivity(AppActivity.class);
+            SharedPreferences.Editor edit = sp.edit();
+            edit.putBoolean("FIRST",true);
+            edit.commit();
+            finish();
         });
 
         list.add(view1);

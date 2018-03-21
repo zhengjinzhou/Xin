@@ -84,12 +84,9 @@ public class InviteActivity extends BaseActivity {
         Gson gson = new Gson();
         final InvitBean invitBean = gson.fromJson(data, InvitBean.class);
         if (invitBean.getError().equals("-1")){
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    tv_inviteCode.setText(invitBean.getInviteCode());
-                    invited = invitBean.getInviteCode();
-                }
+            runOnUiThread(() -> {
+                tv_inviteCode.setText(invitBean.getInviteCode());
+                invited = invitBean.getInviteCode();
             });
         }
     }
