@@ -1,15 +1,20 @@
 package com.zhou.xin.ui.activity.love;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.zhou.xin.BuildConfig;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.App;
@@ -17,7 +22,9 @@ import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.bean.UserInfo;
+import com.zhou.xin.bean.VerBean;
 import com.zhou.xin.db.DemoDBManager;
+import com.zhou.xin.download.UpdateManager;
 import com.zhou.xin.ui.activity.huanxin.LoginActivity;
 import com.zhou.xin.ui.activity.huanxin.MainActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
@@ -41,7 +48,10 @@ public class SplashActivity extends BaseActivity {
     private static final String TAG = "SplashActivity";
     private String username;
     private String password;
+
     android.os.Handler handler = new Handler();
+    int versionCode = BuildConfig.VERSION_CODE;
+
     @Override
     protected int getLayout() {
         return R.layout.activity_splash;
@@ -49,9 +59,12 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        if (versionCode > 0){
+            new UpdateManager(this).checkUpdate(false);
+            findViewById(R.id.pro).setVisibility(View.VISIBLE);
+            return;
+        }
         /**
          * 没有被异常销毁的时候
          */
@@ -74,22 +87,6 @@ public class SplashActivity extends BaseActivity {
             finish();
         }, 2000);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
@@ -251,4 +248,12 @@ public class SplashActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Toast.makeText(this, "这位爷，在下载呢，待会再退出吧", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

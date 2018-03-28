@@ -9,9 +9,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.bean.UserInfo;
 import com.zhou.xin.utils.CountDownTimerUtils;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
@@ -121,7 +123,13 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d(TAG, "onResponse: "+response.body().string());
+                String string = response.body().string();
+                Log.d(TAG, "onResponse: "+string);
+                Gson gson = new Gson();
+                UserInfo userInfo = gson.fromJson(string, UserInfo.class);
+                if (!userInfo.getError().equals("-1")){
+                    runOnUiThread(() -> ToastUtil.show(getApplicationContext(),userInfo.getMsg()));
+                }
             }
         });
     }

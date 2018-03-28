@@ -146,7 +146,7 @@ public class MeFragment extends BaseFragment {
         @Override
         public void onResponse(Call call, final Response response) throws IOException {
             String string = response.body().string();
-            LogUtil.d("草草草哦啊从奥次哦啊从初次："+string);
+            //LogUtil.d("草草草哦啊从奥次哦啊从初次："+string);
             Gson gson = new Gson();
             SelectBean selectBean = gson.fromJson(string, SelectBean.class);
             App.getInstance().setSelectBean(selectBean);
@@ -195,14 +195,11 @@ public class MeFragment extends BaseFragment {
         pop.setFocusable(true);// 点击back退出pop
         pop.setAnimationStyle(R.style.add_new_style);
         pop.setBackgroundDrawable(new ColorDrawable(Color.WHITE));// 设置背景透明，点击back退出pop
-        pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                pop.dismiss();
-                WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-                lp.alpha = 1f;
-                getActivity().getWindow().setAttributes(lp);
-            }
+        pop.setOnDismissListener(() -> {
+            pop.dismiss();
+            WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+            lp.alpha = 1f;
+            getActivity().getWindow().setAttributes(lp);
         });
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = 0.5f;

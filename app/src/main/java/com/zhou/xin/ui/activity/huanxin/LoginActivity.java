@@ -183,13 +183,7 @@ public class LoginActivity extends BaseActivity {
     Callback callback = new Callback() {
         @Override
         public void onFailure(Call call, final IOException e) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    ToastUtil.show(getApplicationContext(), e.getMessage());
-                }
-            });
-            Log.d(TAG, "onFailure: " + e.getMessage());
+            runOnUiThread(() -> ToastUtil.show(getApplicationContext(), e.getMessage()));
         }
 
         @Override
@@ -267,12 +261,9 @@ public class LoginActivity extends BaseActivity {
         String uid = userInfo.getUid();
 
         if (userInfo.getError().equals("-3")) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    dialog.dismiss();
-                    ToastUtil.show(getApplicationContext(), userInfo.getMsg());
-                }
+            runOnUiThread(() -> {
+                dialog.dismiss();
+                ToastUtil.show(getApplicationContext(), userInfo.getMsg()+"请检查您的时间");
             });
             return;
         }

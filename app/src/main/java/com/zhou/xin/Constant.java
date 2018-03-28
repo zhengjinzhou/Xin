@@ -29,6 +29,8 @@ public class Constant extends EaseConstant {
     //登陆        获取个人信息
     public static final String LOGIN_URL = URL + "/app/index.do";
 
+    //版本更新
+    public static final String UPDATE_NEW = URL+"/app/v_updateApk.do";
     //修改会员个人信息
     public static final String UPDATE_URL = URL + "/app/update.do";
     //获取朋友圈
@@ -67,6 +69,7 @@ public class Constant extends EaseConstant {
     public static final String RECEIVOR_USERID = "objectUserid";
     public static final String RECEIVOR_USER_NAME = "objectUserName";
     public static final String RECEIVOR_USER_SEX = "objectUserSex";
+    public static final String UPDATE_APK = "update_apk";
     public static String USER_HEAD_IMG = "user_head_img";
     public static String HX_CURRENT_USER_ID = "hx_current_user_id";
 

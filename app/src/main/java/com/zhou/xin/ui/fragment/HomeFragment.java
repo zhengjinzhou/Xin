@@ -26,6 +26,7 @@ import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseFragment;
 import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.bean.GenderBean;
+import com.zhou.xin.bean.VerBean;
 import com.zhou.xin.swipe.SwipeFlingAdapterView;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.DES3Util;
@@ -53,7 +54,8 @@ import okhttp3.Response;
 public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.onFlingListener,
         SwipeFlingAdapterView.OnItemClickListener, View.OnClickListener {
 
-
+    //下载后的APK的命名
+    public static final String APK_NAME = "恋爱";
     @BindView(R.id.swipe_view) SwipeFlingAdapterView swipeView;
     @BindView(R.id.swipeLeft) View vLeft;
     @BindView(R.id.swipeRight) View vRight;
@@ -66,13 +68,13 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
     private int cardHeight;
 
     private InnerAdapter adapter;
-    private List<String> nameList;
-    private List<String> cityList;
-    private List<String> edusList;
-    private List<String> yearsList;
-    private List<String> photoList;
-    private List<String> phoneList;
-    private List<String> cidList;
+    private List<String> nameList = new ArrayList<>();
+    private List<String> cityList = new ArrayList<>();
+    private List<String> edusList= new ArrayList<>();
+    private List<String> yearsList= new ArrayList<>();
+    private List<String> photoList= new ArrayList<>();
+    private List<String> phoneList= new ArrayList<>();
+    private List<String> cidList= new ArrayList<>();
 
 
     @Override
@@ -82,21 +84,10 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
     @Override
     protected void init(View v) {
-
         back.setVisibility(View.GONE);
         tv_head.setText("主页");
         getInfo();
-
-        nameList = new ArrayList<>();
-        cityList = new ArrayList<>();
-        edusList = new ArrayList<>();
-        yearsList = new ArrayList<>();
-        photoList = new ArrayList<>();
-        phoneList = new ArrayList<>();
-        cidList = new ArrayList<>();
-
         initView();
-
     }
 
     /**
@@ -120,9 +111,8 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    // Log.d(TAG, "获取异性信息 onResponse: "+response.body().string());
                     String string = response.body().string();
-                    Log.d(TAG, "获取异性信息onResponse: " + string);
+                    //Log.d(TAG, "获取异性信息onResponse: " + string);
                     setResult(string);
                 }
             });
@@ -143,8 +133,6 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
             edusList.add(memberListBean.getMajor().getMajorName());
             phoneList.add(memberListBean.getPhone());//新增一个phone
             cidList.add(memberListBean.getId()+"");//新增一个id
-
-            //Log.d(TAG, "setResult: "+memberListBean.getRealname());
             loadData();
         }
     }
@@ -154,16 +142,13 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
         float density = dm.density;
         cardWidth = (int) (dm.widthPixels - (2 * 18 * density));
         cardHeight = (int) (dm.heightPixels - (338 * density));
-
         if (swipeView != null) {
             swipeView.setIsNeedSwipe(true);
             swipeView.setFlingListener(this);
             swipeView.setOnItemClickListener(this);
-
             adapter = new InnerAdapter();
             swipeView.setAdapter(adapter);
         }
-
         if (vLeft != null) {
             vLeft.setOnClickListener(this);
         }
@@ -187,7 +172,6 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
     @Override
     public void onItemClicked(MotionEvent event, View v, Object dataObject) {
-
         Log.d(TAG, "onItemClicked: "+nameList.toString());
     }
 
@@ -205,11 +189,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
     @Override
     public void onRightCardExit(Object dataObject) {
-
-        //先获取当前用户名
         final Talent talent = (Talent) dataObject;
-        /*Log.d(TAG, "onRightCardExit: "+talent.phone);
-        Log.d(TAG, "onRightCardExit: "+talent.nickname);*/
         new Handler(getContext().getMainLooper()){
             @Override
             public void handleMessage(Message msg) {
@@ -290,12 +270,10 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
                     talent.workYearName = yearsList.get(i);
                     talent.phone = phoneList.get(i);//新增一个phone
                     talent.id = cidList.get(i);
-
                     list.add(talent);
                 }
                 return list;
             }
-
             @Override
             protected void onPostExecute(List<Talent> list) {
                 super.onPostExecute(list);
@@ -376,36 +354,29 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
                 holder = new ViewHolder();
                 convertView.setTag(holder);
                 convertView.getLayoutParams().width = cardWidth;
-                holder.portraitView = (ImageView) convertView.findViewById(R.id.portrait);
+                holder.portraitView =  convertView.findViewById(R.id.portrait);
                 holder.portraitView.getLayoutParams().height = cardHeight;
-                holder.nameView = (TextView) convertView.findViewById(R.id.name);
-                holder.cityView = (TextView) convertView.findViewById(R.id.city);
-                holder.eduView = (TextView) convertView.findViewById(R.id.education);
-                holder.workView = (TextView) convertView.findViewById(R.id.work_year);
+                holder.nameView =  convertView.findViewById(R.id.name);
+                holder.cityView =  convertView.findViewById(R.id.city);
+                holder.eduView =  convertView.findViewById(R.id.education);
+                holder.workView =  convertView.findViewById(R.id.work_year);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-
             // holder.portraitView.setImageResource(talent.headerIcon);
             Glide.with(getContext()).load(talent.headerIcon).into(holder.portraitView);
-
             holder.nameView.setText(String.format("%s", talent.nickname));
             //holder.jobView.setText(talent.jobName);
-
             final CharSequence no = "暂无";
-
             holder.cityView.setHint(no);
             holder.cityView.setText(talent.cityName);
             holder.cityView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home01_icon_location, 0, 0);
-
             holder.eduView.setHint(no);
             holder.eduView.setText(talent.educationName);
             holder.eduView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home01_icon_edu, 0, 0);
-
             holder.workView.setHint(no);
             holder.workView.setText(talent.workYearName);
             holder.workView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home01_icon_work_year, 0, 0);
-
             return convertView;
         }
 
@@ -444,22 +415,16 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
         String stri = getResources().getString(R.string.Is_sending_a_request);
 
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    //demo use a hardcode reason here, you need let user to input if you like
-                    String s = getResources().getString(R.string.Add_a_friend);
-                    EMClient.getInstance().contactManager().addContact(username, s);
-
-                    String s1 = getResources().getString(R.string.send_successful);
-                    Toast.makeText(getContext(), s1, Toast.LENGTH_LONG).show();
-
-                } catch (final Exception e) {
-
-                    String s2 = getResources().getString(R.string.Request_add_buddy_failure);
-                    Toast.makeText(getContext(), s2 + e.getMessage(), Toast.LENGTH_LONG).show();
-
-                }
+        new Thread(() -> {
+            try {
+                //demo use a hardcode reason here, you need let user to input if you like
+                String s = getResources().getString(R.string.Add_a_friend);
+                EMClient.getInstance().contactManager().addContact(username, s);
+                String s1 = getResources().getString(R.string.send_successful);
+                Toast.makeText(getContext(), s1, Toast.LENGTH_LONG).show();
+            } catch (final Exception e) {
+                String s2 = getResources().getString(R.string.Request_add_buddy_failure);
+                Toast.makeText(getContext(), s2 + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }).start();
     }

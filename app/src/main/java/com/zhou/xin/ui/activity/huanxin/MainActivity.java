@@ -31,6 +31,7 @@ import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
+import com.zhou.xin.BuildConfig;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
@@ -70,7 +71,7 @@ public class MainActivity extends BaseActivity {
     private boolean isCurrentAccountRemoved = false;
     private InviteMessgeDao inviteMessgeDao;
     private android.app.AlertDialog.Builder exceptionBuilder;
-    private boolean isExceptionDialogShow =  false;
+    private boolean isExceptionDialogShow = false;
     private BroadcastReceiver internalDebugReceiver;
     private ConversationListFragment conversationListFragment;
     private BroadcastReceiver broadcastReceiver;
@@ -81,8 +82,6 @@ public class MainActivity extends BaseActivity {
     /**
      * check if current user account was remove
      */
-
-
     public boolean getCurrentAccountRemoved() {
         return isCurrentAccountRemoved;
     }
@@ -94,41 +93,16 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void init() {
-        //这段代码是电池优化的代码，注销后不再看到
-       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            String packageName = getPackageName();
-            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
-                try {
-                    //some device doesn't has activity to handle this intent
-                    //so add try catch
-                    Intent intent = new Intent();
-                    intent.setAction(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-                    intent.setData(Uri.parse("package:" + packageName));
-                    startActivity(intent);
-                } catch (Exception e) {
-                }
-            }
-        }*/
         requestPermissions();
-
         initView();
-
-        /*//umeng api
-        MobclickAgent.updateOnlineConfig(this);
-        UmengUpdateAgent.setUpdateOnlyWifi(false);
-        UmengUpdateAgent.update(this);*/
-
         showExceptionDialogFromIntent(getIntent());
-
         inviteMessgeDao = new InviteMessgeDao(this);
         UserDao userDao = new UserDao(this);
-
         conversationListFragment = new ConversationListFragment();
         contactListFragment = new ContactListFragment();
         homeFragment = new HomeFragment();
         meFragment = new MeFragment();
-        fragments = new Fragment[] {homeFragment, conversationListFragment, contactListFragment,meFragment};
+        fragments = new Fragment[]{homeFragment, conversationListFragment, contactListFragment, meFragment};
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -153,13 +127,10 @@ public class MainActivity extends BaseActivity {
         registerInternalDebugReceiver();
     }
 
-    EMClientListener clientListener = new EMClientListener() {
-        @Override
-        public void onMigrate2x(boolean success) {
-            Toast.makeText(MainActivity.this, "onUpgradeFrom 2.x to 3.x " + (success ? "success" : "fail"), Toast.LENGTH_LONG).show();
-            if (success) {
-                refreshUIWithMessage();
-            }
+    EMClientListener clientListener = success -> {
+        Toast.makeText(MainActivity.this, "onUpgradeFrom 2.x to 3.x " + (success ? "success" : "fail"), Toast.LENGTH_LONG).show();
+        if (success) {
+            refreshUIWithMessage();
         }
     };
 
@@ -199,6 +170,7 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
     public class MyMultiDeviceListener implements EMMultiDeviceListener {
 
         @Override
@@ -217,30 +189,37 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
+
     public class MyContactListener implements EMContactListener {
         @Override
-        public void onContactAdded(String username) {}
+        public void onContactAdded(String username) {
+        }
+
         @Override
         public void onContactDeleted(final String username) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    if (ChatActivity.activityInstance != null && ChatActivity.activityInstance.toChatUsername != null &&
-                            username.equals(ChatActivity.activityInstance.toChatUsername)) {
-                        String st10 = getResources().getString(R.string.have_you_removed);
-                        Toast.makeText(MainActivity.this, ChatActivity.activityInstance.getToChatUsername() + st10, Toast.LENGTH_LONG)
-                                .show();
-                        ChatActivity.activityInstance.finish();
-                    }
+            runOnUiThread(() -> {
+                if (ChatActivity.activityInstance != null && ChatActivity.activityInstance.toChatUsername != null &&
+                        username.equals(ChatActivity.activityInstance.toChatUsername)) {
+                    String st10 = getResources().getString(R.string.have_you_removed);
+                    Toast.makeText(MainActivity.this, ChatActivity.activityInstance.getToChatUsername() + st10, Toast.LENGTH_LONG)
+                            .show();
+                    ChatActivity.activityInstance.finish();
                 }
             });
             updateUnreadAddressLable();
         }
+
         @Override
-        public void onContactInvited(String username, String reason) {}
+        public void onContactInvited(String username, String reason) {
+        }
+
         @Override
-        public void onFriendRequestAccepted(String username) {}
+        public void onFriendRequestAccepted(String username) {
+        }
+
         @Override
-        public void onFriendRequestDeclined(String username) {}
+        public void onFriendRequestDeclined(String username) {
+        }
     }
 
     /**
@@ -258,14 +237,12 @@ public class MainActivity extends BaseActivity {
      * update the total unread count
      */
     public void updateUnreadAddressLable() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                int count = getUnreadAddressCountTotal();
-                if (count > 0) {
-                    unreadAddressLable.setVisibility(View.VISIBLE);
-                } else {
-                    unreadAddressLable.setVisibility(View.INVISIBLE);
-                }
+        runOnUiThread(() -> {
+            int count = getUnreadAddressCountTotal();
+            if (count > 0) {
+                unreadAddressLable.setVisibility(View.VISIBLE);
+            } else {
+                unreadAddressLable.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -279,7 +256,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onReceive(Context context, Intent intent) {
-                DemoHelper.getInstance().logout(false,new EMCallBack() {
+                DemoHelper.getInstance().logout(false, new EMCallBack() {
 
                     @Override
                     public void onSuccess() {
@@ -292,10 +269,12 @@ public class MainActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onProgress(int progress, String status) {}
+                    public void onProgress(int progress, String status) {
+                    }
 
                     @Override
-                    public void onError(int code, String message) {}
+                    public void onError(int code, String message) {
+                    }
                 });
             }
         };
@@ -321,19 +300,19 @@ public class MainActivity extends BaseActivity {
                         conversationListFragment.refresh();
                     }
                 } else if (currentTabIndex == 3) {/**==============我觉得这个2要不要改呢？改为3吗==========已改=======*/
-                    if(contactListFragment != null) {
+                    if (contactListFragment != null) {
                         contactListFragment.refresh();
                     }
                 }
                 String action = intent.getAction();
-                if(action.equals(Constant.ACTION_GROUP_CHANAGED)){
+                if (action.equals(Constant.ACTION_GROUP_CHANAGED)) {
                     if (EaseCommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
                         GroupsActivity.instance.onResume();
                     }
                 }
                 //red packet code : 处理红包回执透传消息
-                if (action.equals(RPConstant.REFRESH_GROUP_RED_PACKET_ACTION)){
-                    if (conversationListFragment != null){
+                if (action.equals(RPConstant.REFRESH_GROUP_RED_PACKET_ACTION)) {
+                    if (conversationListFragment != null) {
                         conversationListFragment.refresh();
                     }
                 }
@@ -363,7 +342,7 @@ public class MainActivity extends BaseActivity {
      */
     private void showExceptionDialog(String exceptionType) {
         isExceptionDialogShow = true;
-        DemoHelper.getInstance().logout(false,null);
+        DemoHelper.getInstance().logout(false, null);
         String st = getResources().getString(R.string.Logoff_notification);
         if (!MainActivity.this.isFinishing()) {
             // clear up global variables
@@ -395,7 +374,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private int getExceptionMessageId(String exceptionType) {
-        if(exceptionType.equals(Constant.ACCOUNT_CONFLICT)) {
+        if (exceptionType.equals(Constant.ACCOUNT_CONFLICT)) {
             return R.string.connect_conflict;
         } else if (exceptionType.equals(Constant.ACCOUNT_REMOVED)) {
             return R.string.em_user_remove;
@@ -417,7 +396,7 @@ public class MainActivity extends BaseActivity {
         mTabs[0].setSelected(true);
     }
 
-    @OnClick({R.id.btn_index,R.id.btn_conversation, R.id.btn_address_list,R.id.btn_me_list})
+    @OnClick({R.id.btn_index, R.id.btn_conversation, R.id.btn_address_list, R.id.btn_me_list})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_index:
@@ -475,6 +454,7 @@ public class MainActivity extends BaseActivity {
      */
     private long currentBackPressedTime = 0;
     private static int BACK_PRESSED_INTERVAL = 2000;
+
     /**
      * 再按一次退出程序
      *
@@ -487,7 +467,7 @@ public class MainActivity extends BaseActivity {
                 && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             if (System.currentTimeMillis() - currentBackPressedTime > BACK_PRESSED_INTERVAL) {
                 currentBackPressedTime = System.currentTimeMillis();
-                ToastUtil.show(getApplicationContext(),"再按一下退出程序");
+                ToastUtil.show(getApplicationContext(), "再按一下退出程序");
                 return true;
             } else {
                 finish();
@@ -554,7 +534,8 @@ public class MainActivity extends BaseActivity {
         }
 
         @Override
-        public void onMessageChanged(EMMessage message, Object change) {}
+        public void onMessageChanged(EMMessage message, Object change) {
+        }
     };
 
     @Override

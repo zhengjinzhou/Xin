@@ -30,6 +30,7 @@ import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.bean.ReportBean;
 import com.zhou.xin.bean.SelectBean;
 import com.zhou.xin.bean.UserInfo;
+import com.zhou.xin.bean.VerBean;
 import com.zhou.xin.db.InviteMessgeDao;
 import com.zhou.xin.db.UserDao;
 import com.zhou.xin.domain.RobotUser;
@@ -50,6 +51,8 @@ public class App extends Application {
     private UserInfo userInfo;
 
     private PersonalBean personalBean;
+
+    private VerBean verBean;
 
     private SelectBean selectBean;
     private static App app;
@@ -93,7 +96,13 @@ public class App extends Application {
         this.userInfo = userInfo;
     }
 
+    public VerBean getVerBean() {
+        return verBean;
+    }
 
+    public void setVerBean(VerBean verBean) {
+        this.verBean = verBean;
+    }
 
     @Override
     public void onCreate() {

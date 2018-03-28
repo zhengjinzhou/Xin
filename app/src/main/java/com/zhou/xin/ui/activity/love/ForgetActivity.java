@@ -11,20 +11,24 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.base.BaseFragment;
+import com.zhou.xin.bean.UserInfo;
 import com.zhou.xin.ui.fragment.ChatFragment;
 import com.zhou.xin.ui.fragment.HomeFragment;
 import com.zhou.xin.utils.CountDownTimerUtils;
 import com.zhou.xin.utils.CurrentTimeUtil;
+import com.zhou.xin.utils.DES3Util;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.PhoneUtil;
 import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.utils.ToastUtil;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -95,6 +99,7 @@ public class ForgetActivity extends BaseActivity {
         String type = "2";
         String _t = CurrentTimeUtil.nowTime();
         String joint = "_t=" + _t + "&mobile="+mobile+"&opt=" + opt + "&type=" + type  + Constant.APP_ENCRYPTION_KEY;
+        Log.d(TAG, "getCode: "+joint);
         String _s = Md5Util.encoder(joint);
         OkHttpClient okHttpClient = new OkHttpClient();
         FormBody build = new FormBody.Builder()
@@ -104,7 +109,7 @@ public class ForgetActivity extends BaseActivity {
                 .add("_t", _t)
                 .add("_s", _s)
                 .build();
-        Request request = new Request.Builder().url(Constant.LOGIN_URL).post(build).build();
+        Request request = new Request.Builder().url(Constant.URL_REGISTER).post(build).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -173,10 +178,16 @@ public class ForgetActivity extends BaseActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d(TAG, "onResponse: "+response.body().string());
-
-                //修改密码
-                //toChange(mobile,password);
+                String string = response.body().string();
+                Log.d(TAG, "onResponse: "+string);
+                Gson gson = new Gson();
+                UserInfo userInfo = gson.fromJson(string, UserInfo.class);
+                if (userInfo.getError().equals("-1")){
+                    //修改密码
+                    toChange(mobile,password);
+                }else {
+                    runOnUiThread(() -> ToastUtil.show(getApplicationContext(),userInfo.getMsg()));
+                }
             }
         });
     }
@@ -190,12 +201,13 @@ public class ForgetActivity extends BaseActivity {
     private void toChange(String mobile, String password) {
         String opt = "3";
         String _t = CurrentTimeUtil.nowTime();
-        String joint = "_t=" + _t + "&mobile="+mobile+"&opt=" + opt +"&pwd="+password + Constant.APP_ENCRYPTION_KEY;
+        String pwd = DES3Util.encrypt3DES(password, Constant.ENCRYPTION_KEY, Charset.forName("UTF-8"));
+        String joint = "_t=" + _t + "&mobile="+mobile+"&opt=" + opt +"&pwd="+pwd + Constant.APP_ENCRYPTION_KEY;
         String _s = Md5Util.encoder(joint);
         OkHttpClient okHttpClient = new OkHttpClient();
         FormBody build = new FormBody.Builder()
                 .add("mobile", mobile)
-                .add("pwd", password)
+                .add("pwd", pwd)
                 .add("opt", opt)
                 .add("_t", _t)
                 .add("_s", _s)
@@ -210,7 +222,26 @@ public class ForgetActivity extends BaseActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d(TAG, "onResponse: "+response.body().string());
+                String string = response.body().string();
+                Log.d(TAG, "onResponse: "+string);
+                Gson gson = new Gson();
+                UserInfo userInfo = gson.fromJson(string, UserInfo.class);
+                if (userInfo.getError().equals("-1")){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.show(getApplicationContext(),userInfo.getMsg());
+                            finish();
+                        }
+                    });
+                }else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.show(getApplicationContext(),userInfo.getMsg());
+                        }
+                    });
+                }
             }
         });
     }
