@@ -60,7 +60,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void init() {
 
-        if (versionCode > 0){
+        if (versionCode > 3){
             new UpdateManager(this).checkUpdate(false);
             findViewById(R.id.pro).setVisibility(View.VISIBLE);
             return;

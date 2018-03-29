@@ -21,10 +21,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.adapter.base.CommonAdapter;
 import com.zhou.xin.adapter.base.ViewHolder;
+import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.utils.CurrentTimeUtil;
+import com.zhou.xin.utils.Md5Util;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +38,12 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
 
@@ -53,11 +63,45 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
 
     @Override
     protected void init() {
+        getInfo();
         tv_head.setText("线下活动");
         iv_add.setVisibility(View.VISIBLE);
         iv_add.setImageResource(R.drawable.addto);
         initRecycle();
         refresh.setOnRefreshListener(this);
+    }
+
+    /**
+     * 接口获取信息
+     */
+    private void getInfo() {
+        dialog.dismiss();
+        String token = App.getInstance().getUserInfo().getToken();
+        String opt = "22";
+        String _t = CurrentTimeUtil.nowTime();
+        String joint = "_t=" + _t + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
+        String _s = Md5Util.encoder(joint);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody body = new FormBody.Builder()
+                .add("_t", _t)
+                .add("_s", _s)
+                .add("token", token)
+                .add("opt", opt)
+                .build();
+        Request request = new Request.Builder().url(Constant.LOGIN_URL).post(body).build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "onFailure: "+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                Log.d(TAG, "onResponse: "+string);
+                dialog.dismiss();
+            }
+        });
     }
 
     private void initRecycle() {

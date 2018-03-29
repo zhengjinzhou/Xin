@@ -81,7 +81,7 @@ public class LoginActivity extends BaseActivity {
         }
         tv_head.setText("登陆");
         etUsername.setText("13631782148");
-        Log.d(TAG, "init: " + Md5Util.encoder("13631782148" + Constant.APP_ENCRYPTION_KEY));
+       // Log.d(TAG, "init: " + Md5Util.encoder("13631782148" + Constant.APP_ENCRYPTION_KEY));
         etPassword.setText("123456");
 
         hint.setVisibility(View.INVISIBLE);
@@ -201,8 +201,6 @@ public class LoginActivity extends BaseActivity {
      * @param pwd
      */
     private void XinLogin(final String username, final String pwd) {
-        // After logout，the DemoDB may still be accessed due to async callback, so the DemoDB will be re-opened again.
-        // close it before login to make sure DemoDB not overlap
         String pssword = Md5Util.encoder(pwd + Constant.APP_ENCRYPTION_KEY);
         Log.d(TAG, "XinLogin: " + username + "  " + pssword);
         DemoDBManager.getInstance().closeDB();
