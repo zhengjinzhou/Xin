@@ -13,6 +13,7 @@
         app:contactItemName="@string/Application_and_notify" />
 
     <com.zhou.xin.widget.ContactItemView
+        android:visibility="gone"
         android:id="@+id/group_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

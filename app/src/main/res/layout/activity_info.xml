@@ -152,7 +152,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycleView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -184,35 +184,25 @@
 
                 <TextView
                     android:id="@+id/tv_show"
-                    android:padding="@dimen/space_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/more_unfold_down"
+                    android:padding="@dimen/space_5"
                     android:text="展开"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_11" />
             </LinearLayout>
 
-            <LinearLayout
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/space_16"
-                android:paddingRight="@dimen/space_16">
+                android:text="报名"
+                android:textSize="@dimen/text_size_11" />
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="38dp"
-                    android:layout_weight="1"
-                    android:text="加入群聊"
-                    android:textSize="@dimen/text_size_11" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="38dp"
-                    android:layout_weight="1"
-                    android:text="报名"
-                    android:textSize="@dimen/text_size_11" />
-            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/imgRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

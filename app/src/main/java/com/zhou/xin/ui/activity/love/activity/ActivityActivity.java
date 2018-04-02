@@ -65,8 +65,8 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
     protected void init() {
         getInfo();
         tv_head.setText("线下活动");
-        iv_add.setVisibility(View.VISIBLE);
-        iv_add.setImageResource(R.drawable.addto);
+        //iv_add.setVisibility(View.VISIBLE);
+        //iv_add.setImageResource(R.drawable.addto);
         initRecycle();
         refresh.setOnRefreshListener(this);
     }
@@ -75,11 +75,12 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
      * 接口获取信息
      */
     private void getInfo() {
-        dialog.dismiss();
+        dialog.show();
         String token = App.getInstance().getUserInfo().getToken();
         String opt = "22";
         String _t = CurrentTimeUtil.nowTime();
         String joint = "_t=" + _t + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
+        Log.d(TAG, "getInfo: "+joint);
         String _s = Md5Util.encoder(joint);
         OkHttpClient okHttpClient = new OkHttpClient();
         FormBody body = new FormBody.Builder()
@@ -88,8 +89,9 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
                 .add("token", token)
                 .add("opt", opt)
                 .build();
-        Request request = new Request.Builder().url(Constant.LOGIN_URL).post(body).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
+        Request request = new Request.Builder().post(body).url(Constant.LOGIN_URL).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onFailure: "+e.getMessage());

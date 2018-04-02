@@ -114,16 +114,12 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         }
         super.setUpView();
         // set click listener
-        titleBar.setLeftLayoutClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (EasyUtils.isSingleActivity(getActivity())) {
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                }
-                onBackPressed();
+        titleBar.setLeftLayoutClickListener(v -> {
+            if (EasyUtils.isSingleActivity(getActivity())) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
+            onBackPressed();
         });
         ((EaseEmojiconMenu) inputMenu.getEmojiconMenu()).addEmojiconGroup(EmojiconExampleGroupData.getData());
         if (chatType == EaseConstant.CHATTYPE_GROUP) {
@@ -156,10 +152,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         super.registerExtendMenuItem();
         //extend menu items
         inputMenu.registerExtendMenuItem(R.string.attach_video, R.drawable.em_chat_video_selector, ITEM_VIDEO, extendMenuItemClickListener);
-        inputMenu.registerExtendMenuItem(R.string.attach_file, R.drawable.em_chat_file_selector, ITEM_FILE, extendMenuItemClickListener);
+        //这个是文件 inputMenu.registerExtendMenuItem(R.string.attach_file, R.drawable.em_chat_file_selector, ITEM_FILE, extendMenuItemClickListener);
         if (chatType == Constant.CHATTYPE_SINGLE) {
             inputMenu.registerExtendMenuItem(R.string.attach_voice_call, R.drawable.em_chat_voice_call_selector, ITEM_VOICE_CALL, extendMenuItemClickListener);
-            inputMenu.registerExtendMenuItem(R.string.attach_video_call, R.drawable.em_chat_video_call_selector, ITEM_VIDEO_CALL, extendMenuItemClickListener);
+            //这个是视频通话 inputMenu.registerExtendMenuItem(R.string.attach_video_call, R.drawable.em_chat_video_call_selector, ITEM_VIDEO_CALL, extendMenuItemClickListener);
         }
         //聊天室暂时不支持红包功能
         //red packet code : 注册红包菜单选项
@@ -189,28 +185,21 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                     startActivity(intent);
                     break;
                 case ContextMenuActivity.RESULT_CODE_RECALL://recall
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                EMMessage msgNotification = EMMessage.createTxtSendMessage(" ", contextMenuMessage.getTo());
-                                EMTextMessageBody txtBody = new EMTextMessageBody(getResources().getString(R.string.msg_recall_by_self));
-                                msgNotification.addBody(txtBody);
-                                msgNotification.setMsgTime(contextMenuMessage.getMsgTime());
-                                msgNotification.setLocalTime(contextMenuMessage.getMsgTime());
-                                msgNotification.setAttribute(Constant.MESSAGE_TYPE_RECALL, true);
-                                msgNotification.setStatus(EMMessage.Status.SUCCESS);
-                                EMClient.getInstance().chatManager().recallMessage(contextMenuMessage);
-                                EMClient.getInstance().chatManager().saveMessage(msgNotification);
-                                messageList.refresh();
-                            } catch (final HyphenateException e) {
-                                e.printStackTrace();
-                                getActivity().runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
+                    new Thread(() -> {
+                        try {
+                            EMMessage msgNotification = EMMessage.createTxtSendMessage(" ", contextMenuMessage.getTo());
+                            EMTextMessageBody txtBody = new EMTextMessageBody(getResources().getString(R.string.msg_recall_by_self));
+                            msgNotification.addBody(txtBody);
+                            msgNotification.setMsgTime(contextMenuMessage.getMsgTime());
+                            msgNotification.setLocalTime(contextMenuMessage.getMsgTime());
+                            msgNotification.setAttribute(Constant.MESSAGE_TYPE_RECALL, true);
+                            msgNotification.setStatus(EMMessage.Status.SUCCESS);
+                            EMClient.getInstance().chatManager().recallMessage(contextMenuMessage);
+                            EMClient.getInstance().chatManager().saveMessage(msgNotification);
+                            messageList.refresh();
+                        } catch (final HyphenateException e) {
+                            e.printStackTrace();
+                            getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show());
                         }
                     }).start();
                     break;
