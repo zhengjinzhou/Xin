@@ -25,12 +25,11 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/main.backdrop"
+                android:id="@+id/main_backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/main_bg"
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
@@ -54,10 +53,10 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvHead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/space_16"
-                android:text="2.13-19日，海南三亚，新年自驾游"
                 android:textSize="@dimen/text_size_20" />
 
             <View
@@ -65,26 +64,51 @@
                 android:layout_height="0.5dp"
                 android:background="@color/app_bg" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_16">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_16"
+                    android:text="活动时间"
+                    android:textSize="@dimen/text_size_18" />
+
+                <TextView
+                    android:id="@+id/tvStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/tvEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/tvStart" />
+            </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/space_5"
-                android:paddingLeft="@dimen/space_16"
-                android:paddingRight="@dimen/space_16"
-                android:paddingTop="@dimen/space_5">
+                android:padding="@dimen/space_16"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="活动时间"
-                    android:textSize="@dimen/text_size_11" />
+                    android:textSize="@dimen/text_size_18" />
 
                 <TextView
+                    android:id="@+id/tvTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="2月13日09:00 - 2月19日11:00"
+                    android:maxLines="1"
                     android:textSize="@dimen/text_size_11" />
             </LinearLayout>
 
@@ -96,23 +120,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/space_5"
-                android:paddingLeft="@dimen/space_16"
-                android:paddingRight="@dimen/space_16"
-                android:paddingTop="@dimen/space_5">
+                android:padding="@dimen/space_16">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="活动地点"
-                    android:textSize="@dimen/text_size_11" />
+                    android:textSize="@dimen/text_size_18" />
 
                 <TextView
+                    android:id="@+id/tvPlace"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="亚龙湾热带天堂森林公园"
+                    android:gravity="right"
                     android:textSize="@dimen/text_size_11" />
             </LinearLayout>
 
@@ -124,23 +146,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/space_5"
-                android:paddingLeft="@dimen/space_16"
-                android:paddingRight="@dimen/space_16"
-                android:paddingTop="@dimen/space_5">
+                android:padding="@dimen/space_16">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="主办方"
-                    android:textSize="@dimen/text_size_11" />
+                    android:textSize="@dimen/text_size_18" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="王小二"
+                    android:gravity="right"
                     android:textSize="@dimen/text_size_11" />
             </LinearLayout>
 
@@ -149,21 +168,13 @@
                 android:layout_height="8dp"
                 android:background="@color/app_bg" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycleView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8"
-                android:paddingBottom="@dimen/space_5"
-                android:paddingLeft="@dimen/space_16"
-                android:paddingRight="@dimen/space_16"
-                android:paddingTop="@dimen/space_5"
+                android:padding="@dimen/space_16"
                 android:text="活动介绍"
-                android:textSize="@dimen/text_size_11" />
+                android:textSize="@dimen/text_size_18" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -179,7 +190,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="3"
-                    android:text="我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸我是你爸"
                     android:textSize="@dimen/text_size_11" />
 
                 <TextView
@@ -191,13 +201,38 @@
                     android:text="展开"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_11" />
+
             </LinearLayout>
 
-            <Button
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="报名"
+                android:padding="@dimen/space_16"
+                android:text="温馨提示"
+                android:textSize="@dimen/text_size_18" />
+
+            <TextView
+                android:id="@+id/tv_tip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
                 android:textSize="@dimen/text_size_11" />
+
+            <Button
+                android:id="@+id/btSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_drawable_login"
+                android:text="报名"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_11" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space_16"
+                android:text="已报名用户"
+                android:textSize="@dimen/text_size_18" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/imgRecycler"

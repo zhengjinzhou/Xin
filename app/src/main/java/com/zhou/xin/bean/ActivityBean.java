@@ -10,10 +10,9 @@ import java.util.List;
 
 public class ActivityBean implements Serializable {
 
-
     /**
      * error : -3
-     * activityList : [{"activityDetail":"尔特热温热","activityFee":"在线支付:￥110/人 现场支付:￥150/人","activityName":"4.15上海优质高校校友专场联谊","attendantNumber":0,"deadline":{"date":25,"day":0,"hours":11,"minutes":0,"month":2,"nanos":0,"seconds":0,"time":1521946800000,"timezoneOffset":-480,"year":118},"endTime":{"date":25,"day":0,"hours":18,"minutes":0,"month":2,"nanos":0,"seconds":0,"time":1521972000000,"timezoneOffset":-480,"year":118},"entryNumber":50,"id":1,"isFinish":1,"lastNumber":50,"miniUrl":"","mobile":"13631789659","photoUrl":"","place":"高塘石","reminder":"未亡人翁人","startTime":{"date":25,"day":0,"hours":14,"minutes":0,"month":2,"nanos":0,"seconds":0,"time":1521957600000,"timezoneOffset":-480,"year":118}}]
+     * activityList : [{"activityDetail":"尔特热温热","activityFee":"在线支付:￥110/人 现场支付:￥150/人","activityName":"4.15上海优质高校校友专场联谊","attendantNumber":0,"deadline":"2018-03-25 11:00:00","endTime":"2018-03-25 18:00:00","entryNumber":50,"id":1,"isFinish":1,"lastNumber":49,"miniUrl":"/upload/activity/file/mini/201804/02151146orwo.jpg","mobile":"13631789659","photoUrl":"/upload/activity/file/201804/02151146g4w2.jpg","place":"高塘石","reminder":"未亡人翁人","startTime":"2018-03-25 14:00:00"}]
      * msg : 获取成功
      */
 
@@ -51,26 +50,26 @@ public class ActivityBean implements Serializable {
          * activityFee : 在线支付:￥110/人 现场支付:￥150/人
          * activityName : 4.15上海优质高校校友专场联谊
          * attendantNumber : 0
-         * deadline : {"date":25,"day":0,"hours":11,"minutes":0,"month":2,"nanos":0,"seconds":0,"time":1521946800000,"timezoneOffset":-480,"year":118}
-         * endTime : {"date":25,"day":0,"hours":18,"minutes":0,"month":2,"nanos":0,"seconds":0,"time":1521972000000,"timezoneOffset":-480,"year":118}
+         * deadline : 2018-03-25 11:00:00
+         * endTime : 2018-03-25 18:00:00
          * entryNumber : 50
          * id : 1
          * isFinish : 1
-         * lastNumber : 50
-         * miniUrl :
+         * lastNumber : 49
+         * miniUrl : /upload/activity/file/mini/201804/02151146orwo.jpg
          * mobile : 13631789659
-         * photoUrl :
+         * photoUrl : /upload/activity/file/201804/02151146g4w2.jpg
          * place : 高塘石
          * reminder : 未亡人翁人
-         * startTime : {"date":25,"day":0,"hours":14,"minutes":0,"month":2,"nanos":0,"seconds":0,"time":1521957600000,"timezoneOffset":-480,"year":118}
+         * startTime : 2018-03-25 14:00:00
          */
 
         private String activityDetail;
         private String activityFee;
         private String activityName;
         private int attendantNumber;
-        private DeadlineBean deadline;
-        private EndTimeBean endTime;
+        private String deadline;
+        private String endTime;
         private int entryNumber;
         private int id;
         private int isFinish;
@@ -80,7 +79,7 @@ public class ActivityBean implements Serializable {
         private String photoUrl;
         private String place;
         private String reminder;
-        private StartTimeBean startTime;
+        private String startTime;
 
         public String getActivityDetail() {
             return activityDetail;
@@ -114,19 +113,19 @@ public class ActivityBean implements Serializable {
             this.attendantNumber = attendantNumber;
         }
 
-        public DeadlineBean getDeadline() {
+        public String getDeadline() {
             return deadline;
         }
 
-        public void setDeadline(DeadlineBean deadline) {
+        public void setDeadline(String deadline) {
             this.deadline = deadline;
         }
 
-        public EndTimeBean getEndTime() {
+        public String getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(EndTimeBean endTime) {
+        public void setEndTime(String endTime) {
             this.endTime = endTime;
         }
 
@@ -202,346 +201,12 @@ public class ActivityBean implements Serializable {
             this.reminder = reminder;
         }
 
-        public StartTimeBean getStartTime() {
+        public String getStartTime() {
             return startTime;
         }
 
-        public void setStartTime(StartTimeBean startTime) {
+        public void setStartTime(String startTime) {
             this.startTime = startTime;
-        }
-
-        public static class DeadlineBean {
-            /**
-             * date : 25
-             * day : 0
-             * hours : 11
-             * minutes : 0
-             * month : 2
-             * nanos : 0
-             * seconds : 0
-             * time : 1521946800000
-             * timezoneOffset : -480
-             * year : 118
-             */
-
-            private int date;
-            private int day;
-            private int hours;
-            private int minutes;
-            private int month;
-            private int nanos;
-            private int seconds;
-            private long time;
-            private int timezoneOffset;
-            private int year;
-
-            public int getDate() {
-                return date;
-            }
-
-            public void setDate(int date) {
-                this.date = date;
-            }
-
-            public int getDay() {
-                return day;
-            }
-
-            public void setDay(int day) {
-                this.day = day;
-            }
-
-            public int getHours() {
-                return hours;
-            }
-
-            public void setHours(int hours) {
-                this.hours = hours;
-            }
-
-            public int getMinutes() {
-                return minutes;
-            }
-
-            public void setMinutes(int minutes) {
-                this.minutes = minutes;
-            }
-
-            public int getMonth() {
-                return month;
-            }
-
-            public void setMonth(int month) {
-                this.month = month;
-            }
-
-            public int getNanos() {
-                return nanos;
-            }
-
-            public void setNanos(int nanos) {
-                this.nanos = nanos;
-            }
-
-            public int getSeconds() {
-                return seconds;
-            }
-
-            public void setSeconds(int seconds) {
-                this.seconds = seconds;
-            }
-
-            public long getTime() {
-                return time;
-            }
-
-            public void setTime(long time) {
-                this.time = time;
-            }
-
-            public int getTimezoneOffset() {
-                return timezoneOffset;
-            }
-
-            public void setTimezoneOffset(int timezoneOffset) {
-                this.timezoneOffset = timezoneOffset;
-            }
-
-            public int getYear() {
-                return year;
-            }
-
-            public void setYear(int year) {
-                this.year = year;
-            }
-        }
-
-        public static class EndTimeBean {
-            /**
-             * date : 25
-             * day : 0
-             * hours : 18
-             * minutes : 0
-             * month : 2
-             * nanos : 0
-             * seconds : 0
-             * time : 1521972000000
-             * timezoneOffset : -480
-             * year : 118
-             */
-
-            private int date;
-            private int day;
-            private int hours;
-            private int minutes;
-            private int month;
-            private int nanos;
-            private int seconds;
-            private long time;
-            private int timezoneOffset;
-            private int year;
-
-            public int getDate() {
-                return date;
-            }
-
-            public void setDate(int date) {
-                this.date = date;
-            }
-
-            public int getDay() {
-                return day;
-            }
-
-            public void setDay(int day) {
-                this.day = day;
-            }
-
-            public int getHours() {
-                return hours;
-            }
-
-            public void setHours(int hours) {
-                this.hours = hours;
-            }
-
-            public int getMinutes() {
-                return minutes;
-            }
-
-            public void setMinutes(int minutes) {
-                this.minutes = minutes;
-            }
-
-            public int getMonth() {
-                return month;
-            }
-
-            public void setMonth(int month) {
-                this.month = month;
-            }
-
-            public int getNanos() {
-                return nanos;
-            }
-
-            public void setNanos(int nanos) {
-                this.nanos = nanos;
-            }
-
-            public int getSeconds() {
-                return seconds;
-            }
-
-            public void setSeconds(int seconds) {
-                this.seconds = seconds;
-            }
-
-            public long getTime() {
-                return time;
-            }
-
-            public void setTime(long time) {
-                this.time = time;
-            }
-
-            public int getTimezoneOffset() {
-                return timezoneOffset;
-            }
-
-            public void setTimezoneOffset(int timezoneOffset) {
-                this.timezoneOffset = timezoneOffset;
-            }
-
-            public int getYear() {
-                return year;
-            }
-
-            public void setYear(int year) {
-                this.year = year;
-            }
-        }
-
-        public static class StartTimeBean {
-            /**
-             * date : 25
-             * day : 0
-             * hours : 14
-             * minutes : 0
-             * month : 2
-             * nanos : 0
-             * seconds : 0
-             * time : 1521957600000
-             * timezoneOffset : -480
-             * year : 118
-             */
-
-            private int date;
-            private int day;
-            private int hours;
-            private int minutes;
-            private int month;
-            private int nanos;
-            private int seconds;
-            private long time;
-            private int timezoneOffset;
-            private int year;
-
-            public int getDate() {
-                return date;
-            }
-
-            public void setDate(int date) {
-                this.date = date;
-            }
-
-            public int getDay() {
-                return day;
-            }
-
-            public void setDay(int day) {
-                this.day = day;
-            }
-
-            public int getHours() {
-                return hours;
-            }
-
-            public void setHours(int hours) {
-                this.hours = hours;
-            }
-
-            public int getMinutes() {
-                return minutes;
-            }
-
-            public void setMinutes(int minutes) {
-                this.minutes = minutes;
-            }
-
-            public int getMonth() {
-                return month;
-            }
-
-            public void setMonth(int month) {
-                this.month = month;
-            }
-
-            public int getNanos() {
-                return nanos;
-            }
-
-            public void setNanos(int nanos) {
-                this.nanos = nanos;
-            }
-
-            public int getSeconds() {
-                return seconds;
-            }
-
-            public void setSeconds(int seconds) {
-                this.seconds = seconds;
-            }
-
-            public long getTime() {
-                return time;
-            }
-
-            public void setTime(long time) {
-                this.time = time;
-            }
-
-            public int getTimezoneOffset() {
-                return timezoneOffset;
-            }
-
-            public void setTimezoneOffset(int timezoneOffset) {
-                this.timezoneOffset = timezoneOffset;
-            }
-
-            public int getYear() {
-                return year;
-            }
-
-            public void setYear(int year) {
-                this.year = year;
-            }
-
-            @Override
-            public String toString() {
-                return "StartTimeBean{" +
-                        "date=" + date +
-                        ", day=" + day +
-                        ", hours=" + hours +
-                        ", minutes=" + minutes +
-                        ", month=" + month +
-                        ", nanos=" + nanos +
-                        ", seconds=" + seconds +
-                        ", time=" + time +
-                        ", timezoneOffset=" + timezoneOffset +
-                        ", year=" + year +
-                        '}';
-            }
         }
 
         @Override
@@ -551,8 +216,8 @@ public class ActivityBean implements Serializable {
                     ", activityFee='" + activityFee + '\'' +
                     ", activityName='" + activityName + '\'' +
                     ", attendantNumber=" + attendantNumber +
-                    ", deadline=" + deadline +
-                    ", endTime=" + endTime +
+                    ", deadline='" + deadline + '\'' +
+                    ", endTime='" + endTime + '\'' +
                     ", entryNumber=" + entryNumber +
                     ", id=" + id +
                     ", isFinish=" + isFinish +
@@ -562,7 +227,7 @@ public class ActivityBean implements Serializable {
                     ", photoUrl='" + photoUrl + '\'' +
                     ", place='" + place + '\'' +
                     ", reminder='" + reminder + '\'' +
-                    ", startTime=" + startTime +
+                    ", startTime='" + startTime + '\'' +
                     '}';
         }
     }

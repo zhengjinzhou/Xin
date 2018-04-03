@@ -26,6 +26,7 @@ import com.hyphenate.util.EMLog;
 import com.mabeijianxi.smallvideorecord2.DeviceUtils;
 import com.mabeijianxi.smallvideorecord2.JianXiCamera;
 import com.zhou.xin.Constant;
+import com.zhou.xin.bean.ActivityBean;
 import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.bean.ReportBean;
 import com.zhou.xin.bean.SelectBean;
@@ -47,6 +48,7 @@ import java.util.Map;
 
 public class App extends Application {
 
+    private ActivityBean activityBean;
 
     private UserInfo userInfo;
 
@@ -71,6 +73,14 @@ public class App extends Application {
     private Map<String, RobotUser> robotList;
     private String username;
     private EMMessageListener messageListener;
+
+    public ActivityBean getActivityBean() {
+        return activityBean;
+    }
+
+    public void setActivityBean(ActivityBean activityBean) {
+        this.activityBean = activityBean;
+    }
 
     public SelectBean getSelectBean() {
         return selectBean;

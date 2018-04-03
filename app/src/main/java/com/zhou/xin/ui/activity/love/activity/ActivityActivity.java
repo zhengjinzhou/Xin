@@ -21,12 +21,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.adapter.base.CommonAdapter;
 import com.zhou.xin.adapter.base.ViewHolder;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.bean.ActivityBean;
+import com.zhou.xin.ui.activity.love.StartActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
 
@@ -52,9 +56,7 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
     @BindView(R.id.recycleView) RecyclerView recycleView;
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
     @BindView(R.id.iv_add) ImageView iv_add;
-    private static final int CHOOSE_PHOTO = 1;
-    private ImageView iv_img;
-    String imagePath = null;
+    private CommonAdapter adapter;
 
     @Override
     protected int getLayout() {
@@ -101,22 +103,37 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
                 Log.d(TAG, "onResponse: "+string);
+                Gson gson = new Gson();
+                ActivityBean activityBean = gson.fromJson(string, ActivityBean.class);
+                runOnUiThread(() -> {
+                    adapter.add(activityBean);
+                    adapter.notifyDataSetChanged();
+                });
                 dialog.dismiss();
             }
         });
     }
 
     private void initRecycle() {
-        List<String> data = new ArrayList<>();
-        int num = new Random().nextInt(10) * 1;
-        for (int i=0;i<num;i++){
-            data.add(i+"");
-        }
-        CommonAdapter adapter = new CommonAdapter<String>(this, R.layout.recycle_activity, data) {
+        List<ActivityBean> data = new ArrayList<>();
+        //要传参
+        adapter = new CommonAdapter<ActivityBean>(this, R.layout.recycle_activity, data) {
             @Override
-            public void convert(ViewHolder holder, String s, int position) {
+            public void convert(ViewHolder holder, ActivityBean s, int position) {
+                holder.setText(R.id.tvIntroduce,s.getActivityList().get(position).getActivityName());
+                holder.setText(R.id.tv_time,s.getActivityList().get(position).getStartTime());
+                holder.setText(R.id.tvPlace,s.getActivityList().get(position).getPlace());
+                ImageView img = holder.getView(R.id.ivPhoto);
+                Glide.with(getApplicationContext()).load(Constant.URL+s.getActivityList().get(position).getPhotoUrl()).into(img);
+                holder.setText(R.id.tvNum,s.getActivityList().get(position).getAttendantNumber()+"人报名");
+                if (s.getActivityList().get(position).getIsFinish()==1){
+                    holder.getView(R.id.tvIng).setVisibility(View.VISIBLE);
+                }if (s.getActivityList().get(position).getIsFinish()==0){
+                    holder.getView(R.id.tvEd).setVisibility(View.VISIBLE);
+                }
                 holder.setOnClickListener(R.id.ll_activity, v -> {
-                    startToActivity(ActivityInfoActivity.class);//要传参
+                    App.getInstance().setActivityBean(s);
+                    startActivity(ActivityInfoActivity.newIntent(getApplicationContext(),position));
                 });
             }
         };
