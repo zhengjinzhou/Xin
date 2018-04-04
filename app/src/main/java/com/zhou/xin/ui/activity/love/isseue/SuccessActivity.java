@@ -70,6 +70,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
     @BindView(R.id.recycleView) RecyclerView recycleView;
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
     @BindView(R.id.iv_add) ImageView iv_add;
+
     private MultiItemCommonAdapter adapter;
 
     @Override
@@ -165,6 +166,10 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                     VideoUtil.toVideo(SuccessActivity.this);    //视文
                     pop.dismiss();
                 });
+                inflate.findViewById(R.id.tv_refresh).setOnClickListener(v -> {
+                    getInfo();
+                    pop.dismiss();
+                });
                 inflate.findViewById(R.id.tv_cancel).setOnClickListener(view13 -> pop.dismiss());
                 break;
         }
@@ -226,9 +231,11 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 }
                 //举报
                 holder.setOnClickListener(R.id.iv_report, v -> Report(bean.getMobile()));
+                if (position == getItemCount()-1){
+                    ToastUtil.show(getApplicationContext(),"到底部了,可点击顶部右上角进行刷新动态");
+                }
             }
         };
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setSmoothScrollbarEnabled(true);
         layoutManager.setAutoMeasureEnabled(true);
@@ -388,7 +395,6 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                         .into(img);
 
                 holder.setOnClickListener(R.id.img, view -> {
-
                     String[] array = photosList.toArray(new String[photosList.size()]);
                     startActivity(PhotoiewerActivity.newIntent(mContext, array, pos));
                 });
@@ -420,7 +426,14 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(() -> refresh.setRefreshing(false), 2000);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getInfo();
+                refresh.setRefreshing(false);
+
+            }
+        },2000);
     }
 
     @Override

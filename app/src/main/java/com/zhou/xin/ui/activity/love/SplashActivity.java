@@ -250,12 +250,12 @@ public class SplashActivity extends BaseActivity {
         });
     }
 
-    @Override
+   /* @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             Toast.makeText(this, "这位爷，在下载呢，待会再退出吧", Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
+    }*/
 }

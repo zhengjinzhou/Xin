@@ -1,20 +1,25 @@
 package com.zhou.xin.ui.activity.love.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.net.Uri;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -28,7 +33,6 @@ import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.bean.ActivityBean;
 import com.zhou.xin.bean.BaomingBean;
 import com.zhou.xin.bean.UserInfo;
-import com.zhou.xin.ui.activity.love.GuildInfoActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.ToastUtil;
@@ -50,8 +54,6 @@ import okhttp3.Response;
 public class ActivityInfoActivity extends BaseActivity {
 
     private static final String TAG = "ActivityInfoActivity";
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsing_toolbar;
     @BindView(R.id.tv_show) TextView tv_show;
     @BindView(R.id.tv_message) TextView tv_message;
     @BindView(R.id.main_backdrop) ImageView main_backdrop;
@@ -60,14 +62,15 @@ public class ActivityInfoActivity extends BaseActivity {
     @BindView(R.id.tvStart) TextView tvStart;
     @BindView(R.id.tvEnd) TextView tvEnd;
     @BindView(R.id.tv_tip) TextView tv_tip;
-    @BindView(R.id.imgRecycler) RecyclerView imgRecycler;
+    @BindView(R.id.recycleView) RecyclerView recycleView;
+    @BindView(R.id.tvPhoneNumber) TextView tvPhoneNumber;
 
     private int position;
     boolean isShow = false;
-    private BaseCommonAdapter adapter;
+    private CommonAdapter adapter;
 
-    public static Intent newIntent(Context context,int pos){
-        Intent intent = new Intent(context,ActivityInfoActivity.class);
+    public static Intent newIntent(Context context, int pos) {
+        Intent intent = new Intent(context, ActivityInfoActivity.class);
         intent.putExtra("Position", pos);
         return intent;
     }
@@ -79,29 +82,24 @@ public class ActivityInfoActivity extends BaseActivity {
 
     @Override
     protected void init() {
+        initRecycler();
         getBaoming();
         setInfo();
-        toolbar.setLogo(R.drawable.bar_back_white);
-        collapsing_toolbar.setTitle("");
-        initRecycler();
     }
 
-    /**
-     * 所有报名者的显示
-     */
     private void initRecycler() {
-        ArrayList<BaomingBean.MemberListBean> mDate = new ArrayList<>();
-        adapter = new BaseCommonAdapter<BaomingBean.MemberListBean>(this, R.layout.item_activity, mDate) {
+        List<BaomingBean.MemberListBean> data = new ArrayList<>();
+        adapter = new CommonAdapter<BaomingBean.MemberListBean>(this, R.layout.item_activity, data) {
             @Override
             public void convert(ViewHolder holder, BaomingBean.MemberListBean s, int position) {
                 CircleImageView img = holder.getView(R.id.circle);
-                Glide.with(getApplicationContext()).load(Constant.URL+s.getUrl()).into(img);
-                holder.setText(R.id.tvName,s.getMemberName());
-                holder.setText(R.id.tvAge,s.getAge()+"岁");
+                Glide.with(getApplicationContext()).load(Constant.URL + s.getUrl()).into(img);
+                holder.setText(R.id.tvName, s.getMemberName());
+                holder.setText(R.id.tvAge, s.getAge() + "岁");
             }
         };
-        imgRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayout.HORIZONTAL,false));
-        imgRecycler.setAdapter(adapter);
+        recycleView.setLayoutManager(new LinearLayoutManager(this,LinearLayout.HORIZONTAL,false));
+        recycleView.setAdapter(adapter);
     }
 
     /**
@@ -110,7 +108,7 @@ public class ActivityInfoActivity extends BaseActivity {
     private void getBaoming() {
         String token = App.getInstance().getUserInfo().getToken();
         String opt = "24";
-        String activityId = App.getInstance().getActivityBean().getActivityList().get(position).getId()+"";
+        String activityId = App.getInstance().getActivityBean().getActivityList().get(position).getId() + "";
         String _t = CurrentTimeUtil.nowTime();
         String joint = "_t=" + _t + "&activityId=" + activityId + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
         Log.d(TAG, "getInfo: " + joint);
@@ -129,19 +127,19 @@ public class ActivityInfoActivity extends BaseActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: "+e.getMessage());
+                Log.d(TAG, "onFailure: " + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                Log.d(TAG, "onResponse: "+string);
+                Log.d(TAG, "onResponse: " + string);
                 Gson gson = new Gson();
                 BaomingBean baomingBean = gson.fromJson(string, BaomingBean.class);
                 List<BaomingBean.MemberListBean> memberList = baomingBean.getMemberList();
                 runOnUiThread(() -> {
                     adapter.clear();
-                    adapter.add(memberList);
+                    adapter.addDatas(memberList);
                     adapter.notifyDataSetChanged();
                 });
             }
@@ -152,29 +150,29 @@ public class ActivityInfoActivity extends BaseActivity {
         ActivityBean activityBean = App.getInstance().getActivityBean();
         position = getIntent().getIntExtra("Position", 0);
         List<ActivityBean.ActivityListBean> activityList = activityBean.getActivityList();
-        Glide.with(this).load(Constant.URL+activityList.get(position).getPhotoUrl()).into(main_backdrop);
+        Glide.with(this).load(Constant.URL + activityList.get(position).getPhotoUrl()).into(main_backdrop);
         tvHead.setText(activityList.get(position).getActivityName());
         tvPlace.setText(activityList.get(position).getPlace());
         tvStart.setText(activityList.get(position).getStartTime());
-        tvEnd.setText("-"+activityList.get(position).getEndTime());
+        tvEnd.setText("-" + activityList.get(position).getEndTime());
         tv_message.setText(activityList.get(position).getActivityDetail());
         tv_tip.setText(activityList.get(position).getReminder());
+        tvPhoneNumber.setText(activityList.get(position).getMobile());
     }
 
     /**
      * 报名参与
      */
     private void baoMing() {
-        dialog.show();
         String token = App.getInstance().getUserInfo().getToken();
         String mobile = App.getInstance().getUserInfo().getAccountNumber();
         String opt = "23";
-        String activityId = App.getInstance().getActivityBean().getActivityList().get(position).getId()+"";
+        String activityId = App.getInstance().getActivityBean().getActivityList().get(position).getId() + "";
         String _t = CurrentTimeUtil.nowTime();
         String joint = "_t=" + _t + "&activityId=" + activityId + "&mobile=" + mobile + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
         Log.d(TAG, "getInfo: " + joint);
         String _s = Md5Util.encoder(joint);
-
+        dialog.show();
         OkHttpClient okHttpClient = new OkHttpClient();
         FormBody body = new FormBody.Builder()
                 .add("_t", _t)
@@ -189,21 +187,24 @@ public class ActivityInfoActivity extends BaseActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                dialog.dismiss();
                 Log.d(TAG, "onFailure: " + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                dialog.dismiss();
                 String string = response.body().string();
                 Log.d(TAG, "onResponse: " + string);
                 Gson gson = new Gson();
                 UserInfo userInfo = gson.fromJson(string, UserInfo.class);
-                if (userInfo.getError().equals("-1")){
-                    runOnUiThread(() -> ToastUtil.show(getApplicationContext(),userInfo.getMsg()));
+                if (userInfo.getError().equals("-1")) {
+                    runOnUiThread(() -> ToastUtil.show(getApplicationContext(), userInfo.getMsg()));
                     //成功之后更新头像
                     getBaoming();
+                } else {
+                    runOnUiThread(() -> ToastUtil.show(getApplicationContext(), userInfo.getMsg()));
                 }
-                dialog.dismiss();
             }
         });
     }
@@ -214,9 +215,35 @@ public class ActivityInfoActivity extends BaseActivity {
         return true;
     }
 
-    @OnClick({R.id.tv_show,R.id.btSubmit})
+    @OnClick({R.id.tv_show, R.id.btSubmit, R.id.tvPhoneNumber, R.id.back})
     void onClick(View view) {
         switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+            case R.id.tvPhoneNumber:
+                // 检查是否获得了权限（Android6.0运行时权限）
+                if (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // 没有获得授权，申请授权
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                            Manifest.permission.CALL_PHONE)) {
+                        // 帮跳转到该应用的设置界面，让用户手动授权
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+                        intent.setData(uri);
+                        startActivity(intent);
+                    } else {
+                        // 不需要解释为何需要该权限，直接请求授权
+                        ActivityCompat.requestPermissions(this,
+                                new String[]{Manifest.permission.CALL_PHONE},
+                                111);
+                    }
+                } else {
+                    // 已经获得授权，可以打电话
+                    CallPhone();
+                }
+                break;
             case R.id.tv_show:
                 if (!isShow) {
                     tv_message.setMaxLines(999);
@@ -240,5 +267,44 @@ public class ActivityInfoActivity extends BaseActivity {
                 baoMing();
                 break;
         }
+    }
+
+    /**
+     * 拨打电话
+     */
+    private void CallPhone() {
+        String number = tvPhoneNumber.getText().toString();
+        if (TextUtils.isEmpty(number)) {
+            // 提醒用户
+            // 注意：在这个匿名内部类中如果用this则表示是View.OnClickListener类的对象，
+            // 所以必须用MainActivity.this来指定上下文环境。
+            Toast.makeText(this, "号码不能为空！", Toast.LENGTH_SHORT).show();
+        } else {
+            // 拨号：激活系统的拨号组件
+            Intent intent = new Intent(); // 意图对象：动作 + 数据
+            intent.setAction(Intent.ACTION_CALL); // 设置动作
+            Uri data = Uri.parse("tel:" + number); // 设置数据
+            intent.setData(data);
+            startActivity(intent); // 激活Activity组件
+        }
+    }
+
+    // 处理权限申请的回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 111: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 授权成功，继续打电话
+                    CallPhone();
+                } else {
+                    // 授权失败！
+                    Toast.makeText(this, "授权失败！", Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+        }
+
     }
 }
