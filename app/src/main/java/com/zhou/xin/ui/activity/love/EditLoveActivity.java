@@ -1,13 +1,10 @@
 package com.zhou.xin.ui.activity.love;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.IdRes;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -22,10 +19,7 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.ta.utdid2.android.utils.StringUtils;
-import com.yuyh.library.imgsel.ImageLoader;
 import com.yuyh.library.imgsel.ImgSelActivity;
-import com.yuyh.library.imgsel.ImgSelConfig;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.App;
@@ -35,8 +29,6 @@ import com.zhou.xin.bean.BaseInfo;
 import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.bean.ProvinceBean;
 import com.zhou.xin.bean.SelectBean;
-import com.zhou.xin.bean.UserInfo;
-import com.zhou.xin.ui.activity.huanxin.MainActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.DateUtil;
 import com.zhou.xin.utils.GlideRoundTransform;
@@ -44,13 +36,10 @@ import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.PersonalFormTools;
 import com.zhou.xin.utils.ToastUtil;
 import com.zhou.xin.utils.actionPhotoUtil;
-
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -68,11 +57,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import retrofit2.http.HEAD;
 
 public class EditLoveActivity extends BaseActivity {
 
-    private static final String TAG = "EditActivity";
+    private static final String TAG = "EditLoveActivity";
     @BindView(R.id.img_1) ImageView img1;
     @BindView(R.id.img_2) ImageView img2;
     @BindView(R.id.img_3) ImageView img3;
@@ -184,9 +172,11 @@ public class EditLoveActivity extends BaseActivity {
         initData();
 
         if (App.getInstance().getUserInfo().getCode().equals("1")){
+            Log.d(TAG, "init: 1");
             ll_details.setVisibility(View.GONE);
             bt_skip.setVisibility(View.GONE);
         }else {
+            Log.d(TAG, "init: 0");
             ll_details.setVisibility(View.VISIBLE);
             bt_next.setVisibility(View.GONE);
             bt_skip.setVisibility(View.GONE);
@@ -338,9 +328,11 @@ public class EditLoveActivity extends BaseActivity {
                 showMultiChioceDialog1(listTravel.toArray(new String[listTravel.size()]), uploadTravel, mapTravel, tv_travels);
                 break;
             case R.id.tv_labels://我的个性标签
+                Log.d(TAG, "onClick: "+listLabel.toString());
                 showMultiChioceDialog(listLabel.toArray(new String[listLabel.size()]), uploadLabel, mapLabel, tv_labels);
                 break;
             case R.id.tv_books:
+                Log.d(TAG, "onClick: "+listBook.toString());
                 showMultiChioceDialog1(listBook.toArray(new String[listBook.size()]), uploapBook, mapBook, tv_books);
                 break;
             case R.id.tv_video:
@@ -456,6 +448,7 @@ public class EditLoveActivity extends BaseActivity {
      * @param tv
      */
     public void showMultiChioceDialog(final String[] shuzu, final List<String> uoload, final Map<String, String> map, final TextView tv) {
+
         final List<String> list = new ArrayList<>();
         //final EditText editText = new EditText(this);
         //editText.setHint("    若还有其他，请输入");
