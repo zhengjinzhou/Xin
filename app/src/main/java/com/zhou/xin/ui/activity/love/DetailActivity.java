@@ -61,6 +61,7 @@ public class DetailActivity extends BaseActivity {
     TextView tv_head;
     @BindView(R.id.tv_title)
     TextView tv_title;
+    @BindView(R.id.tv_nickname) TextView tv_nickname;
 
     private List<String> photoUrlList;
     private List<View> list_view;
@@ -96,7 +97,8 @@ public class DetailActivity extends BaseActivity {
             photoUrlList.add(pictures.get(i).getPhotoUrl());
             System.out.println(photoUrlList.get(i));
         }
-        tv_username.setText(TextUtils.isEmpty(personalBean.getMemInfo().getRealname()) ? "" : personalBean.getMemInfo().getNickname());
+        tv_username.setText(TextUtils.isEmpty(personalBean.getMemInfo().getRealname()) ? "" : personalBean.getMemInfo().getRealname());
+        tv_nickname.setText(TextUtils.isEmpty(personalBean.getMemInfo().getRealname()) ? "" : personalBean.getMemInfo().getNickname());
         if (personalBean.getMemInfo().getCity() != null)
             tv_province.setText(TextUtils.isEmpty(personalBean.getMemInfo().getCity().getProvince().getName()) ? "" : personalBean.getMemInfo().getCity().getProvince().getName());
         if (personalBean.getMemInfo().getCity() != null)
