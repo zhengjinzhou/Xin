@@ -1,4 +1,5 @@
 package com.zhou.xin.ui.fragment;
+
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
+import com.yuyh.library.imgsel.utils.LogUtils;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.App;
@@ -30,6 +32,7 @@ import com.zhou.xin.bean.VerBean;
 import com.zhou.xin.swipe.SwipeFlingAdapterView;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.DES3Util;
+import com.zhou.xin.utils.LogUtil;
 import com.zhou.xin.utils.Md5Util;
 
 import java.io.IOException;
@@ -56,11 +59,16 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
     //下载后的APK的命名
     public static final String APK_NAME = "恋爱";
-    @BindView(R.id.swipe_view) SwipeFlingAdapterView swipeView;
-    @BindView(R.id.swipeLeft) View vLeft;
-    @BindView(R.id.swipeRight) View vRight;
-    @BindView(R.id.back) ImageView back;
-    @BindView(R.id.tv_head) TextView tv_head;
+    @BindView(R.id.swipe_view)
+    SwipeFlingAdapterView swipeView;
+    @BindView(R.id.swipeLeft)
+    View vLeft;
+    @BindView(R.id.swipeRight)
+    View vRight;
+    @BindView(R.id.back)
+    ImageView back;
+    @BindView(R.id.tv_head)
+    TextView tv_head;
     private static final String TAG = "HomeFragment";
 
     Random ran = new Random();
@@ -70,11 +78,11 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
     private InnerAdapter adapter;
     private List<String> nameList = new ArrayList<>();
     private List<String> cityList = new ArrayList<>();
-    private List<String> edusList= new ArrayList<>();
-    private List<String> yearsList= new ArrayList<>();
-    private List<String> photoList= new ArrayList<>();
-    private List<String> phoneList= new ArrayList<>();
-    private List<String> cidList= new ArrayList<>();
+    private List<String> edusList = new ArrayList<>();
+    private List<String> yearsList = new ArrayList<>();
+    private List<String> photoList = new ArrayList<>();
+    private List<String> phoneList = new ArrayList<>();
+    private List<String> cidList = new ArrayList<>();
 
 
     @Override
@@ -112,7 +120,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String string = response.body().string();
-                    //Log.d(TAG, "获取异性信息onResponse: " + string);
+                    LogUtil.d("获取异性信息"+string);
                     setResult(string);
                 }
             });
@@ -124,17 +132,19 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
         Gson gson = new Gson();
         GenderBean genderBean = gson.fromJson(data, GenderBean.class);
         List<GenderBean.MemberListBean> memberList = genderBean.getMemberList();
-        for (int i = 0; i < memberList.size(); i++) {
-            GenderBean.MemberListBean memberListBean = memberList.get(i);
-            photoList.add(memberListBean.getPhotoPath());
-            nameList.add(memberListBean.getRealname());
-            cityList.add(memberListBean.getCity().getName());
-            yearsList.add(memberListBean.getAge() + "岁");
-            edusList.add(memberListBean.getMajor().getMajorName());
-            phoneList.add(memberListBean.getPhone());//新增一个phone
-            cidList.add(memberListBean.getId()+"");//新增一个id
-            loadData();
-        }
+        if (memberList != null)
+            for (int i = 0; i < memberList.size(); i++) {
+                GenderBean.MemberListBean memberListBean = memberList.get(i);
+                photoList.add(memberListBean.getPhotoPath());
+                nameList.add(memberListBean.getRealname());
+                if (memberListBean.getCity().getName() != null)
+                    cityList.add(memberListBean.getCity().getName());
+                yearsList.add(memberListBean.getAge() + "岁");
+                edusList.add(memberListBean.getMajor().getMajorName());
+                phoneList.add(memberListBean.getPhone());//新增一个phone
+                cidList.add(memberListBean.getId() + "");//新增一个id
+                loadData();
+            }
     }
 
     private void initView() {
@@ -172,7 +182,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
     @Override
     public void onItemClicked(MotionEvent event, View v, Object dataObject) {
-        Log.d(TAG, "onItemClicked: "+nameList.toString());
+        Log.d(TAG, "onItemClicked: " + nameList.toString());
     }
 
     @Override
@@ -190,7 +200,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
     @Override
     public void onRightCardExit(Object dataObject) {
         final Talent talent = (Talent) dataObject;
-        new Handler(getContext().getMainLooper()){
+        new Handler(getContext().getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
@@ -202,16 +212,17 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
     /**
      * 向后台发送请求添加好友请求
+     *
      * @param id
      */
     private void sendBackground(String id) {
-        Log.d(TAG, "sendBackground: "+id);
+        Log.d(TAG, "sendBackground: " + id);
         String token = App.getInstance().getUserInfo().getToken();
         String opt = "6";
         String cid = DES3Util.encrypt3DES(id, Constant.ENCRYPTION_KEY, Charset.forName("UTF-8"));
         String _t = CurrentTimeUtil.nowTime();
         String apply_reason = "like";
-        String joint = "_t=" + _t + "&apply_reason=" + apply_reason  +"&cid=" + cid + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
+        String joint = "_t=" + _t + "&apply_reason=" + apply_reason + "&cid=" + cid + "&opt=" + opt + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
         String _s = Md5Util.encoder(joint);
         System.out.println("拼接后_t的数据--------" + joint);
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -231,12 +242,12 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "发起添加好友请求失败: "+e);
+                Log.d(TAG, "发起添加好友请求失败: " + e);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d(TAG, "发起添加好友请求成功: "+response.body().string());
+                Log.d(TAG, "发起添加好友请求成功: " + response.body().string());
             }
         });
     }
@@ -274,6 +285,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
                 }
                 return list;
             }
+
             @Override
             protected void onPostExecute(List<Talent> list) {
                 super.onPostExecute(list);
@@ -354,12 +366,12 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
                 holder = new ViewHolder();
                 convertView.setTag(holder);
                 convertView.getLayoutParams().width = cardWidth;
-                holder.portraitView =  convertView.findViewById(R.id.portrait);
+                holder.portraitView = convertView.findViewById(R.id.portrait);
                 holder.portraitView.getLayoutParams().height = cardHeight;
-                holder.nameView =  convertView.findViewById(R.id.name);
-                holder.cityView =  convertView.findViewById(R.id.city);
-                holder.eduView =  convertView.findViewById(R.id.education);
-                holder.workView =  convertView.findViewById(R.id.work_year);
+                holder.nameView = convertView.findViewById(R.id.name);
+                holder.cityView = convertView.findViewById(R.id.city);
+                holder.eduView = convertView.findViewById(R.id.education);
+                holder.workView = convertView.findViewById(R.id.work_year);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
@@ -394,6 +406,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
 
     /**
      * 添加好友请求
+     *
      * @param username
      */
     public void addContact(final String username) {

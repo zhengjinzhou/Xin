@@ -32,6 +32,7 @@ import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.bean.ActivityBean;
 import com.zhou.xin.ui.activity.love.StartActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
+import com.zhou.xin.utils.LogUtil;
 import com.zhou.xin.utils.Md5Util;
 
 import java.io.File;
@@ -102,11 +103,12 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                Log.d(TAG, "onResponse: "+string);
+                LogUtil.d("----------"+string);
                 Gson gson = new Gson();
                 ActivityBean activityBean = gson.fromJson(string, ActivityBean.class);
+                List<ActivityBean.ActivityListBean> activityList = activityBean.getActivityList();
                 runOnUiThread(() -> {
-                    adapter.add(activityBean);
+                    adapter.add(activityList);
                     adapter.notifyDataSetChanged();
                 });
                 dialog.dismiss();
@@ -115,25 +117,26 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
     }
 
     private void initRecycle() {
-        List<ActivityBean> data = new ArrayList<>();
+        List<ActivityBean.ActivityListBean> data = new ArrayList<>();
         //要传参
-        adapter = new CommonAdapter<ActivityBean>(this, R.layout.recycle_activity, data) {
+        adapter = new CommonAdapter<ActivityBean.ActivityListBean>(this, R.layout.recycle_activity, data) {
             @Override
-            public void convert(ViewHolder holder, ActivityBean s, int position) {
-                holder.setText(R.id.tvIntroduce,s.getActivityList().get(position).getActivityName());
-                holder.setText(R.id.tv_time,s.getActivityList().get(position).getStartTime());
-                holder.setText(R.id.tvPlace,s.getActivityList().get(position).getPlace());
+            public void convert(ViewHolder holder, ActivityBean.ActivityListBean s, int position) {
+                holder.setText(R.id.tvIntroduce,s.getActivityName());
+                holder.setText(R.id.tv_time,s.getStartTime());
+                holder.setText(R.id.tvPlace,s.getPlace());
                 ImageView img = holder.getView(R.id.ivPhoto);
-                Glide.with(getApplicationContext()).load(Constant.URL+s.getActivityList().get(position).getPhotoUrl()).into(img);
-                holder.setText(R.id.tvNum,s.getActivityList().get(position).getAttendantNumber()+"人报名");
-                if (s.getActivityList().get(position).getIsFinish()==1){
+                Glide.with(getApplicationContext()).load(Constant.URL+s.getPhotoUrl()).into(img);
+                holder.setText(R.id.tvNum,s.getAttendantNumber()+"人报名");
+                if (s.getIsFinish()==1){
                     holder.getView(R.id.tvIng).setVisibility(View.VISIBLE);
-                }if (s.getActivityList().get(position).getIsFinish()==0){
+                }if (s.getIsFinish()==0){
                     holder.getView(R.id.tvEd).setVisibility(View.VISIBLE);
                 }
                 holder.setOnClickListener(R.id.ll_activity, v -> {
                     App.getInstance().setActivityBean(s);
-                    startActivity(ActivityInfoActivity.newIntent(getApplicationContext(),position));
+                    startToActivity(ActivityInfoActivity.class);
+                    //startActivity(ActivityInfoActivity.newIntent(getApplicationContext(),position));
                 });
             }
         };
@@ -154,7 +157,10 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(() -> refresh.setRefreshing(false),2000);
+        new Handler().postDelayed(() -> {
+            refresh.setRefreshing(false);
+            getInfo();
+        },2000);
     }
 
 }

@@ -5,13 +5,15 @@ package com.zhou.xin.bean;
  */
 
 public class UserInfo {
+
     /**
-     * uid : 09147E16EF6FC65D
-     * accountNumber : 2014414
+     * uid : DB1BC4A09027FAE4
+     * accountNumber : 13631782148
      * error : -1
-     * token : 81fb92c746364ec0a7ce8201831a4384
+     * token : be0a74237f644437a31546b60cc7f4b6
      * expires_in : 172800
-     * msg : 登录成功并已注册
+     * code : 1
+     * msg : 请设置个人信息
      */
 
     private String uid;
@@ -19,6 +21,7 @@ public class UserInfo {
     private String error;
     private String token;
     private int expires_in;
+    private String code;
     private String msg;
 
     public String getUid() {
@@ -61,6 +64,14 @@ public class UserInfo {
         this.expires_in = expires_in;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getMsg() {
         return msg;
     }
@@ -77,6 +88,7 @@ public class UserInfo {
                 ", error='" + error + '\'' +
                 ", token='" + token + '\'' +
                 ", expires_in=" + expires_in +
+                ", code='" + code + '\'' +
                 ", msg='" + msg + '\'' +
                 '}';
     }

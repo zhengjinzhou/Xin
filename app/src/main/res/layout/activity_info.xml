@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:background="@color/white"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
-    tools:context="com.zhou.xin.ui.activity.love.activity.ActivityInfoActivity">
+    android:orientation="vertical">
 
-    <include layout="@layout/headerbar"/>
+    <include layout="@layout/headerbar" />
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,9 +22,8 @@
                 android:id="@+id/main_backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
-                android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax" />
+                />
 
             <TextView
                 android:id="@+id/tvHead"
@@ -72,6 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/app_bg" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -139,12 +135,37 @@
 
                 <TextView
                     android:id="@+id/tvPhoneNumber"
-                    android:textColor="@color/btn_green_noraml"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="LoveMe官方"
+                    android:textColor="@color/btn_green_noraml"
+                    android:textSize="@dimen/text_size_11" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/app_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space_16">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="费用"
+                    android:textSize="@dimen/text_size_18" />
+
+                <TextView
+                    android:id="@+id/tvMoney"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
                     android:textSize="@dimen/text_size_11" />
             </LinearLayout>
 
@@ -152,7 +173,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
                 android:background="@color/app_bg" />
-
 
             <TextView
                 android:layout_width="match_parent"
@@ -221,9 +241,9 @@
                 android:textSize="@dimen/text_size_18" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycleView"
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
 </LinearLayout>

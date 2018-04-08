@@ -24,6 +24,7 @@ import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.bean.UserInfo;
 import com.zhou.xin.db.DemoDBManager;
+import com.zhou.xin.ui.activity.love.EditLoveActivity;
 import com.zhou.xin.ui.activity.love.ForgetActivity;
 import com.zhou.xin.ui.activity.love.RegisterActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
@@ -68,21 +69,15 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void init() {
 
-        /*//尝试保存用户名和头像
-        SpUtil.putString(getApplicationContext(),Constant.USER_NAME,"zhangsan");
-        SpUtil.putString(getApplicationContext(),Constant.HEAD_IMAGE_URL,"http://img0.imgtn.bdimg.com/it/u=3707678312,2260123328&fm=27&gp=0.jpg");
-        DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName("zhangsan");
-        DemoHelper.getInstance().getUserProfileManager().setCurrentUserAvatar("http://img0.imgtn.bdimg.com/it/u=3707678312,2260123328&fm=27&gp=0.jpg");
-*/
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         tv_head.setText("登陆");
-        /*etUsername.setText("13631782148");
-       // Log.d(TAG, "init: " + Md5Util.encoder("13631782148" + Constant.APP_ENCRYPTION_KEY));
-        etPassword.setText("123456");*/
+        etUsername.setText("13631782148");
+        Log.d(TAG, "init: " + Md5Util.encoder("13631789689" + Constant.APP_ENCRYPTION_KEY));
+        etPassword.setText("123456");
 
         hint.setVisibility(View.INVISIBLE);
         clear.setVisibility(View.INVISIBLE);
@@ -257,6 +252,8 @@ public class LoginActivity extends BaseActivity {
         String token = userInfo.getToken();
         String uid = userInfo.getUid();
 
+        App.getInstance().setUserInfo(userInfo);
+
         if (userInfo.getError().equals("-3")) {
             runOnUiThread(() -> {
                 dialog.dismiss();
@@ -264,8 +261,11 @@ public class LoginActivity extends BaseActivity {
             });
             return;
         }
-        Log.d(TAG, "getResult: " + token);
-        Log.d(TAG, "getResult: " + uid);
+        if (userInfo.getCode().equals("1")){
+            startToActivity(EditLoveActivity.class);
+            dialog.dismiss();
+            return;
+        }
 
         String opt = "5";
         String _t = CurrentTimeUtil.nowTime();
@@ -293,6 +293,7 @@ public class LoginActivity extends BaseActivity {
                 Log.d(TAG, "获取个人信息onResponse: " + string);
                 Gson gson1 = new Gson();
                 PersonalBean personalBean = gson1.fromJson(string, PersonalBean.class);
+
                 App.getInstance().setPersonalBean(personalBean);
                 //设置头像昵称
                 Log.d(TAG, "onResponse: "+personalBean.getMemInfo().getNickname() + "  "+Constant.URL+personalBean.getMemInfo().getPhotoPath());
@@ -303,7 +304,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        App.getInstance().setUserInfo(userInfo);
+
         if (userInfo.getError().equals("-1")) {
             //进行环信登录
             XinLogin(username, username);

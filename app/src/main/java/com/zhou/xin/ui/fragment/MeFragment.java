@@ -163,8 +163,9 @@ public class MeFragment extends BaseFragment {
         }
         if (personalBean.getMemInfo().getGender() == 0) {
             iv_gender.setImageResource(R.drawable.female);
+        }else {
+            iv_gender.setImageResource(R.drawable.male);
         }
-        iv_gender.setImageResource(R.drawable.male);
         tv_name.setText(personalBean.getMemInfo().getNickname());
         Glide.with(getContext()).load(Constant.URL + personalBean.getMemInfo().getPhotoPath()).into(circle);
         SpUtil.putString(getContext(),Constant.APP_PHOTO,Constant.URL + personalBean.getMemInfo().getPhotoPath());

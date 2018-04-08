@@ -48,7 +48,7 @@ import java.util.Map;
 
 public class App extends Application {
 
-    private ActivityBean activityBean;
+    private ActivityBean.ActivityListBean activityBean;
 
     private UserInfo userInfo;
 
@@ -74,11 +74,11 @@ public class App extends Application {
     private String username;
     private EMMessageListener messageListener;
 
-    public ActivityBean getActivityBean() {
+    public ActivityBean.ActivityListBean getActivityBean() {
         return activityBean;
     }
 
-    public void setActivityBean(ActivityBean activityBean) {
+    public void setActivityBean(ActivityBean.ActivityListBean activityBean) {
         this.activityBean = activityBean;
     }
 

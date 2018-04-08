@@ -81,4 +81,7 @@
     <dimen name="space_40">40dp</dimen>
     <dimen name="space_200">200dp</dimen>
 
+    <dimen name="image_thumbnail_size">148dp</dimen>
+    <dimen name="image_thumbnail_spacing">2dp</dimen>
+
 </resources>

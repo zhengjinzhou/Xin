@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -53,6 +54,7 @@ public class UserProfileActivity extends BaseActivity {
     @Override
     public void init() {
         initListener();
+
     }
 
     @OnClick({R.id.user_head_avatar, R.id.rl_nickname,R.id.rl_jubao})
@@ -69,17 +71,13 @@ public class UserProfileActivity extends BaseActivity {
             case R.id.rl_nickname:
                 final EditText editText = new EditText(this);
                 new AlertDialog.Builder(this).setTitle(R.string.setting_nickname).setIcon(android.R.drawable.ic_dialog_info).setView(editText)
-                        .setPositiveButton(R.string.dl_ok, new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String nickString = editText.getText().toString();
-                                if (TextUtils.isEmpty(nickString)) {
-                                    Toast.makeText(UserProfileActivity.this, getString(R.string.toast_nick_not_isnull), Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                updateRemoteNick(nickString);
+                        .setPositiveButton(R.string.dl_ok, (dialog, which) -> {
+                            String nickString = editText.getText().toString();
+                            if (TextUtils.isEmpty(nickString)) {
+                                Toast.makeText(UserProfileActivity.this, getString(R.string.toast_nick_not_isnull), Toast.LENGTH_SHORT).show();
+                                return;
                             }
+                            updateRemoteNick(nickString);
                         }).setNegativeButton(R.string.dl_cancel, null).show();
                 break;
         }
@@ -87,33 +85,24 @@ public class UserProfileActivity extends BaseActivity {
 
     private void updateRemoteNick(final String nickName) {
         dialog = ProgressDialog.show(this, getString(R.string.dl_update_nick), getString(R.string.dl_waiting));
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                boolean updatenick = DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(nickName);
-                if (UserProfileActivity.this.isFinishing()) {
-                    return;
-                }
-                if (!updatenick) {
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatenick_fail), Toast.LENGTH_SHORT)
-                                    .show();
-                            dialog.dismiss();
-                        }
-                    });
-                } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            dialog.dismiss();
-                            Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatenick_success), Toast.LENGTH_SHORT)
-                                    .show();
-                            tvNickName.setText(nickName);
-                        }
-                    });
-                }
+        new Thread(() -> {
+            boolean updatenick = DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(nickName);
+            if (UserProfileActivity.this.isFinishing()) {
+                return;
+            }
+            if (!updatenick) {
+                runOnUiThread(() -> {
+                    Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatenick_fail), Toast.LENGTH_SHORT)
+                            .show();
+                    dialog.dismiss();
+                });
+            } else {
+                runOnUiThread(() -> {
+                    dialog.dismiss();
+                    Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatenick_success), Toast.LENGTH_SHORT)
+                            .show();
+                    tvNickName.setText(nickName);
+                });
             }
         }).start();
     }
@@ -173,23 +162,20 @@ public class UserProfileActivity extends BaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.dl_title_upload_photo);
         builder.setItems(new String[]{getString(R.string.dl_msg_take_photo), getString(R.string.dl_msg_local_upload)},
-                new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        switch (which) {
-                            case 0:
-                                Toast.makeText(UserProfileActivity.this, getString(R.string.toast_no_support),
-                                        Toast.LENGTH_SHORT).show();
-                                break;
-                            case 1:
-                                Intent pickIntent = new Intent(Intent.ACTION_PICK, null);
-                                pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                                startActivityForResult(pickIntent, REQUESTCODE_PICK);
-                                break;
-                            default:
-                                break;
-                        }
+                (dialog, which) -> {
+                    dialog.dismiss();
+                    switch (which) {
+                        case 0:
+                            Toast.makeText(UserProfileActivity.this, getString(R.string.toast_no_support),
+                                    Toast.LENGTH_SHORT).show();
+                            break;
+                        case 1:
+                            Intent pickIntent = new Intent(Intent.ACTION_PICK, null);
+                            pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                            startActivityForResult(pickIntent, REQUESTCODE_PICK);
+                            break;
+                        default:
+                            break;
                     }
                 });
         builder.create().show();

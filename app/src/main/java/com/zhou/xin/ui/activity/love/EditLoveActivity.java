@@ -183,7 +183,15 @@ public class EditLoveActivity extends BaseActivity {
         ll_details.setVisibility(View.GONE);
         initData();
 
-        initOption();
+        if (App.getInstance().getUserInfo().getCode().equals("1")){
+            ll_details.setVisibility(View.GONE);
+            bt_skip.setVisibility(View.GONE);
+        }else {
+            ll_details.setVisibility(View.VISIBLE);
+            bt_next.setVisibility(View.GONE);
+            bt_skip.setVisibility(View.GONE);
+            initOption();
+        }
     }
 
     private void initOption() {
@@ -192,7 +200,6 @@ public class EditLoveActivity extends BaseActivity {
                     + options2Items.get(options1).get(options2);
             tv_province_city.setText("地址：" + tx);
             cityId = mapCity.get(options2Items.get(options1).get(options2));
-
         }).build();
         pvOptions.setPicker(options1Items, options2Items);//二级选择器
     }
@@ -224,6 +231,7 @@ public class EditLoveActivity extends BaseActivity {
             if (checkedRadioButtonId == 2131296686)
                 sex = 0;
         });
+
         if (App.getInstance() == null) return;
         if (App.getInstance().getSelectBean() == null) return;
         SelectBean selectBean = App.getInstance().getSelectBean();
@@ -362,9 +370,7 @@ public class EditLoveActivity extends BaseActivity {
                 break;
             //继续完善
             case R.id.bt_next:
-                ll_details.setVisibility(View.VISIBLE);
-                bt_next.setVisibility(View.GONE);
-                bt_skip.setVisibility(View.GONE);
+                submit();
                 break;
             //提交一次
             case R.id.bt_skip:
@@ -588,24 +594,25 @@ public class EditLoveActivity extends BaseActivity {
             builider.addFormDataPart("constellation", constellationID);//星座id
         if (!TextUtils.isEmpty(et_autograph.getText().toString().trim()))
             builider.addFormDataPart("autograph", et_autograph.getText().toString().trim());//签名
-        if (uploadLabel.size() > 0)
+        if (uploadLabel != null && uploadLabel.size() > 0)
             builider.addFormDataPart("labels[]", uploadLabel.toString().substring(1, uploadLabel.toString().length() - 1).replace(" ", ""));//个性标签
         //builider.addFormDataPart("label_others", label_others);
-        if (uploadSport.size() > 0)
+        if (uploadSport != null && uploadSport.size() > 0)
             builider.addFormDataPart("sports[]", uploadSport.toString().substring(1, uploadSport.toString().length() - 1).replace(" ", ""));//运动类型
         //builider.addFormDataPart("sport_others", sport_others);
-        if (uploadMusic.size() > 0)
+        if (uploadMusic != null && uploadMusic.size() > 0)
             builider.addFormDataPart("music[]", uploadMusic.toString().substring(1, uploadMusic.toString().length() - 1).replace(" ", ""));//音乐类型
         //builider.addFormDataPart("music_others", music_others);
-        if (uploadFood.size() > 0)
+        if (uploadFood != null && uploadFood.size() > 0)
             builider.addFormDataPart("foods[]", uploadFood.toString().substring(1, uploadFood.toString().length() - 1).replace(" ", ""));//食物
         //builider.addFormDataPart("food_others", food_others);
-        if (uploadFilm.size() > 0)
+        if (uploadFilm != null &&uploadFilm.size() > 0)
             builider.addFormDataPart("films[]", uploadFilm.toString().substring(1, uploadFilm.toString().length() - 1).replace(" ", ""));//影视
         //builider.addFormDataPart("film_others", film_others);
-        if (uploapBook.size() > 0)
+        if (uploapBook != null &&uploapBook.size() > 0)
             builider.addFormDataPart("books[]", uploapBook.toString().substring(1, uploapBook.toString().length() - 1).replace(" ", ""));//书籍
         //builider.addFormDataPart("book_others", book_others);
+        if (uploadTravel != null &&uploadTravel.size() > 0)
         builider.addFormDataPart("travels[]", uploadTravel.toString().substring(1, uploadTravel.toString().length() - 1).replace(" ", ""));//旅行足迹
         //builider.addFormDataPart("travel_others", travel_others);
         for (int i = 0; i < entity.size(); i++) {

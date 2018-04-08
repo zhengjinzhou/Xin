@@ -8,6 +8,7 @@
         android:id="@+id/circle"
         android:layout_width="56dp"
         android:layout_height="56dp"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/ic_avatar" />
 
     <TextView
@@ -15,14 +16,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/circle"
-        />
+        android:ellipsize="end"
+        android:maxEms="4"
+        android:singleLine="true"
+        android:text="我是你" />
 
     <TextView
-        android:layout_marginLeft="@dimen/space_8"
-        android:textColor="@drawable/bg_button2"
         android:id="@+id/tvAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/circle"
-        android:layout_toRightOf="@+id/tvName" />
+        android:layout_marginLeft="@dimen/space_8"
+        android:layout_toRightOf="@+id/tvName"
+        android:textColor="@color/holo_red_light" />
+
+    <ImageView
+        android:layout_marginTop="@dimen/space_8"
+        android:id="@+id/iv_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/circle"
+        android:layout_toRightOf="@+id/tvName"
+        android:src="@drawable/male" />
 </RelativeLayout>

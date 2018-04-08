@@ -93,15 +93,9 @@ public class Register2Activity extends BaseActivity {
      * 注册
      */
     private void toRegister() {
-        final String username = et_username.getText().toString().trim();
         final String password = et_password.getText().toString().trim();
         String confirm = et_confirm.getText().toString().trim();
         String inviteCode = et_inviteCode.getText().toString().trim();
-        if (TextUtils.isEmpty(username)) {
-            ToastUtil.show(getApplicationContext(), "用户名不能为空");
-            return;
-        }
-
         if (TextUtils.isEmpty(password)) {
             ToastUtil.show(getApplicationContext(), "密码不能为空");
             return;
@@ -112,7 +106,7 @@ public class Register2Activity extends BaseActivity {
             return;
         }
 
-        if (TextUtils.isEmpty(password)) {
+        if (password.length() < 6) {
             ToastUtil.show(getApplicationContext(), "密码不能小于6位");
             return;
         }
@@ -131,7 +125,7 @@ public class Register2Activity extends BaseActivity {
         String opt = "1";
         String _t = CurrentTimeUtil.nowTime();
         String pwd = DES3Util.encrypt3DES(password, Constant.ENCRYPTION_KEY, Charset.forName("UTF-8"));
-        String joint = "_t=" + _t + "&code=" + code +"&inviteCode="+inviteCode+ "&mobile=" + mobile + "&opt=" + opt + "&password=" + pwd + "&username=" + username  + Constant.APP_ENCRYPTION_KEY;
+        String joint = "_t=" + _t + "&code=" + code + "&inviteCode=" + inviteCode + "&mobile=" + mobile + "&opt=" + opt + "&password=" + pwd + Constant.APP_ENCRYPTION_KEY;
         String _s = Md5Util.encoder(joint);
         Log.d(TAG, "getCode: " + joint);
         dialog.show();
@@ -140,7 +134,6 @@ public class Register2Activity extends BaseActivity {
                 .add("opt", opt)
                 .add("mobile", mobile)
                 .add("code", code)
-                .add("username", username)
                 .add("password", pwd)
                 .add("inviteCode", inviteCode)
                 .add("_t", _t)
@@ -164,17 +157,17 @@ public class Register2Activity extends BaseActivity {
                 Log.d(TAG, "注册onResponse: " + string);
                 Gson gson = new Gson();
                 ZhuCeBean zhuCeBean = gson.fromJson(string, ZhuCeBean.class);
-                if (zhuCeBean.getError().equals("-1")){
+                if (zhuCeBean.getError().equals("-1")) {
                     /**
                      * 环信注册
                      * 环信的密码固定位电话号码的拼接后md5加密
                      */
-                    xinRegister(username, username);
+                    xinRegister(mobile, mobile);
                     //保存密码，用在修改密码处于原密码进行对比
-                    SpUtil.putString(getApplicationContext(),Constant.PASSWORD,password);
-                }else {
+                    SpUtil.putString(getApplicationContext(), Constant.PASSWORD, password);
+                } else {
                     dialog.dismiss();
-                    runOnUiThread(() -> ToastUtil.show(getApplicationContext(),zhuCeBean.getMsg()));
+                    runOnUiThread(() -> ToastUtil.show(getApplicationContext(), zhuCeBean.getMsg()));
                 }
             }
         });
@@ -185,7 +178,7 @@ public class Register2Activity extends BaseActivity {
         new Thread(() -> {
             // call method in SDK
             try {
-                String psswordd = Md5Util.encoder(pwd+Constant.APP_ENCRYPTION_KEY);
+                String psswordd = Md5Util.encoder(pwd + Constant.APP_ENCRYPTION_KEY);
                 EMClient.getInstance().createAccount(username, psswordd);
                 runOnUiThread(() -> {
                     DemoHelper.getInstance().setCurrentUserName(username);

@@ -31,21 +31,36 @@ public class DetailActivity extends BaseActivity {
 
     @BindView(R.id.tv_username)
     TextView tv_username;
-    @BindView(R.id.tv_province) TextView tv_province;
-    @BindView(R.id.tv_city) TextView tv_city;
-    @BindView(R.id.tv_constellation) TextView tv_constellation;
-    @BindView(R.id.tv_major) TextView tv_major;
-    @BindView(R.id.tv_labels) TextView tv_labels;
-    @BindView(R.id.tv_sports) TextView tv_sports;
-    @BindView(R.id.tv_musics) TextView tv_musics;
-    @BindView(R.id.tv_foods) TextView tv_foods;
-    @BindView(R.id.tv_films) TextView tv_films;
-    @BindView(R.id.tv_books) TextView tv_books;
-    @BindView(R.id.tv_travels) TextView tv_travels;
-    @BindView(R.id.list_pager) ViewPager list_pager;
-    @BindView(R.id.Xcircleindicator) Xcircleindicator mXcircleindicator;
-    @BindView(R.id.tv_head) TextView tv_head;
-    @BindView(R.id.tv_title) TextView tv_title;
+    @BindView(R.id.tv_province)
+    TextView tv_province;
+    @BindView(R.id.tv_city)
+    TextView tv_city;
+    @BindView(R.id.tv_constellation)
+    TextView tv_constellation;
+    @BindView(R.id.tv_major)
+    TextView tv_major;
+    @BindView(R.id.tv_labels)
+    TextView tv_labels;
+    @BindView(R.id.tv_sports)
+    TextView tv_sports;
+    @BindView(R.id.tv_musics)
+    TextView tv_musics;
+    @BindView(R.id.tv_foods)
+    TextView tv_foods;
+    @BindView(R.id.tv_films)
+    TextView tv_films;
+    @BindView(R.id.tv_books)
+    TextView tv_books;
+    @BindView(R.id.tv_travels)
+    TextView tv_travels;
+    @BindView(R.id.list_pager)
+    ViewPager list_pager;
+    @BindView(R.id.Xcircleindicator)
+    Xcircleindicator mXcircleindicator;
+    @BindView(R.id.tv_head)
+    TextView tv_head;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
 
     private List<String> photoUrlList;
     private List<View> list_view;
@@ -68,41 +83,45 @@ public class DetailActivity extends BaseActivity {
         setInfo();
         super.onResume();
     }
+
     private void setInfo() {
         photoUrlList = new ArrayList<>();
         PersonalBean personalBean = App.getInstance().getPersonalBean();
-        Log.d("可以吗？", "setInfo: "+personalBean.toString());
-        if (personalBean==null){
+        Log.d("可以吗？", "setInfo: " + personalBean.toString());
+        if (personalBean.getMemInfo() == null) {
             return;
         }
         List<PersonalBean.MemInfoBean.PicturesBean> pictures = personalBean.getMemInfo().getPictures();
-        for (int i=0;i<pictures.size();i++){
+        for (int i = 0; i < pictures.size(); i++) {
             photoUrlList.add(pictures.get(i).getPhotoUrl());
             System.out.println(photoUrlList.get(i));
         }
-        tv_username.setText(TextUtils.isEmpty(personalBean.getMemInfo().getRealname())?"":personalBean.getMemInfo().getRealname());
-        tv_province.setText(TextUtils.isEmpty(personalBean.getMemInfo().getCity().getProvince().getName())?"":personalBean.getMemInfo().getCity().getProvince().getName());
-        tv_city.setText(TextUtils.isEmpty(personalBean.getMemInfo().getCity().getName())?"":personalBean.getMemInfo().getCity().getName());
-        tv_constellation.setText(TextUtils.isEmpty(personalBean.getMemInfo().getConstellation())?"":personalBean.getMemInfo().getConstellation());
-        tv_major.setText(TextUtils.isEmpty(personalBean.getMemInfo().getMajor().getMajorName())?"":personalBean.getMemInfo().getMajor().getMajorName());
-        tv_labels.setText(TextUtils.isEmpty(personalBean.getMemInfo().getLabels())?"":personalBean.getMemInfo().getLabels());
-        tv_sports.setText(TextUtils.isEmpty(personalBean.getMemInfo().getSports())?"":personalBean.getMemInfo().getSports());
-        tv_musics.setText(TextUtils.isEmpty(personalBean.getMemInfo().getMusic())?"":personalBean.getMemInfo().getMusic());
-        tv_foods.setText(TextUtils.isEmpty(personalBean.getMemInfo().getFoods())?"":personalBean.getMemInfo().getFoods());
-        tv_films.setText(TextUtils.isEmpty(personalBean.getMemInfo().getFilms())?"":personalBean.getMemInfo().getFilms());
-        tv_books.setText(TextUtils.isEmpty(personalBean.getMemInfo().getBooks())?"":personalBean.getMemInfo().getBooks());
-        tv_travels.setText(TextUtils.isEmpty(personalBean.getMemInfo().getTravels())?"":personalBean.getMemInfo().getTravels());
+        tv_username.setText(TextUtils.isEmpty(personalBean.getMemInfo().getRealname()) ? "" : personalBean.getMemInfo().getNickname());
+        if (personalBean.getMemInfo().getCity() != null)
+            tv_province.setText(TextUtils.isEmpty(personalBean.getMemInfo().getCity().getProvince().getName()) ? "" : personalBean.getMemInfo().getCity().getProvince().getName());
+        if (personalBean.getMemInfo().getCity() != null)
+            tv_city.setText(TextUtils.isEmpty(personalBean.getMemInfo().getCity().getName()) ? "" : personalBean.getMemInfo().getCity().getName());
+        tv_constellation.setText(TextUtils.isEmpty(personalBean.getMemInfo().getConstellation()) ? "" : personalBean.getMemInfo().getConstellation());
+        if (personalBean.getMemInfo().getMajor() != null)
+            tv_major.setText(TextUtils.isEmpty(personalBean.getMemInfo().getMajor().getMajorName()) ? "" : personalBean.getMemInfo().getMajor().getMajorName());
+        tv_labels.setText(TextUtils.isEmpty(personalBean.getMemInfo().getLabels()) ? "" : personalBean.getMemInfo().getLabels());
+        tv_sports.setText(TextUtils.isEmpty(personalBean.getMemInfo().getSports()) ? "" : personalBean.getMemInfo().getSports());
+        tv_musics.setText(TextUtils.isEmpty(personalBean.getMemInfo().getMusic()) ? "" : personalBean.getMemInfo().getMusic());
+        tv_foods.setText(TextUtils.isEmpty(personalBean.getMemInfo().getFoods()) ? "" : personalBean.getMemInfo().getFoods());
+        tv_films.setText(TextUtils.isEmpty(personalBean.getMemInfo().getFilms()) ? "" : personalBean.getMemInfo().getFilms());
+        tv_books.setText(TextUtils.isEmpty(personalBean.getMemInfo().getBooks()) ? "" : personalBean.getMemInfo().getBooks());
+        tv_travels.setText(TextUtils.isEmpty(personalBean.getMemInfo().getTravels()) ? "" : personalBean.getMemInfo().getTravels());
         setPhoto();
     }
 
     private void setPhoto() {
         list_view = new ArrayList<>();
-        for (int i=0;i<photoUrlList.size();i++){
+        for (int i = 0; i < photoUrlList.size(); i++) {
             //System.out.println(photoUrlList.get(i));
             LayoutInflater inflater = getLayoutInflater();
             View inflate = inflater.inflate(R.layout.fragment_page, null);
             ImageView iv_image = inflate.findViewById(R.id.iv_image);
-            Glide.with(getApplicationContext()).load(Constant.URL+photoUrlList.get(i)).into(iv_image);
+            Glide.with(getApplicationContext()).load(Constant.URL + photoUrlList.get(i)).into(iv_image);
             list_view.add(inflate);
         }
         list_pager.setAdapter(new MypageAdapter());
@@ -140,7 +159,7 @@ public class DetailActivity extends BaseActivity {
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
-            return view==object;
+            return view == object;
         }
 
         @Override
@@ -156,8 +175,9 @@ public class DetailActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.back,R.id.tv_title}) void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.back, R.id.tv_title})
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.back:
                 finish();
                 break;

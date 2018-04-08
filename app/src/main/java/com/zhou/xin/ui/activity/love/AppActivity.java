@@ -6,13 +6,16 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.whinc.widget.fontview.FontUtils;
+import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.ui.activity.huanxin.LoginActivity;
+import com.zhou.xin.utils.Md5Util;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,6 +34,13 @@ public class AppActivity extends BaseActivity {
 
     @Override
     protected void init() {
+
+        Log.d("huanxinmima", "init: " + Md5Util.encoder("13631789689" + Constant.APP_ENCRYPTION_KEY));
+        Log.d("huanxinmima", "init: " + Md5Util.encoder("13631789689" + Constant.APP_ENCRYPTION_KEY));
+        Log.d("huanxinmima", "init: " + Md5Util.encoder("13631784759" + Constant.APP_ENCRYPTION_KEY));
+        Log.d("huanxinmima", "init: " + Md5Util.encoder("13631782249" + Constant.APP_ENCRYPTION_KEY));
+        Log.d("huanxinmima", "init: " + Md5Util.encoder("13631784659" + Constant.APP_ENCRYPTION_KEY));
+
         if(Build.VERSION.SDK_INT >= 21){
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     |View.SYSTEM_UI_FLAG_LAYOUT_STABLE);

@@ -53,6 +53,7 @@ import com.zhou.xin.ui.activity.huanxin.PickAtUserActivity;
 import com.zhou.xin.ui.activity.huanxin.UserProfileActivity;
 import com.zhou.xin.ui.activity.huanxin.VideoCallActivity;
 import com.zhou.xin.ui.activity.huanxin.VoiceCallActivity;
+import com.zhou.xin.ui.activity.love.ObjectActivity;
 import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.widget.EaseChatRecallPresenter;
 import com.zhou.xin.widget.EaseChatVoiceCallPresenter;
@@ -287,9 +288,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     @Override
     public void onAvatarClick(String username) {
         //handling when user click avatar
-        Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+        /*Intent intent = new Intent(getActivity(), UserProfileActivity.class);
         intent.putExtra("username", username);
-        startActivity(intent);
+        startActivity(intent);*/
+        startActivity(ObjectActivity.newIntent(getContext(),username));
     }
 
     @Override

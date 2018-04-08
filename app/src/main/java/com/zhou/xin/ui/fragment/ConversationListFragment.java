@@ -45,53 +45,46 @@ public class ConversationListFragment extends EaseConversationListFragment {
         super.setUpView();
         // register context menu
         registerForContextMenu(conversationListView);
-        conversationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                EMConversation conversation = conversationListView.getItem(position);
-                String username = conversation.conversationId();
-                if (username.equals(EMClient.getInstance().getCurrentUser()))
-                    Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
-                else {
-                    // start chat acitivity
-                    Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    if(conversation.isGroup()){
-                        if(conversation.getType() == EMConversation.EMConversationType.ChatRoom){
-                            // it's group chat
-                            intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_CHATROOM);
-                        }else{
-                            intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
-                        }
-
+        conversationListView.setOnItemClickListener((parent, view, position, id) -> {
+            EMConversation conversation = conversationListView.getItem(position);
+            String username = conversation.conversationId();
+            if (username.equals(EMClient.getInstance().getCurrentUser()))
+                Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
+            else {
+                // start chat acitivity
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                if(conversation.isGroup()){
+                    if(conversation.getType() == EMConversation.EMConversationType.ChatRoom){
+                        // it's group chat
+                        intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_CHATROOM);
+                    }else{
+                        intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
                     }
-                    // it's single chat
-                    intent.putExtra(Constant.EXTRA_USER_ID, username);
-                    startActivity(intent);
+
                 }
+                // it's single chat
+                intent.putExtra(Constant.EXTRA_USER_ID, username);
+                startActivity(intent);
             }
         });
         //red packet code : 红包回执消息在会话列表最后一条消息的展示
-        conversationListView.setConversationListHelper(new EaseConversationList.EaseConversationListHelper() {
-            @Override
-            public String onSetItemSecondaryText(EMMessage lastMessage) {
-                if (lastMessage.getBooleanAttribute(RPConstant.MESSAGE_ATTR_IS_RED_PACKET_ACK_MESSAGE, false)) {
-                    String sendNick = lastMessage.getStringAttribute(RPConstant.EXTRA_RED_PACKET_SENDER_NAME, "");
-                    String receiveNick = lastMessage.getStringAttribute(RPConstant.EXTRA_RED_PACKET_RECEIVER_NAME, "");
-                    String msg;
-                    if (lastMessage.direct() == EMMessage.Direct.RECEIVE) {
-                        msg = String.format(getResources().getString(R.string.msg_someone_take_red_packet), receiveNick);
+        conversationListView.setConversationListHelper(lastMessage -> {
+            if (lastMessage.getBooleanAttribute(RPConstant.MESSAGE_ATTR_IS_RED_PACKET_ACK_MESSAGE, false)) {
+                String sendNick = lastMessage.getStringAttribute(RPConstant.EXTRA_RED_PACKET_SENDER_NAME, "");
+                String receiveNick = lastMessage.getStringAttribute(RPConstant.EXTRA_RED_PACKET_RECEIVER_NAME, "");
+                String msg;
+                if (lastMessage.direct() == EMMessage.Direct.RECEIVE) {
+                    msg = String.format(getResources().getString(R.string.msg_someone_take_red_packet), receiveNick);
+                } else {
+                    if (sendNick.equals(receiveNick)) {
+                        msg = getResources().getString(R.string.msg_take_red_packet);
                     } else {
-                        if (sendNick.equals(receiveNick)) {
-                            msg = getResources().getString(R.string.msg_take_red_packet);
-                        } else {
-                            msg = String.format(getResources().getString(R.string.msg_take_someone_red_packet), sendNick);
-                        }
+                        msg = String.format(getResources().getString(R.string.msg_take_someone_red_packet), sendNick);
                     }
-                    return msg;
                 }
-                return null;
+                return msg;
             }
+            return null;
         });
         super.setUpView();
         //end of red packet code

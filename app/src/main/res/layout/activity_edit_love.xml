@@ -262,7 +262,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:background="@drawable/btn_bg"
-                android:text="继续完善"
+                android:text="上传信息"
                 android:textSize="14sp"
                 />
 
@@ -272,12 +272,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:background="@drawable/btn_bg"
-                android:text="下次完善"
+                android:text="上传信息"
                 android:textSize="14sp"
                 />
 
             <LinearLayout
-
                 android:id="@+id/ll_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
