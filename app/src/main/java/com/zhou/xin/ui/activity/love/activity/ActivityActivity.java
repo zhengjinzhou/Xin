@@ -108,6 +108,7 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
                 ActivityBean activityBean = gson.fromJson(string, ActivityBean.class);
                 List<ActivityBean.ActivityListBean> activityList = activityBean.getActivityList();
                 runOnUiThread(() -> {
+                    adapter.clear();
                     adapter.add(activityList);
                     adapter.notifyDataSetChanged();
                 });

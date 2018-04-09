@@ -136,13 +136,13 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
             for (int i = 0; i < memberList.size(); i++) {
                 GenderBean.MemberListBean memberListBean = memberList.get(i);
                 photoList.add(memberListBean.getPhotoPath());
-                nameList.add(memberListBean.getRealname());
+                nameList.add(memberListBean.getNickname());
                 if (memberListBean.getCity().getName() != null)
                     cityList.add(memberListBean.getCity().getName());
                 yearsList.add(memberListBean.getAge() + "岁");
                 edusList.add(memberListBean.getMajor().getMajorName());
                 phoneList.add(memberListBean.getPhone());//新增一个phone
-                cidList.add(memberListBean.getId() + "");//新增一个id
+                cidList.add(memberListBean.getMemberId() + "");//新增一个id  修改之后的memberId
                 loadData();
             }
     }
@@ -207,7 +207,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
                 addContact(talent.phone);//右划以及点击Like  添加好友
             }
         };
-        sendBackground(talent.id);//向后台发送请求添加好友请求
+        sendBackground(talent.memberId);//向后台发送请求添加好友请求
     }
 
     /**
@@ -280,7 +280,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
                     talent.educationName = edusList.get(i);
                     talent.workYearName = yearsList.get(i);
                     talent.phone = phoneList.get(i);//新增一个phone
-                    talent.id = cidList.get(i);
+                    talent.memberId = cidList.get(i);
                     list.add(talent);
                 }
                 return list;
@@ -297,7 +297,7 @@ public class HomeFragment extends BaseFragment implements SwipeFlingAdapterView.
     public static class Talent {
 
         public String phone;//新增一个phone
-        public String id;//新增一个cid，用于发起添加好友请求
+        public String memberId;//新增一个cid，用于发起添加好友请求
 
         public String headerIcon;
         public String nickname;

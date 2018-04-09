@@ -9,9 +9,10 @@ import java.util.List;
 
 public class GenderBean {
 
+
     /**
      * error : -1
-     * memberList : [{"age":23,"autograph":"","birthday":"1995-06-12","book_others":"","books":"古龙","city":{"id":22,"name":"福州市","priority":0,"province":{"id":2,"name":"福建省","priority":2}},"constellation":"金牛座","film_others":"","films":"喜剧,惊悚","food_others":"","foods":"卤肉饭,生煎包","gender":0,"hashCode":-2147483648,"id":3,"label_others":"","labels":"健谈,局气,热血,叛逆,安静","major":{"hashCode":-2147483648,"id":3,"majorName":"高中","priority":0},"miniPhotoPath":"/upload/file/mini/201712/28162354m993.jpg","music":"R&B,金属,嘻哈","music_others":"","nickname":"飞翔","pair_id":0,"phone":"13631789659","photoPath":"/upload/file/201712/28162354l3nf.jpg","pictures":[{"miniUrl":"/upload/file/mini/201712/28162354m993.jpg","photoUrl":"/upload/file/201712/28162354l3nf.jpg","pictureId":34},{"miniUrl":"/upload/file/mini/201712/281623557f5w.jpg","photoUrl":"/upload/file/201712/28162355rmc1.jpg","pictureId":35}],"realname":"成龙","sport_others":"","sports":"健身房,拳击,跆拳道,足球","thumbs_up":0,"travel_others":"","travels":"","wechat":""},{"age":25,"autograph":"哈哈哈","birthday":"1995-06-12","book_others":"","books":"古龙","city":{"id":23,"name":"厦门市","priority":0,"province":{"id":2,"name":"福建省","priority":2}},"constellation":"狮子座","film_others":"","films":"喜剧,惊悚","food_others":"","foods":"卤肉饭,生煎包,北京烤鸭","gender":0,"hashCode":-2147483648,"id":4,"label_others":"","labels":"健谈,局气,热血,叛逆,安静","major":{"hashCode":-2147483648,"id":4,"majorName":"大专","priority":0},"miniPhotoPath":"/upload/file/mini/201712/28162438vs29.jpg","music":"R&B,金属,嘻哈","music_others":"","nickname":"敖强","pair_id":0,"phone":"13631789659","photoPath":"/upload/file/201712/28162437z7ls.jpg","pictures":[{"miniUrl":"/upload/file/mini/201712/28162438vs29.jpg","photoUrl":"/upload/file/201712/28162437z7ls.jpg","pictureId":36},{"miniUrl":"/upload/file/mini/201712/28162438rdfa.jpg","photoUrl":"/upload/file/201712/2816243845zd.jpg","pictureId":37},{"miniUrl":"/upload/file/mini/201712/28162438pqfl.jpg","photoUrl":"/upload/file/201712/28162438psm7.jpg","pictureId":38}],"realname":"吴亦凡","sport_others":"","sports":"健身房,拳击,跆拳道,足球","thumbs_up":0,"travel_others":"","travels":"桂林,成都","wechat":"12563644"}]
+     * memberList : [{"age":23,"autograph":"","birthday":"1995-06-12","book_others":"","books":"古龙","city":{"id":22,"name":"福州市","priority":0,"province":{"id":2,"name":"福建省","priority":2}},"constellation":"金牛座","film_others":"","films":"喜剧,惊悚","food_others":"","foods":"卤肉饭,生煎包","gender":0,"hashCode":-2147483648,"id":3,"label_others":"","labels":"健谈,局气,热血,叛逆,安静","major":{"hashCode":-2147483648,"id":6,"majorName":"研究生","priority":0},"memberId":3,"miniPhotoPath":"/upload/file/mini/201804/06133117uims.jpg","music":"R&B,金属,嘻哈","music_others":"","nickname":"飞翔","pair_id":0,"phone":"13631784759","photoPath":"/upload/file/201804/06133117jqpb.jpg","pictures":[{"miniUrl":"/upload/file/mini/201804/06133117uims.jpg","photoUrl":"/upload/file/201804/06133117jqpb.jpg","pictureId":34},{"miniUrl":"/upload/file/mini/201804/061331176jw2.jpg","photoUrl":"/upload/file/201804/06133117ev0i.jpg","pictureId":35}],"realname":"成龙","sport_others":"","sports":"健身房,拳击,跆拳道,足球","thumbs_up":0,"travel_others":"","travels":"","wechat":""},{"age":25,"autograph":"哈哈哈","birthday":"1995-06-12","book_others":"","books":"古龙","city":{"id":23,"name":"厦门市","priority":0,"province":{"id":2,"name":"福建省","priority":2}},"constellation":"狮子座","film_others":"","films":"喜剧,惊悚","food_others":"","foods":"卤肉饭,生煎包,北京烤鸭","gender":0,"hashCode":-2147483648,"id":4,"label_others":"","labels":"健谈,局气,热血,叛逆,安静","major":{"hashCode":-2147483648,"id":6,"majorName":"研究生","priority":0},"memberId":4,"miniPhotoPath":"/upload/file/mini/201804/06133143ym1s.jpg","music":"R&B,金属,嘻哈","music_others":"","nickname":"敖强","pair_id":0,"phone":"13631784659","photoPath":"/upload/file/201804/06133143xidc.jpg","pictures":[{"miniUrl":"/upload/file/mini/201804/06133143ym1s.jpg","photoUrl":"/upload/file/201804/06133143xidc.jpg","pictureId":36},{"miniUrl":"/upload/file/mini/201804/06133143464p.jpg","photoUrl":"/upload/file/201804/06133143jsfa.jpg","pictureId":37},{"miniUrl":"/upload/file/mini/201712/28162438pqfl.jpg","photoUrl":"/upload/file 04-09 10:39:08.917 10593-10760/com.zhou.xin D/LogUtil1: /201712/28162438psm7.jpg","pictureId":38}],"realname":"吴亦凡","sport_others":"","sports":"健身房,拳击,跆拳道,足球","thumbs_up":0,"travel_others":"","travels":"桂林,成都","wechat":"12563644"}]
      * msg : 获取成功
      */
 
@@ -61,15 +62,16 @@ public class GenderBean {
          * id : 3
          * label_others :
          * labels : 健谈,局气,热血,叛逆,安静
-         * major : {"hashCode":-2147483648,"id":3,"majorName":"高中","priority":0}
-         * miniPhotoPath : /upload/file/mini/201712/28162354m993.jpg
+         * major : {"hashCode":-2147483648,"id":6,"majorName":"研究生","priority":0}
+         * memberId : 3
+         * miniPhotoPath : /upload/file/mini/201804/06133117uims.jpg
          * music : R&B,金属,嘻哈
          * music_others :
          * nickname : 飞翔
          * pair_id : 0
-         * phone : 13631789659
-         * photoPath : /upload/file/201712/28162354l3nf.jpg
-         * pictures : [{"miniUrl":"/upload/file/mini/201712/28162354m993.jpg","photoUrl":"/upload/file/201712/28162354l3nf.jpg","pictureId":34},{"miniUrl":"/upload/file/mini/201712/281623557f5w.jpg","photoUrl":"/upload/file/201712/28162355rmc1.jpg","pictureId":35}]
+         * phone : 13631784759
+         * photoPath : /upload/file/201804/06133117jqpb.jpg
+         * pictures : [{"miniUrl":"/upload/file/mini/201804/06133117uims.jpg","photoUrl":"/upload/file/201804/06133117jqpb.jpg","pictureId":34},{"miniUrl":"/upload/file/mini/201804/061331176jw2.jpg","photoUrl":"/upload/file/201804/06133117ev0i.jpg","pictureId":35}]
          * realname : 成龙
          * sport_others :
          * sports : 健身房,拳击,跆拳道,足球
@@ -96,6 +98,7 @@ public class GenderBean {
         private String label_others;
         private String labels;
         private MajorBean major;
+        private int memberId;
         private String miniPhotoPath;
         private String music;
         private String music_others;
@@ -246,6 +249,14 @@ public class GenderBean {
 
         public void setMajor(MajorBean major) {
             this.major = major;
+        }
+
+        public int getMemberId() {
+            return memberId;
+        }
+
+        public void setMemberId(int memberId) {
+            this.memberId = memberId;
         }
 
         public String getMiniPhotoPath() {
@@ -453,8 +464,8 @@ public class GenderBean {
         public static class MajorBean {
             /**
              * hashCode : -2147483648
-             * id : 3
-             * majorName : 高中
+             * id : 6
+             * majorName : 研究生
              * priority : 0
              */
 
@@ -498,8 +509,8 @@ public class GenderBean {
 
         public static class PicturesBean {
             /**
-             * miniUrl : /upload/file/mini/201712/28162354m993.jpg
-             * photoUrl : /upload/file/201712/28162354l3nf.jpg
+             * miniUrl : /upload/file/mini/201804/06133117uims.jpg
+             * photoUrl : /upload/file/201804/06133117jqpb.jpg
              * pictureId : 34
              */
 
@@ -561,6 +572,7 @@ public class GenderBean {
                     ", label_others='" + label_others + '\'' +
                     ", labels='" + labels + '\'' +
                     ", major=" + major +
+                    ", memberId=" + memberId +
                     ", miniPhotoPath='" + miniPhotoPath + '\'' +
                     ", music='" + music + '\'' +
                     ", music_others='" + music_others + '\'' +

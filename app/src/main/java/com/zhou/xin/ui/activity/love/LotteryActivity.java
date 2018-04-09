@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,8 +17,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
+import com.zhou.xin.adapter.base.BaseCommonAdapter;
+import com.zhou.xin.adapter.base.ViewHolder;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
+import com.zhou.xin.bean.MyWinerBean;
 import com.zhou.xin.bean.WinnersBean;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
@@ -44,10 +49,11 @@ public class LotteryActivity extends BaseActivity {
     private static final String TAG = "LotteryActivity";
     @BindView(R.id.wheelSurfView1) WheelSurfView wheelSurfView1;
     @BindView(R.id.tv_head) TextView tv_head;
-    @BindView(R.id.textView) VerticalTextview textView;
+    @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
-    private List<String> titleList = new ArrayList<>();
-    private List<String> imgUrl = new ArrayList<>();
+    private List<MyWinerBean.WinnerListBean> titleList = new ArrayList<>();
+    private BaseCommonAdapter adapter;
+    public boolean isChoujiang = true;
 
     @Override
     protected int getLayout() {
@@ -62,7 +68,18 @@ public class LotteryActivity extends BaseActivity {
         //获取第二个视图
         //添加滚动监听
         initLottery();
-        initTextView();
+        initRecycler();
+    }
+
+    private void initRecycler() {
+        adapter = new BaseCommonAdapter<MyWinerBean.WinnerListBean>(this, R.layout.item_lotter, titleList) {
+            @Override
+            public void convert(ViewHolder holder, MyWinerBean.WinnerListBean s, int position) {
+                holder.setText(R.id.tvContent,"您在 "+s.getWinTime()+" 中得 "+s.getPrize().getPrizeName());
+            }
+        };
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
 
     /**
@@ -87,90 +104,68 @@ public class LotteryActivity extends BaseActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "获取中奖列表: "+e.getMessage());
-
+                Log.d(TAG, "获取中奖列表: " + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                Log.d(TAG, "获取中奖列表: "+string);
-                Gson gson = new Gson();
-                WinnersBean winnersListBean = gson.fromJson(string, WinnersBean.class);
-                WinnersBean.LuckdrawBean luckdraw = winnersListBean.getLuckdraw();
-                List<WinnersBean.LuckdrawBean.PrizeSetBean> prizeSet = luckdraw.getPrizeSet();
-                for (int i=0;i<prizeSet.size();i++){
-                    imgUrl.add(prizeSet.get(i).getMini_url());
-
-                }
+                Log.d(TAG, "获取中奖列表: " + string);
             }
         });
-    }
-
-    private void initTextView() {
-
-        textView.setTextList(titleList);
-        textView.setText(16, 5, Color.RED);//设置属性
-        textView.setTextStillTime(3000);//设置停留时长间隔
-        textView.setAnimTime(300);//设置进入和退出的时间间隔
-        textView.setOnItemClickListener(position -> ToastUtil.show(getApplicationContext(),"点击了 : " + titleList.get(position)));
     }
 
     private void initLottery() {
         wheelSurfView1.setRotateListener(new RotateListener() {
             @Override
             public void rotateEnd(int position, String des) {
-                ToastUtil.show(getApplicationContext(),"恭喜，您中了" + des);
+                ToastUtil.show(getApplicationContext(), "恭喜，您中了" + des);
                 initmember(position);//记录中奖者
+                initwinnerList();//更新个人中奖列表
             }
 
             @Override
             public void rotating(ValueAnimator valueAnimator) {
-                Log.d(TAG, "rotating: "+valueAnimator);
+                Log.d(TAG, "rotating: " + valueAnimator);
             }
 
             @Override
             public void rotateBefore(ImageView goImg) {
-                int position = new Random().nextInt(7) + 1;
-                wheelSurfView1.startRotate(position);
+                if(isChoujiang){
+                    int position = new Random().nextInt(7) + 1;
+                    wheelSurfView1.startRotate(position);
+                    isChoujiang = false;
+                }else {
+                    ToastUtil.show(getApplicationContext(), "每个人仅能抽奖一次！");
+                }
             }
         });
     }
 
-    @OnClick({R.id.back}) void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.back})
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.back:
                 finish();
                 break;
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        textView.startAutoScroll();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        textView.stopAutoScroll();
-    }
 
     private void initmember(int pos) {
         String token = App.getInstance().getUserInfo().getToken();
         String opt = "18";
         String memberId = App.getInstance().getUserInfo().getUid();
-        String prizeId = pos+"";
+        String prizeId = pos + "";
         String _t = CurrentTimeUtil.nowTime();
-        String joint = "_t=" + _t + "&memberId=" + memberId +"&opt=" + opt +"&prizeId="+ prizeId + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
+        String joint = "_t=" + _t + "&memberId=" + memberId + "&opt=" + opt + "&prizeId=" + prizeId + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
         String _s = Md5Util.encoder(joint);
         OkHttpClient okHttpClient = new OkHttpClient();
         FormBody formBody = new FormBody.Builder()
                 .add("token", token)
                 .add("opt", opt)
-                .add("memberId",memberId)
-                .add("prizeId",prizeId)
+                .add("memberId", memberId)
+                .add("prizeId", prizeId)
                 .add("_t", _t)
                 .add("_s", _s)
                 .build();
@@ -179,13 +174,13 @@ public class LotteryActivity extends BaseActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "记录中奖者: "+e.getMessage());
+                Log.d(TAG, "记录中奖者: " + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                Log.d(TAG, "记录中奖者: "+string);
+                Log.d(TAG, "记录中奖者: " + string);
             }
         });
     }
@@ -211,13 +206,28 @@ public class LotteryActivity extends BaseActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "获取个人中奖记录: "+e.getMessage());
+                Log.d(TAG, "获取个人中奖记录: " + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                Log.d(TAG, "获取个人中奖记录: "+string);
+                Log.d(TAG, "获取个人中奖记录: " + string);
+                getResult(string);
+            }
+        });
+    }
+
+    private void getResult(String string) {
+        Gson gson = new Gson();
+        MyWinerBean myWinerBean = gson.fromJson(string, MyWinerBean.class);
+        List<MyWinerBean.WinnerListBean> winnerList = myWinerBean.getWinnerList();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.clear();
+                adapter.addDatas(winnerList);
+                adapter.notifyDataSetChanged();
             }
         });
     }
