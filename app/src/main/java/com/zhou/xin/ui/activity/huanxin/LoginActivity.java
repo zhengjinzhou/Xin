@@ -132,13 +132,10 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void login() {
-        if (SpUtil.getString(getApplicationContext(), Constant.ISLOGIN,"").equals("ISLOGIN")){
-            username = SpUtil.getString(getApplicationContext(),Constant.USERNAME,"");
-            password = SpUtil.getString(getApplicationContext(),Constant.PASSWORD,"");
-        }else {
+
             username = etUsername.getText().toString().trim();
             password = etPassword.getText().toString().trim();
-        }
+
         if (TextUtils.isEmpty(username)) {
             ToastUtil.show(getApplicationContext(), "账号不能为空");
             return;
