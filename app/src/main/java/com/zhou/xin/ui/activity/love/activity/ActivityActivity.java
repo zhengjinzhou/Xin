@@ -1,17 +1,6 @@
 package com.zhou.xin.ui.activity.love.activity;
 
-import android.annotation.TargetApi;
-import android.content.ContentUris;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
 import android.os.Handler;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -30,16 +18,14 @@ import com.zhou.xin.adapter.base.ViewHolder;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.bean.ActivityBean;
-import com.zhou.xin.ui.activity.love.StartActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.LogUtil;
 import com.zhou.xin.utils.Md5Util;
+import com.zhou.xin.utils.ToastUtil;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -135,9 +121,12 @@ public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout
                     holder.getView(R.id.tvEd).setVisibility(View.VISIBLE);
                 }
                 holder.setOnClickListener(R.id.ll_activity, v -> {
-                    App.getInstance().setActivityBean(s);
-                    startToActivity(ActivityInfoActivity.class);
-                    //startActivity(ActivityInfoActivity.newIntent(getApplicationContext(),position));
+                    if (s.getIsFinish()==1){
+                        App.getInstance().setActivityBean(s);
+                        startToActivity(ActivityInfoActivity.class);
+                    }else {
+                        ToastUtil.show(getApplicationContext(),"活动已结束");
+                    }
                 });
             }
         };

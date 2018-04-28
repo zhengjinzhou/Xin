@@ -2,8 +2,6 @@ package com.zhou.xin.ui.activity.love;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +18,6 @@ import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.base.DemoHelper;
 import com.zhou.xin.bean.ZhuCeBean;
-import com.zhou.xin.ui.activity.huanxin.LoginActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.DES3Util;
 import com.zhou.xin.utils.Md5Util;

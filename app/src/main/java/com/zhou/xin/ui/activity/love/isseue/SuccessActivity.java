@@ -23,8 +23,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.google.gson.Gson;
 import com.hyphenate.util.DensityUtil;
-import com.mabeijianxi.smallvideorecord2.MediaRecorderActivity;
-import com.mabeijianxi.smallvideorecord2.model.MediaRecorderConfig;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.adapter.base.BaseCommonAdapter;
@@ -42,9 +40,9 @@ import com.zhou.xin.utils.DateUtil;
 import com.zhou.xin.utils.GlideRoundTransform;
 import com.zhou.xin.utils.LogUtil;
 import com.zhou.xin.utils.Md5Util;
-import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.utils.ToastUtil;
 import com.zhou.xin.utils.VideoUtil;
+import com.zhuang.likeviewlibrary.LikeView;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -219,8 +217,17 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 }
                 if (!TextUtils.isEmpty(bean.getContent()))
                     holder.setText(R.id.content, bean.getContent());
-                holder.setText(R.id.like, bean.getTapTimes() + "");
-                toPoint(holder, bean);//点赞
+                LikeView like = holder.getView(R.id.like);
+                like.setLikeCount(bean.getTapTimes());
+                //holder.setText(R.id.like, bean.getTapTimes() + "");
+                //toPoint(holder, bean);//点赞
+                like.setOnLikeListeners(isCancel -> {
+                    if (isCancel){
+                        toSend("cancel", bean.getId() + "");
+                    }else {
+                        toSend("focus", bean.getId() + "");
+                    }
+                });
                 int type = getItemViewType(position);
                 if (type == 1) {
                     textImagerManger(holder, bean, position);

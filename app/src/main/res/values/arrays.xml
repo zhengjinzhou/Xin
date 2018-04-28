@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="WheelSurfView_names">
-        <item>王者荣耀皮肤</item>
-        <item>王者荣耀皮肤</item>
-        <item>王者荣耀皮肤</item>
-        <item>王者荣耀皮肤</item>
-        <item>QQ会员优惠80%</item>
+        <item>王者皮肤</item>
+        <item>王者皮肤</item>
+        <item>王者皮肤</item>
+        <item>王者皮肤</item>
+        <item>QQ会员优惠券</item>
         <item>电影票两张</item>
         <item>省内旅游两张票</item>
     </string-array>

@@ -2,9 +2,6 @@ package com.zhou.xin.ui.activity.love;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,15 +16,10 @@ import com.zhou.xin.adapter.base.ViewHolder;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.bean.ReportBean;
-import com.zhou.xin.ui.activity.huanxin.MainActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
-import com.zhou.xin.utils.ToastUtil;
-
-import org.json.JSONArray;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

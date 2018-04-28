@@ -22,8 +22,7 @@
                 android:id="@+id/main_backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
-                android:scaleType="centerCrop"
-                />
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/tvHead"
@@ -233,6 +232,17 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_11" />
 
+            <Button
+                android:visibility="gone"
+                android:id="@+id/btLottery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_16"
+                android:background="@drawable/bg_drawable_register"
+                android:text="您获取一次抽奖机会"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_11" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -243,7 +253,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

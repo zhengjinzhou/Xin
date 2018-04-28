@@ -2,9 +2,6 @@ package com.zhou.xin.ui.activity.love;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,22 +12,16 @@ import com.google.gson.Gson;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
-import com.zhou.xin.base.BaseFragment;
 import com.zhou.xin.bean.UserInfo;
-import com.zhou.xin.ui.fragment.ChatFragment;
-import com.zhou.xin.ui.fragment.HomeFragment;
 import com.zhou.xin.utils.CountDownTimerUtils;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.DES3Util;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.PhoneUtil;
-import com.zhou.xin.utils.SpUtil;
 import com.zhou.xin.utils.ToastUtil;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;

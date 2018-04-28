@@ -1,9 +1,6 @@
 package com.zhou.xin.ui.activity.huanxin;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -14,11 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.utils.EaseUserUtils;
-import com.hyphenate.exceptions.HyphenateException;
 import com.zhou.xin.R;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.utils.ToastUtil;
@@ -81,6 +76,7 @@ public class BlacklistActivity extends BaseActivity {
      */
     void removeOutBlacklist(final String tobeRemoveUser) {
         Log.d("", "removeOutBlacklist: 11111111111111111111111");
+
         ToastUtil.show(getApplicationContext(),"暂不支持移出黑名单！");
 
         /*final ProgressDialog pd = new ProgressDialog(this);

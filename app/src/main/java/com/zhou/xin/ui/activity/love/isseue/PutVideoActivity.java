@@ -3,8 +3,6 @@ package com.zhou.xin.ui.activity.love.isseue;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +17,6 @@ import com.zhou.xin.R;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.bean.UserInfo;
-import com.zhou.xin.ui.activity.love.isseue.VideoPlayerActivity;
 import com.zhou.xin.utils.ToastUtil;
 
 import java.io.File;

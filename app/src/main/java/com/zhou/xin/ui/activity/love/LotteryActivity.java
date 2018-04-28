@@ -1,18 +1,12 @@
 package com.zhou.xin.ui.activity.love;
 
 import android.animation.ValueAnimator;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zhou.xin.Constant;
@@ -22,11 +16,9 @@ import com.zhou.xin.adapter.base.ViewHolder;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
 import com.zhou.xin.bean.MyWinerBean;
-import com.zhou.xin.bean.WinnersBean;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.ToastUtil;
-import com.zhou.xin.widget.VerticalTextview;
 import com.zhou.xin.widget.lottery.listener.RotateListener;
 import com.zhou.xin.widget.lottery.view.WheelSurfView;
 

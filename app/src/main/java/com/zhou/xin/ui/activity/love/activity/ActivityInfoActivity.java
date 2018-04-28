@@ -1,9 +1,6 @@
 package com.zhou.xin.ui.activity.love.activity;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -13,11 +10,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,7 +24,6 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
-import com.zhou.xin.adapter.base.BaseCommonAdapter;
 import com.zhou.xin.adapter.base.CommonAdapter;
 import com.zhou.xin.adapter.base.ViewHolder;
 import com.zhou.xin.base.App;
@@ -68,6 +64,7 @@ public class ActivityInfoActivity extends BaseActivity {
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.tvPhoneNumber) TextView tvPhoneNumber;
     @BindView(R.id.tvMoney) TextView tvMoney;
+    @BindView(R.id.btLottery) Button btLottery;
 
     boolean isShow = false;
     private CommonAdapter adapter;
@@ -196,29 +193,18 @@ public class ActivityInfoActivity extends BaseActivity {
                 Gson gson = new Gson();
                 UserInfo userInfo = gson.fromJson(string, UserInfo.class);
                 if (userInfo.getError().equals("-1")) {
-                    //抽奖
-                    toLottery();
-                    //成功之后更新头像
-                    getBaoming();
+                    runOnUiThread(() -> {
+                        //抽奖显示
+                        btLottery.setVisibility(View.VISIBLE);
+                        //成功之后更新头像
+                        getBaoming();
+                    });
+
                 } else {
                     runOnUiThread(() -> ToastUtil.show(getApplicationContext(), userInfo.getMsg()));
                 }
             }
         });
-    }
-
-    /**
-     * 抽奖
-     */
-    private void toLottery() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("报名成功！");
-        builder.setTitle("恭喜您获得一次抽奖机会，是否参与抽奖？");
-        builder.setNegativeButton("否", (dialog, which) -> dialog.dismiss()).setPositiveButton("是", (dialog, which) -> {
-            dialog.dismiss();
-            startToActivity(LotteryActivity.class);
-        });
-        builder.create().show();
     }
 
     @Override
@@ -227,9 +213,13 @@ public class ActivityInfoActivity extends BaseActivity {
         return true;
     }
 
-    @OnClick({R.id.tv_show, R.id.btSubmit, R.id.tvPhoneNumber, R.id.back})
+    @OnClick({R.id.tv_show, R.id.btSubmit, R.id.tvPhoneNumber, R.id.back,R.id.btLottery})
     void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btLottery:
+                startToActivity(LotteryActivity.class);
+                btLottery.setVisibility(View.GONE);
+                break;
             case R.id.back:
                 finish();
                 break;
