@@ -1,5 +1,6 @@
 package com.zhou.xin.ui.fragment;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseFragment;
 import com.zhou.xin.bean.PersonalBean;
 import com.zhou.xin.bean.SelectBean;
+import com.zhou.xin.ui.activity.love.MyFriendActivity;
 import com.zhou.xin.ui.activity.love.activity.ActivityActivity;
 import com.zhou.xin.ui.activity.love.DetailActivity;
 import com.zhou.xin.ui.activity.love.GuildActivity;
@@ -90,7 +92,7 @@ public class MeFragment extends BaseFragment {
     private void initRecycle() {
         ArrayList<BaseBean> data = new ArrayList<>();
         data.add(new BaseBean(SafeActivity.class,"安全管理",R.drawable.saft));
-        //data.add(new BaseBean(LotteryActivity.class,"抽奖活动",R.drawable.lottery));
+        data.add(new BaseBean(MyFriendActivity.class,"个人朋友圈",R.drawable.task));
         data.add(new BaseBean(OpinionActivity.class,"意见反馈",R.drawable.opinion));
         data.add(new BaseBean(ActivityActivity.class,"线下活动",R.drawable.activity));
 

@@ -510,6 +510,7 @@
 
         <service android:name=".download.DownLoadService" />
 
+        <activity android:name=".ui.activity.love.MyFriendActivity"></activity>
     </application>
 
 </manifest>

@@ -4,8 +4,8 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/griditems_bg"
     android:layout_marginBottom="@dimen/space_16"
+    android:background="@drawable/griditems_bg"
     android:orientation="vertical">
 
     <include layout="@layout/view_isseue_info_nufollow" />
@@ -27,8 +27,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_16" />
 
+    <android.support.v7.widget.RecyclerView
+        android:background="@color/emojicon_tab_selected"
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <include layout="@layout/view_isseue_menu" />
+
 
 </LinearLayout>
 

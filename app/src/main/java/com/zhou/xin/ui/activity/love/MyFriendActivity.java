@@ -1,22 +1,13 @@
-package com.zhou.xin.ui.activity.love.isseue;
+package com.zhou.xin.ui.activity.love;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,18 +23,15 @@ import com.zhou.xin.adapter.base.MultiItemTypeSupport;
 import com.zhou.xin.adapter.base.ViewHolder;
 import com.zhou.xin.base.App;
 import com.zhou.xin.base.BaseActivity;
-import com.zhou.xin.bean.DianZanBean;
 import com.zhou.xin.bean.TalkBean;
 import com.zhou.xin.bean.UserInfo;
-import com.zhou.xin.ui.activity.love.ObjectActivity;
-import com.zhou.xin.ui.activity.love.ReportActivity;
+import com.zhou.xin.ui.activity.love.isseue.PhotoiewerActivity;
+import com.zhou.xin.ui.activity.love.isseue.SuccessActivity;
 import com.zhou.xin.utils.CurrentTimeUtil;
 import com.zhou.xin.utils.DateUtil;
 import com.zhou.xin.utils.GlideRoundTransform;
-import com.zhou.xin.utils.LogUtil;
 import com.zhou.xin.utils.Md5Util;
 import com.zhou.xin.utils.ToastUtil;
-import com.zhou.xin.utils.VideoUtil;
 import com.zhuang.likeviewlibrary.LikeView;
 
 import java.io.IOException;
@@ -53,7 +41,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
@@ -63,117 +50,24 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class MyFriendActivity extends BaseActivity {
 
-    private static final String TAG = "SuccessActivity";
+    private static final String TAG = "MyFriendActivity";
     @BindView(R.id.tv_head) TextView tv_head;
-    @BindView(R.id.recycleView) RecyclerView recycleView;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.iv_add) ImageView iv_add;
-
     private MultiItemCommonAdapter adapter;
+    @BindView(R.id.recycleView) RecyclerView recycleView;
     private BaseCommonAdapter<String> photoAdapter;
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_success;
+        return R.layout.activity_my_friend;
     }
 
     @Override
     protected void init() {
-        tv_head.setText(R.string.SuccessActivity);
-        iv_add.setVisibility(View.VISIBLE);
-        iv_add.setBackground(getResources().getDrawable(R.drawable.more_unfold));
+        tv_head.setText("我的朋友圈");
+        getInfo();
         initRecycle();
-        refresh.setOnRefreshListener(this);
-    }
-
-    /**
-     * 获取服务器数据
-     */
-    private void getInfo() {
-        String token = App.getInstance().getUserInfo().getToken();
-        OkHttpClient okHttpClient = new OkHttpClient();
-        FormBody formBody = new FormBody.Builder()
-                .add("token", token)
-                .build();
-        Request build = new Request.Builder()
-                .url(Constant.GET_LIST)
-                .post(formBody)
-                .build();
-        Call call = okHttpClient.newCall(build);
-        dialog.show();
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                dialog.dismiss();
-                Log.d(TAG, "onFailure: " + e.getMessage());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                dialog.dismiss();
-                String string = response.body().string();
-                LogUtil.d("-----------朋友圈信息--------------" + string);
-                getResult(string);
-            }
-        });
-    }
-
-    /**
-     * 朋友圈信息
-     *
-     * @param data
-     */
-    private void getResult(String data) {
-        Gson gson = new Gson();
-        TalkBean talkBean = gson.fromJson(data, TalkBean.class);
-        if (talkBean.getError().equals("-1")) {
-            final List<TalkBean.TalkListBean> talkList = talkBean.getTalkList();
-            runOnUiThread(() -> {
-                adapter.addDatas(talkList);
-                adapter.notifyDataSetChanged();
-            });
-        }
-    }
-
-    @OnClick({R.id.back, R.id.iv_add})
-    void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-            case R.id.iv_add:
-                View inflate = LayoutInflater.from(getApplicationContext()).inflate(R.layout.pop_success, null);
-                final PopupWindow pop = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                pop.setOutsideTouchable(true);
-                pop.setFocusable(true);// 点击back退出pop
-                pop.setBackgroundDrawable(new ColorDrawable(Color.WHITE));// 设置背景透明，点击back退出pop
-                pop.setOnDismissListener(() -> {
-                    pop.dismiss();
-                    WindowManager.LayoutParams lp = getWindow().getAttributes();
-                    lp.alpha = 1f;
-                    getWindow().setAttributes(lp);
-                });
-                WindowManager.LayoutParams lp = getWindow().getAttributes();
-                lp.alpha = 0.5f;
-                getWindow().setAttributes(lp);
-                pop.showAsDropDown(iv_add, 0, 80);
-                inflate.findViewById(R.id.tv_img).setOnClickListener(view1 -> {
-                    startToActivity(PutActivity.class);//图文
-                    pop.dismiss();
-                });
-                inflate.findViewById(R.id.tv_video).setOnClickListener(view12 -> {
-                    VideoUtil.toVideo(SuccessActivity.this);    //视文
-                    pop.dismiss();
-                });
-                inflate.findViewById(R.id.tv_refresh).setOnClickListener(v -> {
-                    getInfo();
-                    pop.dismiss();
-                });
-                inflate.findViewById(R.id.tv_cancel).setOnClickListener(view13 -> pop.dismiss());
-                break;
-        }
     }
 
     private void initRecycle() {
@@ -207,12 +101,25 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
             @Override
             public void convert(final ViewHolder holder, final TalkBean.TalkListBean bean, int position) {
 
-                holder.getView(R.id.ivDelete).setVisibility(View.GONE);
+                holder.getView(R.id.iv_report).setVisibility(View.GONE);
+                holder.getView(R.id.like).setVisibility(View.GONE);
+
+                /**
+                 * 删除朋友圈动态
+                 */
+                holder.setOnClickListener(R.id.ivDelete, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        toDelete(bean.getId()+"",position);
+                    }
+                });
+
                 List<String> photo = bean.getIconList();
 
                 RecyclerView headerPhoto = holder.getView(R.id.header);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(SuccessActivity.this, 5, GridLayoutManager.VERTICAL, false);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(MyFriendActivity.this, 5, GridLayoutManager.VERTICAL, false);
                 headerPhoto.setLayoutManager(gridLayoutManager);
+
                 photoAdapter = new BaseCommonAdapter<String>(mContext, R.layout.header_photo_view, photo) {
                     @Override
                     public void convert(ViewHolder holder, String s, int position) {
@@ -237,22 +144,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 }
                 if (!TextUtils.isEmpty(bean.getContent()))
                     holder.setText(R.id.content, bean.getContent());
-                LikeView like = holder.getView(R.id.like);
-                like.setLikeCount(bean.getTapTimes());
-                //holder.setText(R.id.like, bean.getTapTimes() + "");
-                //toPoint(holder, bean);//点赞
-                    like.setOnLikeListeners(isCancel -> {
-                        if (bean.getIstap()==1){
-                            ToastUtil.show(getApplicationContext(),"你已经点赞过该朋友圈");
-                            return;
-                        }else {
-                            if (isCancel){
-                                toSend("cancel", bean.getId() + "");
-                            }else {
-                                toSend("focus", bean.getId() + "");
-                            }
-                        }
-                    });
+
 
                 int type = getItemViewType(position);
                 if (type == 1) {
@@ -262,11 +154,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 } else {
                     //textManger(holder,bean,position);
                 }
-                //举报
-                holder.setOnClickListener(R.id.iv_report, v -> Report(bean.getMobile()));
-                if (position == getItemCount()-1){
-                    ToastUtil.show(getApplicationContext(),"到底部了,可点击顶部右上角进行刷新动态");
-                }
+
             }
         };
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -280,53 +168,63 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
     }
 
     /**
-     * 点赞接口
-     *
-     * @param action
+     * 删除某条动态
+     * @param talkId
      */
-    private void toSend(String action, String talkId) {
-        Log.d(TAG, "toSend: " + action + "," + talkId);
-        String opt = "16";
+    private void toDelete(String talkId,int position) {
         String token = App.getInstance().getUserInfo().getToken();
+        String opt = "25";
         String _t = CurrentTimeUtil.nowTime();
-        String joint = "_t=" + _t + "&action=" + action + "&opt=" + opt + "&talkId=" + talkId + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
+        String joint = "_t=" + _t + "&opt=" + opt + "&talkId=" + talkId + "&token=" + token + Constant.APP_ENCRYPTION_KEY;
         String _s = Md5Util.encoder(joint);
+
         System.out.println("拼接后_t的数据--------" + joint);
+
         OkHttpClient okHttpClient = new OkHttpClient();
+
         FormBody body = new FormBody.Builder()
-                .add("opt", opt)
                 .add("token", token)
-                .add("action", action)
                 .add("talkId", talkId)
+                .add("opt", opt)
                 .add("_t", _t)
                 .add("_s", _s)
                 .build();
-        Request request = new Request.Builder().post(body).url(Constant.LOGIN_URL).build();
+        Request request = new Request.Builder()
+                .url(Constant.LOGIN_URL)
+                .post(body)
+                .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: " + e.getMessage());
+                dialog.dismiss();
+                Log.d(TAG, "onFailure: "+e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
                 Gson gson = new Gson();
-                DianZanBean dianZanBean = gson.fromJson(string, DianZanBean.class);
-                List<String> iconList = dianZanBean.getIconList();
-                if (iconList==null){
-                    return;
+                UserInfo userInfo = gson.fromJson(string, UserInfo.class);
+                if (userInfo.getError().equals("-1")){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.show(getApplicationContext(),userInfo.getMsg());
+                            adapter.remove(position);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.show(getApplicationContext(),userInfo.getMsg());
+                        }
+                    });
                 }
-                runOnUiThread(() -> {
-                    int itemCount = photoAdapter.getItemCount();
-                    if (itemCount>0){
-                        photoAdapter.clear();
-                    }
-                    photoAdapter.add(iconList);
-                    photoAdapter.notifyDataSetChanged();
-                });
-                Log.d(TAG, "onResponse: " + string);
+                Log.d(TAG, "onResponse: "+string);
+
             }
         });
     }
@@ -414,50 +312,46 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
     }
 
     /**
-     * 举报，有参数要传，待续
+     * 获取个人朋友圈列表
      */
-    private void Report(final String mobile) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final AlertDialog dialog = builder.create();
-        View inflate = getLayoutInflater().inflate(R.layout.dialog_report, null);
-        dialog.setView(inflate, 0, 0, 0, 0);
-        inflate.findViewById(R.id.tv_cancel).setOnClickListener(v -> dialog.dismiss());
-        inflate.findViewById(R.id.tv_sure).setOnClickListener(v -> {
-            startActivity(ReportActivity.newIntent(getApplicationContext(), mobile));//传递举报手机号码过去
-            dialog.dismiss();
-        });
-        dialog.show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getInfo();
-    }
-
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
+    private void getInfo() {
+        String token = App.getInstance().getUserInfo().getToken();
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder().add("token", token).build();
+        Request request = new Request.Builder().url(Constant.My_URL).post(formBody).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
             @Override
-            public void run() {
-                getInfo();
-                refresh.setRefreshing(false);
-
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "onFailure: "+e.getMessage());
             }
-        },2000);
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                Log.d(TAG, "获取个人朋友圈列表-onResponse: "+string);
+                getResult(string);
+            }
+        });
     }
 
-    @Override
-    public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
-            return;
+    private void getResult(String data) {
+        Gson gson = new Gson();
+        TalkBean talkBean = gson.fromJson(data, TalkBean.class);
+        if (talkBean.getError().equals("-1")) {
+            final List<TalkBean.TalkListBean> talkList = talkBean.getTalkList();
+            runOnUiThread(() -> {
+                adapter.addDatas(talkList);
+                adapter.notifyDataSetChanged();
+            });
         }
-        super.onBackPressed();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        JZVideoPlayer.releaseAllVideos();
+    @OnClick({R.id.back}) void onClick(View view){
+        switch (view.getId()){
+            case R.id.back:
+                finish();
+                break;
+        }
     }
 }

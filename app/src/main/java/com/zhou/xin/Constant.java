@@ -29,6 +29,9 @@ public class Constant extends EaseConstant {
     //登陆        获取个人信息
     public static final String LOGIN_URL = URL + "/app/index.do";
 
+    //获取个人朋友圈列表
+    public static final String My_URL = "http://123.207.55.87:8080/LoveMe/app/o_listTalk.do";
+
     //版本更新
     public static final String UPDATE_NEW = URL+"/app/v_updateApk.do";
     //修改会员个人信息

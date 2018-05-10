@@ -48,12 +48,7 @@ public class NewFriendsMsgActivity extends BaseActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("温馨提示");
             builder.setMessage("本应用仅支持一对一聊天，您如果需要添加新的好友，请将原来的好友删除或者拉黑。对您造成影响真的抱歉，感谢您的使用");
-            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            });
+            builder.setPositiveButton("确定", (dialog, which) -> finish());
             builder.setCancelable(false).create();
             builder.show();
         } else {

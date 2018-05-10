@@ -31,6 +31,12 @@
              />
     </RelativeLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:background="@color/emojicon_tab_selected"
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <include layout="@layout/view_isseue_menu" />
 
 </LinearLayout>
