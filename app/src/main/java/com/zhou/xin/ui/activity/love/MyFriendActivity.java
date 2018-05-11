@@ -135,7 +135,7 @@ public class MyFriendActivity extends BaseActivity {
                         .placeholder(R.drawable.ic_avatar)
                         .dontAnimate()
                         .into(circle);
-                circle.setOnClickListener(v -> startActivity(ObjectActivity.newIntent(getApplicationContext(),bean.getMobile())));
+                //circle.setOnClickListener(v -> startActivity(ObjectActivity.newIntent(getApplicationContext(),bean.getMobile())));
                 holder.setText(R.id.name, bean.getNickName());
                 try {
                     holder.setText(R.id.date, DateUtil.showTime(bean.getPublish_time()));
@@ -211,8 +211,9 @@ public class MyFriendActivity extends BaseActivity {
                         @Override
                         public void run() {
                             ToastUtil.show(getApplicationContext(),userInfo.getMsg());
-                            adapter.remove(position);
-                            adapter.notifyDataSetChanged();
+                            /*adapter.remove(position);
+                            adapter.notifyDataSetChanged();*/
+                            getInfo();
                         }
                     });
                 }else {
@@ -315,6 +316,7 @@ public class MyFriendActivity extends BaseActivity {
      * 获取个人朋友圈列表
      */
     private void getInfo() {
+        dialog.show();
         String token = App.getInstance().getUserInfo().getToken();
         OkHttpClient okHttpClient = new OkHttpClient();
         FormBody formBody = new FormBody.Builder().add("token", token).build();
@@ -323,11 +325,13 @@ public class MyFriendActivity extends BaseActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                dialog.dismiss();
                 Log.d(TAG, "onFailure: "+e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                dialog.dismiss();
                 String string = response.body().string();
                 Log.d(TAG, "获取个人朋友圈列表-onResponse: "+string);
                 getResult(string);
