@@ -26,6 +26,7 @@ import com.hyphenate.util.DensityUtil;
 import com.zhou.xin.Constant;
 import com.zhou.xin.R;
 import com.zhou.xin.adapter.base.BaseCommonAdapter;
+import com.zhou.xin.adapter.base.CommonAdapter;
 import com.zhou.xin.adapter.base.GridsSpacesItemDecoration;
 import com.zhou.xin.adapter.base.MultiItemCommonAdapter;
 import com.zhou.xin.adapter.base.MultiItemTypeSupport;
@@ -72,7 +73,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
     @BindView(R.id.iv_add) ImageView iv_add;
 
     private MultiItemCommonAdapter adapter;
-    private BaseCommonAdapter<String> photoAdapter;
+    private CommonAdapter<String> photoAdapter;
 
     @Override
     protected int getLayout() {
@@ -213,7 +214,7 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                 RecyclerView headerPhoto = holder.getView(R.id.header);
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(SuccessActivity.this, 5, GridLayoutManager.VERTICAL, false);
                 headerPhoto.setLayoutManager(gridLayoutManager);
-                photoAdapter = new BaseCommonAdapter<String>(mContext, R.layout.header_photo_view, photo) {
+                photoAdapter = new CommonAdapter<String>(mContext, R.layout.header_photo_view, photo) {
                     @Override
                     public void convert(ViewHolder holder, String s, int position) {
                         CircleImageView img = holder.getView(R.id.ivPhoto);
@@ -228,7 +229,9 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                         .placeholder(R.drawable.ic_avatar)
                         .dontAnimate()
                         .into(circle);
+
                 circle.setOnClickListener(v -> startActivity(ObjectActivity.newIntent(getApplicationContext(),bean.getMobile())));
+
                 holder.setText(R.id.name, bean.getNickName());
                 try {
                     holder.setText(R.id.date, DateUtil.showTime(bean.getPublish_time()));
@@ -239,8 +242,6 @@ public class SuccessActivity extends BaseActivity implements SwipeRefreshLayout.
                     holder.setText(R.id.content, bean.getContent());
                 LikeView like = holder.getView(R.id.like);
                 like.setLikeCount(bean.getTapTimes());
-                //holder.setText(R.id.like, bean.getTapTimes() + "");
-                //toPoint(holder, bean);//点赞
                     like.setOnLikeListeners(isCancel -> {
                         if (bean.getIstap()==1){
                             ToastUtil.show(getApplicationContext(),"你已经点赞过该朋友圈");

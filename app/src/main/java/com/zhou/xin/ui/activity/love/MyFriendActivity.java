@@ -1,5 +1,7 @@
 package com.zhou.xin.ui.activity.love;
 
+import android.content.DialogInterface;
+import android.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -207,25 +209,18 @@ public class MyFriendActivity extends BaseActivity {
                 Gson gson = new Gson();
                 UserInfo userInfo = gson.fromJson(string, UserInfo.class);
                 if (userInfo.getError().equals("-1")){
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtil.show(getApplicationContext(),userInfo.getMsg());
-                            /*adapter.remove(position);
-                            adapter.notifyDataSetChanged();*/
-                            getInfo();
-                        }
-                    });
+                    runOnUiThread(() -> new AlertDialog.Builder(MyFriendActivity.this).setTitle("提示")
+                            .setMessage("是否删除该动态？")
+                            .setPositiveButton("是", (dialog, which) -> {
+                                dialog.dismiss();
+                                ToastUtil.show(getApplicationContext(), userInfo.getMsg());
+                                adapter.remove(position);
+                                adapter.notifyDataSetChanged();
+                            }).setNegativeButton("否", (dialog, which) -> dialog.dismiss()).show());
                 }else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtil.show(getApplicationContext(),userInfo.getMsg());
-                        }
-                    });
+                    runOnUiThread(() -> ToastUtil.show(getApplicationContext(),userInfo.getMsg()));
                 }
                 Log.d(TAG, "onResponse: "+string);
-
             }
         });
     }
